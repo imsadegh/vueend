@@ -10,6 +10,10 @@ import authV2RegisterIllustrationLight from '@images/pages/auth-v2-register-illu
 import authV2RegisterMaskDark from '@images/pages/auth-v2-register-mask-dark.png'
 import authV2RegisterMaskLight from '@images/pages/auth-v2-register-mask-light.png'
 
+import { API_BASE_URL } from '@/config/config'
+import axios from 'axios'; // Axios for API requests
+import { useRouter } from 'vue-router'
+
 const authThemeMask = useGenerateImageVariant(authV2RegisterMaskLight, authV2RegisterMaskDark)
 
 const authThemeImg = useGenerateImageVariant(
@@ -31,9 +35,45 @@ const form = ref({
   email: '',
   password: '',
   privacyPolicies: false,
+  role: '', // Add role
 })
 
 const isPasswordVisible = ref(false)
+
+const router = useRouter()
+
+const rules = {
+  required: (v: string) => !!v || 'Field is required',
+  email: (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+  minLength: (length: number) => (v: string) =>
+    (v && v.length >= length) || `Must be at least ${length} characters`,
+  maxLength: (length: number) => (v: string) =>
+    (v && v.length <= length) || `Must be less than ${length} characters`,
+}
+
+// Form submission function
+const onSubmit = async () => {
+  try {
+    if (!form.value.privacyPolicies) {
+      alert('You must agree to the privacy policy.')
+      return
+    }
+
+    // Send data to the backend
+    const response = await axios.post(`${API_BASE_URL}/signup`, {
+      username: form.value.username,
+      email: form.value.email,
+      password: form.value.password,
+      role: form.value.role, // Include role
+    })
+
+    alert('Signup successful! Redirecting to login...')
+    router.push({ name: 'login' }) // Navigate to login page
+  } catch (error) {
+    console.error('Signup failed:', error)
+    alert((error as any).response?.data?.message || 'Signup failed. Please try again.')
+  }
+}
 </script>
 
 <template>
@@ -82,7 +122,7 @@ const isPasswordVisible = ref(false)
       >
         <VCardText>
           <h4 class="text-h4 mb-1">
-            Adventure starts here 🚀
+            Adventure starts heree 🚀
           </h4>
           <p class="mb-0">
             Make your app management easy and fun!
@@ -90,7 +130,7 @@ const isPasswordVisible = ref(false)
         </VCardText>
 
         <VCardText>
-          <VForm @submit.prevent="() => {}">
+          <VForm @submit.prevent="onSubmit" v-slot="{ validate }">
             <VRow>
               <!-- Username -->
               <VCol cols="12">
@@ -99,6 +139,7 @@ const isPasswordVisible = ref(false)
                   autofocus
                   label="Username"
                   placeholder="Johndoe"
+                  :rules="[rules.required, rules.minLength(3), rules.maxLength(20)]"
                 />
               </VCol>
 
@@ -109,6 +150,7 @@ const isPasswordVisible = ref(false)
                   label="Email"
                   type="email"
                   placeholder="johndoe@email.com"
+                  :rules="[rules.required, rules.email]"
                 />
               </VCol>
 
@@ -119,8 +161,18 @@ const isPasswordVisible = ref(false)
                   label="Password"
                   placeholder="············"
                   :type="isPasswordVisible ? 'text' : 'password'"
+                  :rules="[rules.required, rules.minLength(8)]"
                   :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                />
+
+                <br>
+                <!-- Role -->
+                <VSelect
+                  v-model="form.role"
+                  label="Role"
+                  :items="['Student', 'Teacher', 'Assistant', 'Manager']"
+                  :rules="[rules.required]"
                 />
 
                 <div class="d-flex align-center my-6">
@@ -185,5 +237,5 @@ const isPasswordVisible = ref(false)
 </template>
 
 <style lang="scss">
-@use "@core/scss/template/pages/page-auth.scss";
+@use "@core/scss/template/pages/page-auth";
 </style>
