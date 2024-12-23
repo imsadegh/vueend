@@ -1,8 +1,8 @@
-import { breakpointsVuetifyV3 } from '@vueuse/core'
-import { VIcon } from 'vuetify/components/VIcon'
 import { defineThemeConfig } from '@core'
 import { Skins } from '@core/enums'
 import VerticalNavHeaderArrow from '@images/svg/vertical-nav-header-arrow.svg'
+import { breakpointsVuetifyV3 } from '@vueuse/core'
+import { VIcon } from 'vuetify/components/VIcon'
 
 // ❗ Logo SVG must be imported with ?raw suffix
 import logo from '@images/logo.svg?raw'
@@ -11,17 +11,23 @@ import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layo
 
 export const { themeConfig, layoutConfig } = defineThemeConfig({
   app: {
-    title: 'materialize',
+    title: 'hakim yar',
 
     // ❗ if you have SVG logo and want it to adapt according to theme color, you have to apply color as `color: rgb(var(--v-global-theme-primary))`
     logo: h('div', { innerHTML: logo, style: 'line-height:0; color: rgb(var(--v-global-theme-primary))' }),
     contentWidth: ContentWidth.Boxed,
-    contentLayoutNav: AppContentLayoutNav.Vertical,
+    // contentLayoutNav: AppContentLayoutNav.Vertical,
+    contentLayoutNav: AppContentLayoutNav.Horizontal,
     overlayNavFromBreakpoint: breakpointsVuetifyV3.lg - 1, // 1 for matching with vuetify breakpoint. Docs: https://next.vuetifyjs.com/en/features/display-and-platform/
     i18n: {
       enable: true,
-      defaultLocale: 'en',
+      defaultLocale: 'fa',
       langConfig: [
+        {
+          label: 'فارسی',
+          i18nLang: 'fa',
+          isRTL: true,
+        },
         {
           label: 'English',
           i18nLang: 'en',

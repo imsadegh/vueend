@@ -12,6 +12,7 @@ import authV2RegisterMaskLight from '@images/pages/auth-v2-register-mask-light.p
 
 import { API_BASE_URL } from '@/config/config'
 import axios from 'axios'; // Axios for API requests
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 const authThemeMask = useGenerateImageVariant(authV2RegisterMaskLight, authV2RegisterMaskDark)
@@ -41,16 +42,18 @@ const form = ref({
 const isPasswordVisible = ref(false)
 
 const router = useRouter()
+const { t: $t } = useI18n()
 
 const rules = {
-  required: (v: string) => !!v || 'Field is required',
-  email: (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+  required: (v: string) => !!v || $t('Field is required'),
+  email: (v: string) => /.+@.+\..+/.test(v) || $t('E-mail must be valid'),
   minLength: (length: number) => (v: string) =>
-    (v && v.length >= length) || `Must be at least ${length} characters`,
+    (v && v.length >= length) || $t('Must be at least {length} characters', { length }),
   maxLength: (length: number) => (v: string) =>
-    (v && v.length <= length) || `Must be less than ${length} characters`,
+    (v && v.length <= length) || $t('Must be less than {length} characters', { length }),
 }
 
+// TODO: the alert must be updated according to the figma design
 // Form submission function
 const onSubmit = async () => {
   try {
@@ -125,7 +128,7 @@ const onSubmit = async () => {
             Adventure starts heree 🚀
           </h4>
           <p class="mb-0">
-            Make your app management easy and fun!
+            {{ $t('Make your app management easy and fun!') }}
           </p>
         </VCardText>
 
@@ -137,8 +140,8 @@ const onSubmit = async () => {
                 <VTextField
                   v-model="form.username"
                   autofocus
-                  label="Username"
-                  placeholder="Johndoe"
+                  :label="$t('Username')"
+                  :placeholder="$t('Johndoe')"
                   :rules="[rules.required, rules.minLength(3), rules.maxLength(20)]"
                 />
               </VCol>
@@ -147,7 +150,7 @@ const onSubmit = async () => {
               <VCol cols="12">
                 <VTextField
                   v-model="form.email"
-                  label="Email"
+                  :label="$t('Email')"
                   type="email"
                   placeholder="johndoe@email.com"
                   :rules="[rules.required, rules.email]"
@@ -158,7 +161,7 @@ const onSubmit = async () => {
               <VCol cols="12">
                 <VTextField
                   v-model="form.password"
-                  label="Password"
+                  :label="$t('Password')"
                   placeholder="············"
                   :type="isPasswordVisible ? 'text' : 'password'"
                   :rules="[rules.required, rules.minLength(8)]"
@@ -170,8 +173,8 @@ const onSubmit = async () => {
                 <!-- Role -->
                 <VSelect
                   v-model="form.role"
-                  label="Role"
-                  :items="['Student', 'Teacher', 'Assistant', 'Manager']"
+                  :label="$t('Role')"
+                  :items="[$t('Student'), $t('Teacher'), $t('Assistant'), $t('Manager')]"
                   :rules="[rules.required]"
                 />
 
