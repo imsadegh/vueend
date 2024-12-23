@@ -1,1 +1,9 @@
 // Write your overrides
+@use "vuetify/styles" as * with (
+  $body-font-family: "Vazirmatn",
+);
+
+// html,
+// body {
+//   font-family: Vazirmatn, sans-serif;font-family
+// }
