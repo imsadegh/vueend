@@ -9,8 +9,12 @@ import logo from '@images/logo.svg?raw'
 
 import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layouts/enums'
 
+// import { useI18n } from 'vue-i18n'
+// const { t } = useI18n()
+
 export const { themeConfig, layoutConfig } = defineThemeConfig({
   app: {
+    // title: t('app.title') as Lowercase<string>,
     title: 'hakim yar',
 
     // ❗ if you have SVG logo and want it to adapt according to theme color, you have to apply color as `color: rgb(var(--v-global-theme-primary))`
@@ -28,21 +32,21 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
           i18nLang: 'fa',
           isRTL: true,
         },
-        {
-          label: 'English',
-          i18nLang: 'en',
-          isRTL: false,
-        },
-        {
-          label: 'French',
-          i18nLang: 'fr',
-          isRTL: false,
-        },
-        {
-          label: 'Arabic',
-          i18nLang: 'ar',
-          isRTL: true,
-        },
+        // {
+        //   label: t('languages.english'),
+        //   i18nLang: 'en',
+        //   isRTL: false,
+        // },
+        // {
+        //   label: t('languages.french'),
+        //   i18nLang: 'fr',
+        //   isRTL: false,
+        // },
+        // {
+        //   label: t('languages.arabic'),
+        //   i18nLang: 'ar',
+        //   isRTL: true,
+        // },
       ],
     },
     theme: 'system',
