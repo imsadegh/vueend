@@ -14,6 +14,7 @@ import axios from 'axios'; // Axios for API requests
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
+
 const authThemeMask = useGenerateImageVariant(authV2RegisterMaskLight, authV2RegisterMaskDark)
 
 const authThemeImg = useGenerateImageVariant(
@@ -42,22 +43,35 @@ const form = ref({
   role_id: '', // Add role
 })
 
-const isPasswordVisible = ref(false)
-
 const router = useRouter()
+const isPasswordVisible = ref(false)
 const { t: $t } = useI18n()
 
-// TODO: if pass is not the same disable the submit button
 const rules = {
   required: (v: string) => !!v || $t('Field is required'),
   email: (v: string) => /.+@.+\..+/.test(v) || $t('E-mail must be valid'),
-  minLength: (length: number) => (v: string) =>
-    (v && v.length >= length) || $t('Must be at least {length} characters', { length }),
-  maxLength: (length: number) => (v: string) =>
-    (v && v.length <= length) || $t('Must be less than {length} characters', { length }),
+  minLength: (length: number) => (v: string) => (v && v.length >= length) || $t('Must be at least {length} characters', { length }),
+  maxLength: (length: number) => (v: string) => (v && v.length <= length) || $t('Must be less than {length} characters', { length }),
   phone: (v: string) => /^\d{11}$/.test(v) || $t('Phone number must be valid (e.g., 0912-345-6789)'),
   persian: (v: string) => /^[\u0600-\u06FF\s]+$/.test(v) || $t('Only Persian characters are allowed'),
+  passwordsMatch: (v: string) => v === form.value.password || $t('Passwords must match'),
 }
+
+const isFormValid = computed(() => {
+  return (
+    form.value.first_name &&
+    rules.required(form.value.first_name) === true &&
+    rules.minLength(3)(form.value.first_name) === true &&
+    rules.persian(form.value.first_name) === true &&
+    form.value.password &&
+    rules.required(form.value.password) === true &&
+    rules.minLength(8)(form.value.password) === true &&
+    form.value.repeat_password &&
+    rules.passwordsMatch(form.value.repeat_password) === true &&
+    form.value.role_id &&
+    form.value.privacyPolicies
+  )
+})
 
 // TODO: the alert must be updated according to the figma design, add input validation
 // Form submission function
@@ -166,7 +180,6 @@ const onSubmit = async () => {
               <VCol cols="12">
                 <VTextField
                   v-model="form.last_name"
-                  autofocus
                   :label="$t('Last Name')"
                   :placeholder="$t('Enter your last name')"
                   :rules="[rules.required, rules.minLength(3), rules.persian]"
@@ -177,7 +190,6 @@ const onSubmit = async () => {
               <!-- <VCol cols="12">
                 <VTextField
                   v-model="form.username"
-                  autofocus
                   :label="$t('Username')"
                   :placeholder="$t('Enter your username')"
                   :rules="[rules.required, rules.minLength(3), rules.maxLength(20)]"
@@ -208,19 +220,20 @@ const onSubmit = async () => {
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
                 />
 
-                <!-- repeat password -->
                 <br>
-                <!-- <VCol cols="12"> -->
-                  <VTextField
-                    v-model="form.repeat_password"
-                    :label="$t('Repeat Password')"
-                    placeholder="············"
-                    :type="isPasswordVisible ? 'text' : 'password'"
-                    :rules="[rules.required, (v) => v === form.password || $t('Passwords must match')]"
-                    :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
-                    @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                  />
-                <!-- </VCol> -->
+
+              <!-- repeat password -->
+              <!-- <VCol cols="12"> -->
+                <VTextField
+                  v-model="form.repeat_password"
+                  :label="$t('Repeat Password')"
+                  placeholder="············"
+                  :type="isPasswordVisible ? 'text' : 'password'"
+                  :rules="[rules.required, rules.passwordsMatch]"
+                  :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
+                  @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                />
+              <!-- </VCol> -->
 
                 <br>
                 <!-- Role -->
@@ -261,6 +274,7 @@ const onSubmit = async () => {
                 <VBtn
                   block
                   type="submit"
+                  :disabled="!isFormValid"
                 >
                   {{$t ('Sign Up')}}
                 </VBtn>
@@ -280,13 +294,13 @@ const onSubmit = async () => {
                 </div>
               </VCol>
 
-              <VCol cols="12">
+              <!-- <VCol cols="12">
                 <div class="d-flex align-center">
-                  <!-- <VDivider />
+                  <VDivider />
                     <span class="mx-4 text-high-emphasis">or</span>
-                  <VDivider /> -->
+                  <VDivider />
                 </div>
-              </VCol>
+              </VCol>-->
 
               <!-- auth providers -->
               <!-- <VCol
