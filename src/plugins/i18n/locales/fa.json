@@ -1,4 +1,10 @@
 {
+  "Two Step Verification 💬": "تایید دو مرحله‌ای 💬",
+  "We sent a verification code to your mobile. Enter the code from the mobile in the field below.": "کد تایید به موبایل شما ارسال شد. کد را از موبایل خود در فیلد زیر وارد کنید.",
+  "Type your 6 digit security code": "کد امنیتی ۶ رقمی خود را وارد کنید.",
+  "Verify my account": "تایید حساب من",
+  "Didn't get the code?": "کد را دریافت نکردید؟",
+  "Resend": "ارسال مجدد",
   "First Name": "نام",
   "Last Name": "نام خانوادگی",
   "Enter your first name": "نام خود را وارد کنید",

@@ -52,7 +52,7 @@ const rules = {
   email: (v: string) => /.+@.+\..+/.test(v) || $t('E-mail must be valid'),
   minLength: (length: number) => (v: string) => (v && v.length >= length) || $t('Must be at least {length} characters', { length }),
   maxLength: (length: number) => (v: string) => (v && v.length <= length) || $t('Must be less than {length} characters', { length }),
-  phone: (v: string) => /^\d{11}$/.test(v) || $t('Phone number must be valid (e.g., 0912-345-6789)'),
+  phone: (v: string) => /^09\d{9}$/.test(v) || $t('Phone number must be valid (e.g., 0912-345-6789)'),
   persian: (v: string) => /^[\u0600-\u06FF\s]+$/.test(v) || $t('Only Persian characters are allowed'),
   passwordsMatch: (v: string) => v === form.value.password || $t('Passwords must match'),
 }
@@ -73,6 +73,7 @@ const isFormValid = computed(() => {
   )
 })
 
+// TODO: Convert the persian numbers to english numbers.
 // TODO: the alert must be updated according to the figma design, add input validation
 // Form submission function
 const onSubmit = async () => {
@@ -93,8 +94,11 @@ const onSubmit = async () => {
       role_id: form.value.role_id, // Include role
     })
 
-    alert($t('Signup successful! Redirecting to login...'))
-    router.push({ name: 'login' }) // Navigate to login page
+    // alert($t('Signup successful! Redirecting to login...'))
+    // router.push({ name: 'login' }) // Navigate to login page
+    router.push({ path: '/pages/authentication/two-steps-v2' }) // Navigate to two-step verification page
+    
+    // todo - if sign in failed, catch and show the error in the database.
   } catch (error) {
     console.error('Signup failed:', error)
     alert((error as any).response?.data?.message || $t('Signup failed. Please try again.'))
@@ -202,12 +206,13 @@ const onSubmit = async () => {
                   v-model="form.phone_number"
                   :label="$t('Phone Number')"
                   type="tel"
-                  :placeholder="$t('0912-345-6789')"
+                  :placeholder="$t('09**-***-****')"
                   :rules="[rules.required, rules.phone]"
-                  @input="form.phone_number = form.phone_number.replace(/\D/g, '')"
+                  @input="form.phone_number = form.phone_number.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '')"
                 />
               </VCol>
 
+              <!-- TODO - Add password validator -->
               <!-- password -->
               <VCol cols="12">
                 <VTextField
