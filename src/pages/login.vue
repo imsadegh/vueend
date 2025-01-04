@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { VForm } from 'vuetify/components/VForm'
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
+import { persianTitle } from '@/config/config'
 import { themeConfig } from '@themeConfig'
+import { VForm } from 'vuetify/components/VForm'
 
 import authV2LoginIllustrationBorderedDark from '@images/pages/auth-v2-login-illustration-bordered-dark.png'
 import authV2LoginIllustrationBorderedLight from '@images/pages/auth-v2-login-illustration-bordered-light.png'
@@ -94,7 +94,8 @@ const onSubmit = () => {
     <div class="auth-logo app-logo">
       <VNodeRenderer :nodes="themeConfig.app.logo" />
       <h1 class="app-logo-title">
-        {{ themeConfig.app.title }}
+        <!-- {{ themeConfig.app.title }} -->
+        {{ persianTitle }}
       </h1>
     </div>
   </RouterLink>
@@ -134,10 +135,11 @@ const onSubmit = () => {
       >
         <VCardText>
           <h4 class="text-h4 mb-1">
-            Welcome to <span class="text-capitalize">{{ themeConfig.app.title }}!</span> 👋🏻
+            {{$t('Welcome to ')}}
+            <!-- <span class="text-capitalize">{{ themeConfig.app.title }}!</span> 👋🏻 -->
           </h4>
           <p class="mb-0">
-            Please sign-in to your account and start the adventure
+            {{$t('Please sign-in to your account and start the adventure')}}
           </p>
         </VCardText>
         <VCardText>
@@ -164,7 +166,7 @@ const onSubmit = () => {
               <VCol cols="12">
                 <VTextField
                   v-model="credentials.email"
-                  label="Email"
+                    :label="$t('Email')"
                   placeholder="johndoe@email.com"
                   type="email"
                   autofocus
@@ -177,7 +179,7 @@ const onSubmit = () => {
               <VCol cols="12">
                 <VTextField
                   v-model="credentials.password"
-                  label="Password"
+                    :label="$t('Password')"
                   placeholder="············"
                   :rules="[requiredValidator]"
                   :type="isPasswordVisible ? 'text' : 'password'"
@@ -187,15 +189,15 @@ const onSubmit = () => {
                 />
 
                 <div class="d-flex align-center flex-wrap justify-space-between my-6 gap-x-2">
-                  <VCheckbox
+                    <VCheckbox
                     v-model="rememberMe"
-                    label="Remember me"
+                    :label="$t('Remember me')"
                   />
                   <RouterLink
                     class="text-primary"
                     :to="{ name: 'forgot-password' }"
                   >
-                    Forgot Password?
+                    {{$t('Forgot Password?')}}
                   </RouterLink>
                 </div>
 
@@ -203,7 +205,7 @@ const onSubmit = () => {
                   block
                   type="submit"
                 >
-                  Login
+                    {{$t('Login')}}
                 </VBtn>
               </VCol>
 
@@ -213,17 +215,17 @@ const onSubmit = () => {
                 class="text-body-1 text-center"
               >
                 <span class="d-inline-block">
-                  New on our platform?
+                    {{$t('New on our platform?')}}
                 </span>
                 <RouterLink
                   class="text-primary ms-1 d-inline-block text-body-1"
                   :to="{ name: 'register' }"
                 >
-                  Create an account
+                    {{$t('Create an account')}}
                 </RouterLink>
               </VCol>
 
-              <VCol
+              <!-- <VCol
                 cols="12"
                 class="d-flex align-center"
               >
@@ -232,13 +234,13 @@ const onSubmit = () => {
                 <VDivider />
               </VCol>
 
-              <!-- auth providers -->
+              auth providers
               <VCol
                 cols="12"
                 class="text-center"
               >
                 <AuthProvider />
-              </VCol>
+              </VCol> -->
             </VRow>
           </VForm>
         </VCardText>
@@ -248,5 +250,5 @@ const onSubmit = () => {
 </template>
 
 <style lang="scss">
-@use "@core/scss/template/pages/page-auth.scss";
+@use "@core/scss/template/pages/page-auth";
 </style>

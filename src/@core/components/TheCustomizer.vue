@@ -1,13 +1,13 @@
 <script setup lang="tsx">
-import { useStorage } from '@vueuse/core'
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-import { useTheme } from 'vuetify'
 import { staticPrimaryColor, staticPrimaryDarkenColor } from '@/plugins/vuetify/theme'
 import { Direction, Layout, Skins, Theme } from '@core/enums'
 import { useConfigStore } from '@core/stores/config'
 import { AppContentLayoutNav, ContentWidth } from '@layouts/enums'
 import { cookieRef, namespaceConfig } from '@layouts/stores/config'
 import { themeConfig } from '@themeConfig'
+import { useStorage } from '@vueuse/core'
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+import { useTheme } from 'vuetify'
 
 import borderSkinDark from '@images/customizer-icons/border-dark.svg'
 import borderSkinLight from '@images/customizer-icons/border-light.svg'
@@ -35,7 +35,9 @@ const vuetifyTheme = useTheme()
 
 const colors: { main: string; darken: string }[] = [
   { main: staticPrimaryColor, darken: staticPrimaryDarkenColor },
-  { main: '#0D9394', darken: '#0C8485' },
+  // todo try the 76CA75 color later
+  { main: '#7367F0', darken: '#675DD8' },
+  // { main: '#0D9394', darken: '#0C8485' },
   { main: '#FFB400', darken: '#E6A200' },
   { main: '#FF4C51', darken: '#E64449' },
   { main: '#16B1FF', darken: '#149FE6' },

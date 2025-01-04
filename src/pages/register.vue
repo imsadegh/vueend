@@ -9,7 +9,7 @@ import authV2RegisterIllustrationLight from '@images/pages/auth-v2-register-illu
 import authV2RegisterMaskDark from '@images/pages/auth-v2-register-mask-dark.png'
 import authV2RegisterMaskLight from '@images/pages/auth-v2-register-mask-light.png'
 
-import { API_BASE_URL } from '@/config/config'
+import { API_BASE_URL, persianTitle } from '@/config/config'
 import axios from 'axios'; // Axios for API requests
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
@@ -47,6 +47,7 @@ const router = useRouter()
 const isPasswordVisible = ref(false)
 const { t: $t } = useI18n()
 
+// todo use global validator
 const rules = {
   required: (v: string) => !!v || $t('Field is required'),
   email: (v: string) => /.+@.+\..+/.test(v) || $t('E-mail must be valid'),
@@ -131,7 +132,8 @@ const onSubmit = async () => {
     <div class="app-logo auth-logo">
       <VNodeRenderer :nodes="themeConfig.app.logo" />
       <h1 class="app-logo-title">
-        {{ themeConfig.app.title }}
+        <!-- {{ themeConfig.app.title }} -->
+        {{ persianTitle }}
       </h1>
     </div>
   </RouterLink>

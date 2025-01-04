@@ -12,7 +12,7 @@ import { themeConfig } from '@themeConfig'
 const authV2ThemeTwoStepMask = useGenerateImageVariant(authV2RegisterMaskLight, authV2RegisterMaskDark)
 const authV2TwoStepsIllustration = useGenerateImageVariant (authV2TwoStepsIllustrationLight, authV2TwoStepsIllustrationDark, authV2TwoStepsIllustrationBorderedLight, authV2TwoStepsIllustrationBorderedDark, true)
 
-import { API_BASE_URL } from '@/config/config'
+import { API_BASE_URL, persianTitle } from '@/config/config'
 import axios from 'axios'
 import { useI18n } from 'vue-i18n'
 
@@ -41,6 +41,7 @@ definePage({
   },
 })
 
+// todo use global validator
 // todo convert persian number to english
 const verifyOTP = async () => {
   try {
@@ -71,7 +72,8 @@ const convertToPersian = (number: string) => {
     <div class="app-logo auth-logo">
       <VNodeRenderer :nodes="themeConfig.app.logo" />
       <h1 class="app-logo-title">
-        {{ themeConfig.app.title }}
+        <!-- {{ themeConfig.app.title }} -->
+        {{ persianTitle }}
       </h1>
     </div>
   </RouterLink>

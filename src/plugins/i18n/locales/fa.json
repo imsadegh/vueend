@@ -1,4 +1,10 @@
 {
+  "New on our platform?": "کاربر جدید هستید؟",
+  "Create an account": "ایجاد حساب کاربری",
+  "Remember me": "مرا به خاطر بسپار",
+  "Welcome to ": "به حکیم‌یار خوش آمدید",
+  "Please sign-in to your account and start the adventure": "لطفا وارد حساب کاربری خود شوید.",
+  "Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.": "رمز عبور باید حداقل ۸ کاراکتر باشد، شامل یک حرف بزرگ، یک حرف کوچک، یک عدد و یک کاراکتر ویژه باشد.",
   "This phone number is already registered.": "این شماره موبایل قبلا ثبت‌نام شده است.",
   "Signup failed. Please try again.": "ثبت‌نام ناموفق بود. لطفا دوباره تلاش کنید.",
   "Two Step Verification 💬": "تایید دو مرحله‌ای 💬",
