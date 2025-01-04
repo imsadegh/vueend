@@ -83,6 +83,7 @@ const onSubmit = async () => {
       return
     }
 
+    // Step 1: Register the user
     // Send data to the backend
     const response = await axios.post(`${API_BASE_URL}/signup`, {
       first_name: form.value.first_name,
@@ -94,13 +95,18 @@ const onSubmit = async () => {
       role_id: form.value.role_id, // Include role
     })
 
+    // Step 2: Send OTP
+    await axios.post(`${API_BASE_URL}/otp/send`, {
+      phone_number: form.value.phone_number,
+    })
+
     // alert($t('Signup successful! Redirecting to login...'))
     // router.push({ name: 'login' }) // Navigate to login page
-    router.push({ path: '/pages/authentication/two-steps-v2' }) // Navigate to two-step verification page
+    router.push({ path: '/pages/authentication/two-steps-v2', query: { phone_number: form.value.phone_number } }) // Navigate to two-step verification page
     
     // todo - if sign in failed, catch and show the error in the database.
   } catch (error) {
-    console.error('Signup failed:', error)
+    console.error('Signup or OTP sending failed:', error)
     alert((error as any).response?.data?.message || $t('Signup failed. Please try again.'))
   }
   // console.log({ 

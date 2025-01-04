@@ -12,17 +12,26 @@ import { themeConfig } from '@themeConfig'
 const authV2ThemeTwoStepMask = useGenerateImageVariant(authV2RegisterMaskLight, authV2RegisterMaskDark)
 const authV2TwoStepsIllustration = useGenerateImageVariant (authV2TwoStepsIllustrationLight, authV2TwoStepsIllustrationDark, authV2TwoStepsIllustrationBorderedLight, authV2TwoStepsIllustrationBorderedDark, true)
 
+import { API_BASE_URL } from '@/config/config'
+import axios from 'axios'
+import { useI18n } from 'vue-i18n'
+
 const router = useRouter()
 const otp = ref('')
 const isOtpInserted = ref(false)
+const route = useRoute()
+const { t: $t } = useI18n()
 
-const onFinish = () => {
+const onFinish = async () => {
   isOtpInserted.value = true
 
-  setTimeout(() => {
-    isOtpInserted.value = false
-    router.push('/')
-  }, 2000)
+  // setTimeout(() => {
+  //   isOtpInserted.value = false
+  //   router.push('/')
+  // }, 2000)
+  await verifyOTP()
+
+  isOtpInserted.value = false
 }
 
 definePage({
@@ -31,6 +40,29 @@ definePage({
     public: true,
   },
 })
+
+const verifyOTP = async () => {
+  try {
+    const phone_number = route.query.phone_number // Retrieve phone number from query params
+
+    const response = await axios.post(`${API_BASE_URL}/otp/verify`, {
+      phone_number,
+      otp: otp.value,
+    })
+
+    alert($t('Account verified successfully!'))
+    router.push('/')
+  } catch (error) {
+    console.error('Error verifying OTP:', error)
+    alert($t('Invalid OTP. Please try again.'))
+  }
+}
+
+const convertToPersian = (number: string) => {
+              const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+              return number.replace(/\d/g, (digit: string) => persianDigits[parseInt(digit)]);
+            };
+
 </script>
 
 <template>
@@ -84,13 +116,14 @@ definePage({
           <p class="mb-1">
             {{$t ('We sent a verification code to your mobile. Enter the code from the mobile in the field below.')}}
           </p>
-          <!-- <h6 class="text-h6">
-            ******1234
-          </h6> -->
+            <h6 class="text-h6">
+            ارسال به: {{ convertToPersian(route.query.phone_number as string || '') }}
+            </h6>
         </VCardText>
 
         <VCardText>
-          <VForm @submit.prevent="() => {}">
+          <!-- <VForm @submit.prevent="() => {}"> -->
+          <VForm @submit.prevent="onFinish">
             <!-- email -->
             <h6 class="text-body-1">
               {{$t ('Type your 6 digit security code')}}
