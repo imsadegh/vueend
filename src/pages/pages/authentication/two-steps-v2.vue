@@ -41,6 +41,7 @@ definePage({
   },
 })
 
+// todo convert persian number to english
 const verifyOTP = async () => {
   try {
     const phone_number = route.query.phone_number // Retrieve phone number from query params

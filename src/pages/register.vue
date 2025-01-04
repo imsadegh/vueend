@@ -40,7 +40,7 @@ const form = ref({
   password: '',
   repeat_password: '',
   privacyPolicies: false,
-  role_id: '', // Add role
+  role_id: '',
 })
 
 const router = useRouter()
@@ -72,7 +72,7 @@ const isFormValid = computed(() => {
     form.value.privacyPolicies
   )
 })
-
+// todo password validation
 // TODO: Convert the persian numbers to english numbers.
 // TODO: the alert must be updated according to the figma design, add input validation
 // Form submission function
