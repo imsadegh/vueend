@@ -1,4 +1,6 @@
 {
+  "This phone number is already registered.": "این شماره موبایل قبلا ثبت‌نام شده است.",
+  "Signup failed. Please try again.": "ثبت‌نام ناموفق بود. لطفا دوباره تلاش کنید.",
   "Two Step Verification 💬": "تایید دو مرحله‌ای 💬",
   "We sent a verification code to your mobile. Enter the code from the mobile in the field below.": "کد تایید به موبایل شما ارسال شد. کد را از موبایل خود در فیلد زیر وارد کنید.",
   "Type your 6 digit security code": "کد امنیتی ۶ رقمی خود را وارد کنید.",

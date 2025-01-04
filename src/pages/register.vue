@@ -55,6 +55,10 @@ const rules = {
   phone: (v: string) => /^09\d{9}$/.test(v) || $t('Phone number must be valid (e.g., 0912-345-6789)'),
   persian: (v: string) => /^[\u0600-\u06FF\s]+$/.test(v) || $t('Only Persian characters are allowed'),
   passwordsMatch: (v: string) => v === form.value.password || $t('Passwords must match'),
+
+  strongPassword: (v: string) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/.test(v) ||
+    $t('Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.'),
+
 }
 
 const isFormValid = computed(() => {
@@ -72,8 +76,7 @@ const isFormValid = computed(() => {
     form.value.privacyPolicies
   )
 })
-// todo password validation
-// TODO: Convert the persian numbers to english numbers.
+
 // TODO: the alert must be updated according to the figma design, add input validation
 // Form submission function
 const onSubmit = async () => {
@@ -102,18 +105,22 @@ const onSubmit = async () => {
 
     // alert($t('Signup successful! Redirecting to login...'))
     // router.push({ name: 'login' }) // Navigate to login page
-    router.push({ path: '/pages/authentication/two-steps-v2', query: { phone_number: form.value.phone_number } }) // Navigate to two-step verification page
+    router.push({ path: '/pages/authentication/two-steps-v2', query: { phone_number: form.value.phone_number } })
     
-    // todo - if sign in failed, catch and show the error in the database.
   } catch (error) {
-    console.error('Signup or OTP sending failed:', error)
-    alert((error as any).response?.data?.message || $t('Signup failed. Please try again.'))
+    const response = (error as any).response;
+    if (response?.status === 400 && response?.data?.phone_number) {
+      alert($t('This phone number is already registered.'))
+      // alert($t(response.data.phone_number[0]))
+      // alert(response.data.phone_number[0]);
+    } else {
+    // console.error('Signup or OTP sending failed:', error)
+    alert(response?.data?.message || $t('Signup failed. Please try again.'));
+    }
   }
   // console.log({ 
-  //   first_name: form.value.first_name,
   //   last_name: form.value.last_name,
   //   phone_number: form.value.phone_number,
-  //   password: form.value.password,
   //   role_id: form.value.role_id,
   // });
 }
@@ -218,7 +225,6 @@ const onSubmit = async () => {
                 />
               </VCol>
 
-              <!-- TODO - Add password validator -->
               <!-- password -->
               <VCol cols="12">
                 <VTextField
@@ -226,7 +232,7 @@ const onSubmit = async () => {
                   :label="$t('Password')"
                   placeholder="············"
                   :type="isPasswordVisible ? 'text' : 'password'"
-                  :rules="[rules.required, rules.minLength(8)]"
+                  :rules="[rules.required, rules.strongPassword]"
                   :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
                 />
