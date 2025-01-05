@@ -221,7 +221,7 @@ const onSubmit = async () => {
                   v-model="form.phone_number"
                   :label="$t('Phone Number')"
                   type="tel"
-                  :placeholder="$t('09**-***-****')"
+                  :placeholder="$t('phone number place holder')"
                   :rules="[rules.required, rules.phone]"
                   @input="form.phone_number = form.phone_number.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '')"
                 />
