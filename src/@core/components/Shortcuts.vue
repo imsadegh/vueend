@@ -36,11 +36,11 @@ const router = useRouter()
       >
         <VCardItem class="px-4 py-3">
           <h6 class="text-h6">
-            Shortcuts
+            {{ $t('Shortcuts') }}
           </h6>
 
           <template #append>
-            <IconBtn size="small">
+            <!-- <IconBtn size="small">
               <VIcon
                 icon="ri-add-line"
                 color="high-emphasis"
@@ -51,7 +51,7 @@ const router = useRouter()
               >
                 Add Shortcut
               </VTooltip>
-            </IconBtn>
+            </IconBtn> -->
           </template>
         </VCardItem>
 

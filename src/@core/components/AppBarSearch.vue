@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends unknown">
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-import { VList, VListItem } from 'vuetify/components/VList'
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
+import { VList, VListItem } from 'vuetify/components/VList';
 
 interface Emit {
   (e: 'update:isDialogVisible', value: boolean): void
@@ -184,7 +184,7 @@ watch(
                   icon="ri-file-forbid-line"
                 />
                 <div class="d-flex align-center flex-wrap justify-center gap-2 text-h5 my-3">
-                  <span>No Result For </span>
+                    <span>{{ $t('No Result For ') }}</span>
                   <span>"{{ searchQueryLocal }}"</span>
                 </div>
 

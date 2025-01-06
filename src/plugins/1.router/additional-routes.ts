@@ -73,4 +73,13 @@ export const routes: RouteRecordRaw[] = [
     name: 'apps-ecommerce-dashboard',
     component: () => import('@/pages/dashboards/ecommerce.vue'),
   },
+  // {
+  //   path: '/register',
+  //   name: 'register',
+  //   component: () => import('@/pages/register.vue'),
+  //   meta: {
+  //     disable: true, // Add this property
+  //     public: false,
+  //   },
+  // }
 ]

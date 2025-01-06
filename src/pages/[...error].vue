@@ -20,9 +20,9 @@ definePage({
 <template>
   <div class="misc-wrapper">
     <ErrorHeader
-      status-code="404"
-      title="Page Not Found ⚠️"
-      description="We couldn't find the page you are looking for."
+      :status-code="$t('404')"
+      :title="$t('Page Not Found ⚠️')"
+      :description="$t('We couldn\'t find the page you are looking for.')"
       class="mb-10"
     />
 
@@ -39,7 +39,7 @@ definePage({
         to="/"
         class="mt-10"
       >
-        Back to Home
+        {{ $t('Back To Home') }}
       </VBtn>
 
       <VImg

@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { ThemeSwitcherTheme } from '@layouts/types'
+import type { ThemeSwitcherTheme } from '@layouts/types';
+import { useI18n } from 'vue-i18n';
+
+const { t: $t } = useI18n()
 
 const themes: ThemeSwitcherTheme[] = [
   {

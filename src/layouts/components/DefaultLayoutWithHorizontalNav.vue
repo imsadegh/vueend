@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import navItems from '@/navigation/horizontal'
 
+import { persianTitle } from '@/config/config'
 import { themeConfig } from '@themeConfig'
 
 // Components
@@ -12,7 +13,8 @@ import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import UserProfile from '@/layouts/components/UserProfile.vue'
 import NavBarI18n from '@core/components/I18n.vue'
 import { HorizontalNavLayout } from '@layouts'
-import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
+import { VNodeRenderer } from '@layouts/components/VNodeRenderer'; /* PartiallyEnd: #3632/scriptSetup.vue */
+// import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 </script>
 
 <template>
@@ -26,7 +28,8 @@ import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
         <VNodeRenderer :nodes="themeConfig.app.logo" />
 
         <h1 class="app-logo-title leading-normal">
-          {{ themeConfig.app.title }}
+          <!-- {{ themeConfig.app.title }} -->
+          {{ persianTitle }}
         </h1>
       </RouterLink>
       <VSpacer />

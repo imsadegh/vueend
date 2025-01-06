@@ -1,10 +1,18 @@
-import type { RouteNamedMap, _RouterTyped } from 'unplugin-vue-router'
 import { canNavigate } from '@layouts/plugins/casl'
+import type { RouteNamedMap, _RouterTyped } from 'unplugin-vue-router'
 
 export const setupGuards = (router: _RouterTyped<RouteNamedMap & { [key: string]: any }>) => {
   // 👉 router.beforeEach
   // Docs: https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
   router.beforeEach(to => {
+    
+    // Check if the route is marked as disabled
+    if (to.meta.disable) {
+      return {
+        name: '[...error]', // Redirect to a 'not found' or alternative route
+      }
+    }
+
     /*
      * If it's a public route, continue navigation. This kind of pages are allowed to visited by login & non-login users. Basically, without any restrictions.
      * Examples of public routes are, 404, under maintenance, etc.
@@ -35,12 +43,12 @@ export const setupGuards = (router: _RouterTyped<RouteNamedMap & { [key: string]
       return isLoggedIn
         ? { name: 'not-authorized' }
         : {
-            name: 'login',
-            query: {
-              ...to.query,
-              to: to.fullPath !== '/' ? to.path : undefined,
-            },
-          }
+          name: 'login',
+          query: {
+            ...to.query,
+            to: to.fullPath !== '/' ? to.path : undefined,
+          },
+        }
       /* eslint-enable indent */
     }
   })

@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-
+const { t: $t } = useI18n()
 const router = useRouter()
 const ability = useAbility()
 
@@ -30,19 +31,19 @@ const userProfileList = [
   {
     type: 'navItem',
     icon: 'ri-user-line',
-    title: 'Profile',
+    title: $t('Profile'),
     to: { name: 'apps-user-view-id', params: { id: 21 } },
   },
   {
     type: 'navItem',
     icon: 'ri-settings-4-line',
-    title: 'Settings',
+    title: $t('Settings'),
     to: { name: 'pages-account-settings-tab', params: { tab: 'account' } },
   },
   {
     type: 'navItem',
     icon: 'ri-file-text-line',
-    title: 'Billing Plan',
+    title: $t('Billing Plan'),
     to: { name: 'pages-account-settings-tab', params: { tab: 'billing-plans' } },
     chipsProps: { color: 'error', text: '4', size: 'small' },
   },
@@ -50,13 +51,13 @@ const userProfileList = [
   {
     type: 'navItem',
     icon: 'ri-money-dollar-circle-line',
-    title: 'Pricing',
+    title: $t('Pricing'),
     to: { name: 'pages-pricing' },
   },
   {
     type: 'navItem',
     icon: 'ri-question-line',
-    title: 'FAQ',
+    title: $t('FAQ'),
     to: { name: 'pages-faq' },
   },
 ]
@@ -114,10 +115,10 @@ const userProfileList = [
 
               <div>
                 <div class="text-body-2 font-weight-medium text-high-emphasis">
-                  {{ userData.fullName || userData.username }}
+                  {{ userData.full_name || userData.username }}
                 </div>
                 <div class="text-capitalize text-caption text-disabled">
-                  {{ userData.role }}
+                  {{ $t(`roles.${userData.role}`) }}
                 </div>
               </div>
             </div>
@@ -167,7 +168,7 @@ const userProfileList = [
                 append-icon="ri-logout-box-r-line"
                 @click="logout"
               >
-                Logout
+                {{ $t('Logout') }}
               </VBtn>
             </VListItem>
           </PerfectScrollbar>

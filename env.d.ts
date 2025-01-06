@@ -1,4 +1,4 @@
-import 'vue-router'
+import 'vue-router';
 declare module 'vue-router' {
   interface RouteMeta {
     action?: string
@@ -8,5 +8,6 @@ declare module 'vue-router' {
     layout?: 'blank' | 'default'
     unauthenticatedOnly?: boolean
     public?: boolean
+    disable?: boolean
   }
 }

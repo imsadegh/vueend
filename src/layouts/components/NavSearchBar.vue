@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { useConfigStore } from '@core/stores/config'
+import type { SearchResults } from '@db/app-bar-search/types'
 import Shepherd from 'shepherd.js'
 import { withQuery } from 'ufo'
+import { useI18n } from 'vue-i18n'
 import type { RouteLocationRaw } from 'vue-router'
-import type { SearchResults } from '@db/app-bar-search/types'
-import { useConfigStore } from '@core/stores/config'
 
 interface Suggestion {
   icon: string
@@ -24,44 +25,45 @@ interface SuggestionGroup {
 
 // 👉 Is App Search Bar Visible
 const isAppSearchBarVisible = ref(false)
+const { t: $t } = useI18n()
 
 // 👉 Default suggestions
 
 const suggestionGroups: SuggestionGroup[] = [
   {
-    title: 'Popular Searches',
+    title: $t('Popular Searches'),
     content: [
-      { icon: 'ri-bar-chart-line', title: 'Analytics', url: { name: 'dashboards-analytics' } },
-      { icon: 'ri-pie-chart-2-line', title: 'CRM', url: { name: 'dashboards-crm' } },
-      { icon: 'ri-shopping-bag-3-line', title: 'eCommerce', url: { name: 'dashboards-ecommerce' } },
-      { icon: 'ri-car-line', title: 'Logistics', url: { name: 'apps-logistics-dashboard' } },
+      { icon: 'ri-bar-chart-line', title: $t('Analytics'), url: { name: 'dashboards-analytics' } },
+      { icon: 'ri-pie-chart-2-line', title: $t('CRM'), url: { name: 'dashboards-crm' } },
+      { icon: 'ri-shopping-bag-3-line', title: $t('eCommerce'), url: { name: 'dashboards-ecommerce' } },
+      { icon: 'ri-car-line', title: $t('Logistics'), url: { name: 'apps-logistics-dashboard' } },
     ],
   },
   {
-    title: 'Apps & Pages',
+    title: $t('Apps & Pages'),
     content: [
-      { icon: 'ri-calendar-line', title: 'Calendar', url: { name: 'apps-calendar' } },
-      { icon: 'ri-lock-unlock-line', title: 'Roles & Permissions', url: { name: 'apps-roles' } },
-      { icon: 'ri-settings-4-line', title: 'Account Settings', url: { name: 'pages-account-settings-tab', params: { tab: 'account' } } },
-      { icon: 'ri-file-copy-line', title: 'Dialog Examples', url: { name: 'pages-dialog-examples' } },
+      { icon: 'ri-calendar-line', title: $t('Calendar'), url: { name: 'apps-calendar' } },
+      { icon: 'ri-lock-unlock-line', title: $t('Roles & Permissions'), url: { name: 'apps-roles' } },
+      { icon: 'ri-settings-4-line', title: $t('Account Settings'), url: { name: 'pages-account-settings-tab', params: { tab: 'account' } } },
+      { icon: 'ri-file-copy-line', title: $t('Dialog Examples'), url: { name: 'pages-dialog-examples' } },
     ],
   },
   {
-    title: 'User Interface',
+    title: $t('User Interface'),
     content: [
-      { icon: 'ri-text', title: 'Typography', url: { name: 'pages-typography' } },
-      { icon: 'ri-menu-line', title: 'Accordion', url: { name: 'components-expansion-panel' } },
-      { icon: 'ri-alert-line', title: 'Alerts', url: { name: 'components-alert' } },
-      { icon: 'ri-checkbox-blank-line', title: 'Cards', url: { name: 'pages-cards-card-basic' } },
+      { icon: 'ri-text', title: $t('Typography'), url: { name: 'pages-typography' } },
+      { icon: 'ri-menu-line', title: $t('Accordion'), url: { name: 'components-expansion-panel' } },
+      { icon: 'ri-alert-line', title: $t('Alerts'), url: { name: 'components-alert' } },
+      { icon: 'ri-checkbox-blank-line', title: $t('Cards'), url: { name: 'pages-cards-card-basic' } },
     ],
   },
   {
-    title: 'Forms & Tables',
+    title: $t('Forms & Tables'),
     content: [
-      { icon: 'ri-radio-button-line', title: 'Radio', url: { name: 'forms-radio' } },
-      { icon: 'ri-file-text-line', title: 'Form Layouts', url: { name: 'forms-form-layouts' } },
-      { icon: 'ri-table-line', title: 'Table', url: { name: 'tables-simple-table' } },
-      { icon: 'ri-edit-box-line', title: 'Editor', url: { name: 'forms-editors' } },
+      { icon: 'ri-radio-button-line', title: $t('Radio'), url: { name: 'forms-radio' } },
+      { icon: 'ri-file-text-line', title: $t('Form Layouts'), url: { name: 'forms-form-layouts' } },
+      { icon: 'ri-table-line', title: $t('Table'), url: { name: 'tables-simple-table' } },
+      { icon: 'ri-edit-box-line', title: $t('Editor'), url: { name: 'forms-editors' } },
     ],
   },
 ]
@@ -69,17 +71,17 @@ const suggestionGroups: SuggestionGroup[] = [
 // 👉 No Data suggestion
 const noDataSuggestions: Suggestion[] = [
   {
-    title: 'Analytics',
+    title: $t('Analytics'),
     icon: 'ri-bar-chart-line',
     url: { name: 'dashboards-analytics' },
   },
   {
-    title: 'CRM',
+    title: $t('CRM'),
     icon: 'ri-pie-chart-2-line',
     url: { name: 'dashboards-crm' },
   },
   {
-    title: 'eCommerce',
+    title: $t('eCommerce'),
     icon: 'ri-shopping-bag-3-line',
     url: { name: 'dashboards-ecommerce' },
   },
@@ -135,7 +137,7 @@ const LazyAppBarSearch = defineAsyncComponent(() => import('@core/components/App
       @click="Shepherd.activeTour?.cancel()"
     >
       <div>
-        Search
+        {{ $t('Search') }}
       </div>
       <div class="meta-key">
         &#8984;K
@@ -190,7 +192,7 @@ const LazyAppBarSearch = defineAsyncComponent(() => import('@core/components/App
     <template #noDataSuggestion>
       <div class="mt-6">
         <div class="text-center text-disabled py-2">
-          Try searching for
+          {{ $t('Try searching for') }}
         </div>
         <h6
           v-for="suggestion in noDataSuggestions"
@@ -241,12 +243,13 @@ const LazyAppBarSearch = defineAsyncComponent(() => import('@core/components/App
 </template>
 
 <style lang="scss">
-@use "@styles/variables/vuetify.scss";
+@use "@styles/variables/vuetify";
 
 .meta-key {
   border: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
   border-radius: 6px;
   block-size: 1.5625rem;
+  direction: ltr;
   padding-block: 0.1rem;
   padding-inline: 0.25rem;
 }

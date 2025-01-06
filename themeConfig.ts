@@ -28,11 +28,11 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
           i18nLang: 'fa',
           isRTL: true,
         },
-        // {
-        //   label: t('languages.english'),
-        //   i18nLang: 'en',
-        //   isRTL: false,
-        // },
+        {
+          label: 'English',
+          i18nLang: 'en',
+          isRTL: false,
+        },
         // {
         //   label: t('languages.french'),
         //   i18nLang: 'fr',

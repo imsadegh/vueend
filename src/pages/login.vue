@@ -67,7 +67,7 @@ const rememberMe = ref(false)
 //       },
 //     })
 
-//     console.log('Login successful:', res)
+//     // console.log('Login successful:', res)
 
 //     const { accessToken, userData, userAbilityRules } = res
 
@@ -77,9 +77,9 @@ const rememberMe = ref(false)
 //     useCookie('userData').value = userData
 //     useCookie('accessToken').value = accessToken
 
-//     console.log('use abil:', userAbilityRules)
-//     console.log('userData:', userData)
 //     console.log('accessToken:', accessToken)
+//     console.log('userAbilityRules:', userAbilityRules)
+//     console.log('userData:', userData)
 
 //     // Redirect to `to` query if exist or redirect to index route
 //     // ❗ nextTick is required to wait for DOM updates and later redirect
@@ -102,7 +102,7 @@ const login = async () => {
     })
 
     // Log the successful response
-    console.log('Login successful:', response.data)
+    // console.log('Login successful:', response.data)
     
     // Extract data from the API response
     const { accessToken, userData, userAbilityRules } = response.data
@@ -115,9 +115,9 @@ const login = async () => {
     useCookie('userData').value = userData
     useCookie('accessToken').value = accessToken
     
-    console.log('use abil:', userAbilityRules)
-    console.log('userData:', userData)
     console.log('accessToken:', accessToken)
+    console.log('userAbilityRules:', userAbilityRules)
+    console.log('userData:', userData)
 
     // Redirect the user to the intended route or homepage
     await nextTick(() => {

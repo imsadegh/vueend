@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import type { Notification } from '@layouts/types'
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 
 interface Props {
   notifications: Notification[]
@@ -62,7 +62,7 @@ const totalUnreadNotifications = computed(() => props.notifications.filter(item 
         <!-- 👉 Header -->
         <VCardItem class="notification-section">
           <h6 class="text-h6 text-truncate">
-            Notifications
+            {{ $t('Notifications') }}
           </h6>
 
           <template #append>
@@ -73,7 +73,7 @@ const totalUnreadNotifications = computed(() => props.notifications.filter(item 
               variant="tonal"
               color="primary"
             >
-              {{ totalUnreadNotifications }} new
+              {{ totalUnreadNotifications }} {{$t('new')}}
             </VChip>
 
             <IconBtn
