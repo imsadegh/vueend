@@ -20,9 +20,9 @@ definePage({
 <template>
   <div class="misc-wrapper">
     <ErrorHeader
-      status-code="401"
-      title="You are not authorized! 🔐"
-      description="You don't have permission to access this page. Go Home!"
+      :status-code="$t('error.401.statusCode')"
+      :title="$t('error.401.title')"
+      :description="$t('error.401.description')"
       class="mb-10"
     />
 
@@ -39,7 +39,7 @@ definePage({
         to="/"
         class="mt-10"
       >
-        Back to Home
+        {{ $t('button.backToHome') }}
       </VBtn>
 
       <VImg
@@ -59,5 +59,5 @@ definePage({
 </template>
 
 <style lang="scss">
-@use "@core/scss/template/pages/misc.scss";
+@use "@core/scss/template/pages/misc";
 </style>

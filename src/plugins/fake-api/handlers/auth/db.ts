@@ -26,7 +26,7 @@ export const db: DB = {
       id: 1,
       fullName: 'John Doe',
       username: 'johndoe',
-      password: 'Sadegh@123',
+      password: 'admin',
 
       avatar: `${import.meta.env.BASE_URL ?? '/'}images/avatars/avatar-1.png`,
       email: 'admin@demo.com',

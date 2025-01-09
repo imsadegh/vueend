@@ -36,16 +36,16 @@ export default [
     icon: { icon: 'ri-eye-off-line' },
     disable: true,
   },
-  {
-    title: 'Raise Support',
-    href: 'https://pixinvent.ticksy.com/',
-    icon: { icon: 'ri-lifebuoy-line' },
-    target: '_blank',
-  },
-  {
-    title: 'Documentation',
-    href: 'https://demos.pixinvent.com/materialize-vuejs-admin-template/documentation/',
-    icon: { icon: 'ri-article-line' },
-    target: '_blank',
-  },
+  // {
+  //   title: 'Raise Support',
+  //   href: 'https://pixinvent.ticksy.com/',
+  //   icon: { icon: 'ri-lifebuoy-line' },
+  //   target: '_blank',
+  // },
+  // {
+  //   title: 'Documentation',
+  //   href: 'https://demos.pixinvent.com/materialize-vuejs-admin-template/documentation/',
+  //   icon: { icon: 'ri-article-line' },
+  //   target: '_blank',
+  // },
 ]

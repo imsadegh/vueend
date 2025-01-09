@@ -82,6 +82,7 @@ const triggeredRemove = () => {
             <!-- 👉 Title slot and prop -->
             <slot name="title">
               {{ props.title }}
+              <!-- sadegh -->
             </slot>
           </VCardTitle>
 

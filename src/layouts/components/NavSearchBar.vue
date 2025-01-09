@@ -34,7 +34,8 @@ const suggestionGroups: SuggestionGroup[] = [
     title: $t('Popular Searches'),
     content: [
       { icon: 'ri-bar-chart-line', title: $t('Analytics'), url: { name: 'dashboards-analytics' } },
-      { icon: 'ri-pie-chart-2-line', title: $t('CRM'), url: { name: 'dashboards-crm' } },
+      // { icon: 'ri-pie-chart-2-line', title: $t('CRM'), url: { name: 'dashboards-crm' } },
+      { icon: 'ri-pie-chart-2-line', title: $t('LMS'), url: { name: 'dashboards-lms' } },
       { icon: 'ri-shopping-bag-3-line', title: $t('eCommerce'), url: { name: 'dashboards-ecommerce' } },
       { icon: 'ri-car-line', title: $t('Logistics'), url: { name: 'apps-logistics-dashboard' } },
     ],
@@ -76,9 +77,9 @@ const noDataSuggestions: Suggestion[] = [
     url: { name: 'dashboards-analytics' },
   },
   {
-    title: $t('CRM'),
+    title: $t('LMS'),
     icon: 'ri-pie-chart-2-line',
-    url: { name: 'dashboards-crm' },
+    url: { name: 'dashboards-lms' },
   },
   {
     title: $t('eCommerce'),

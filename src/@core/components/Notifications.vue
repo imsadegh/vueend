@@ -185,7 +185,7 @@ const totalUnreadNotifications = computed(() => props.notifications.filter(item 
               class="text-center text-medium-emphasis"
               style="block-size: 56px;"
             >
-              <VListItemTitle>No Notification Found!</VListItemTitle>
+                <VListItemTitle>{{ $t('No Notification Found!') }}</VListItemTitle>
             </VListItem>
           </VList>
         </PerfectScrollbar>
@@ -201,7 +201,7 @@ const totalUnreadNotifications = computed(() => props.notifications.filter(item 
             block
             size="small"
           >
-            View All Notifications
+            {{ $t('View All Notifications') }}
           </VBtn>
         </VCardText>
       </VCard>
