@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t: $t } = useI18n()
 const borderColor = 'rgba(var(--v-border-color), var(--v-border-opacity))'
 
 // Topics Charts config
@@ -60,7 +63,15 @@ const topicsChartConfig = {
       return topicsChartConfig.labels[opt.dataPointIndex]
     },
   },
-  labels: ['UI Design', 'UX Design', 'Music', 'Animation', 'Vue', 'SEO'],
+  // todo fetch the courses from the api
+  labels: [
+    $t('topics.uiDesign'), 
+    $t('topics.uxDesign'), 
+    $t('topics.music'), 
+    $t('topics.animation'), 
+    $t('topics.vue'), 
+    $t('topics.seo')
+  ],
 
   xaxis: {
     categories: ['6', '5', '4', '3', '2', '1'],
@@ -113,27 +124,27 @@ const topicsChartSeries = [
 ]
 
 const topicsData = [
-  { title: 'UI Design', value: 35, color: 'primary' },
-  { title: 'UX Design', value: 20, color: 'info' },
-  { title: 'Music', value: 14, color: 'success' },
+  { title: $t('topics.uiDesign'), value: 35, color: 'primary' },
+  { title: $t('topics.uxDesign'), value: 20, color: 'info' },
+  { title: $t('topics.music'), value: 14, color: 'success' },
 ]
 
 const moreTopics = [
-  { title: 'Animation', value: 12, color: 'secondary' },
-  { title: 'Vue', value: 10, color: 'error' },
-  { title: 'SEO', value: 9, color: 'warning' },
+  { title: $t('topics.animation'), value: 12, color: 'secondary' },
+  { title: $t('topics.vue'), value: 10, color: 'error' },
+  { title: $t('topics.seo'), value: 9, color: 'warning' },
 ]
 
 const moreList = [
-  { title: 'Refresh', value: 'refresh' },
-  { title: 'Update', value: 'update' },
-  { title: 'Share', value: 'share' },
+  { title: $t('actions.refresh'), value: 'refresh' },
+  { title: $t('actions.update'), value: 'update' },
+  { title: $t('actions.share'), value: 'share' },
 ]
 </script>
 
 <template>
   <VCard>
-    <VCardItem title="Topic you are interested in">
+    <VCardItem :title="$t('academy.interestedIn')">
       <template #append>
         <MoreBtn :menu-list="moreList" />
       </template>

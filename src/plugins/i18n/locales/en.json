@@ -1,4 +1,11 @@
 {
+  "2": "2",
+  "5": "5",
+  "10": "10",
+  "20": "20",
+  "25": "25",
+  "50": "50",
+  "100": "100",
   "UI Elements": "UI Elements",
   "Forms & Tables": "Forms & Tables",
   "Pages": "Pages",
@@ -102,7 +109,6 @@
   "Page Not Found - 404": "Page Not Found - 404",
   "Not Authorized - 401": "Not Authorized - 401",
   "Server Error - 500": "Server Error - 500",
-  "2": "2",
   "Gamification": "Gamification",
   "Forms": "Forms",
   "Timeline": "Timeline",
@@ -157,12 +163,6 @@
   "Dashboard": "Dashboard",
   "Fleet": "Fleet",
   "Widgets": "Widgets",
-  "5": "5",
-  "10": "10",
-  "20": "20",
-  "25": "25",
-  "50": "50",
-  "100": "100",
   "$vuetify": {
     "badge": "Badge",
     "noDataText": "No data available",
@@ -209,5 +209,22 @@
         "item": "item"
       }
     }
-  }
+  },
+  "academy": {
+    "viewCourses": "View courses",
+    "enrollNowInPopularCourses": "Enroll now in popular courses.",
+    "bestRatedCourses": "The best courses",
+    "viewPrograms": "View programs",
+    "getRightCertificateProgram": "Find the right certificate program for you.",
+    "earnCertificate": "Get a certificate",
+    "findYourCourse": "Find your course",
+    "growYourSkill": "Enhance your skills with the most prestigious online courses and certifications in marketing, IT, programming, and data science.",
+    "educationTalentsCareer": "Education, talents and career",
+    "allInOnePlace": "All in one place.",
+    "todaysFreeCourses": "Free courses today",
+    "freeCoursesDescription": "We offer 284 free online courses from the best professors and companies to help you start or enhance your career skills. \nLearn today for free and fast.",
+    "getPremiumCourses": "Receive special courses",
+    "Tasks": "exercise"
+  },
+  "welcome_back": "Welcome!"
 }

@@ -10,6 +10,9 @@ import customCheck from '@images/svg/check.svg'
 import customLaptop from '@images/svg/laptop.svg'
 import customLightbulb from '@images/svg/lightbulb.svg'
 
+// TODO: Get type from backend
+const userData = useCookie<any>('userData')
+
 // Donut Chart Colors
 const donutChartColors = {
   donut: {
@@ -107,10 +110,10 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
         <div class="pe-3">
           <div class="mb-2">
             <span class="text-h5">
-              Welcome back,
+                {{ $t('welcome_back') }},
             </span>
             <span class="text-h4">
-              Felecia 👋🏻
+               {{ userData.first_name }} 👋🏻
             </span>
           </div>
 
@@ -118,16 +121,15 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
             class="text-wrap text-body-1 mb-4"
             style="max-inline-size: 400px;"
           >
-            Your progress this week is Awesome. let's keep it up
-            and get a lot of points reward!
+            {{ $t('academy.progress_awesome') }}
           </div>
 
           <div class="d-flex justify-space-between flex-wrap gap-6 flex-column flex-md-row">
             <div
               v-for="{ title, value, icon, color } in [
-                { title: 'Hours Spent', value: '34h', icon: customLaptop, color: 'primary' },
-                { title: 'Test Results', value: '82%', icon: customLightbulb, color: 'info' },
-                { title: 'Course Completed', value: '14', icon: customCheck, color: 'warning' },
+                { title: 'ساعات صرف شده', value: '34 ساعت', icon: customLaptop, color: 'primary' },
+                { title: 'نتایج آزمون', value: '82%', icon: customLightbulb, color: 'info' },
+                { title: 'دوره‌های تکمیل‌شده', value: '14', icon: customCheck, color: 'warning' },
               ]"
               :key="title"
             >
@@ -169,13 +171,17 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
         <div class="d-flex justify-space-between align-center">
           <div class="d-flex flex-column ps-3">
             <h5 class="text-h5 mb-1 text-no-wrap">
-              Time Spending
+                {{ $t('academy.time_spending') }}
             </h5>
             <div class="mb-6 text-body-1">
-              Weekly Report
+                {{ $t('academy.weekly_report') }}
             </div>
             <h4 class="text-h4 mb-2">
-              231<span class="text-medium-emphasis">h</span> 14<span class="text-medium-emphasis">m</span>
+              231<span class="text-medium-emphasis">
+                {{ $t('academy.hour') }}
+              </span> 14<span class="text-medium-emphasis">
+                {{ $t('academy.minute') }}
+              </span>
             </h4>
             <div>
               <VChip

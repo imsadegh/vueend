@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Course } from '@db/apps/academy/types'
+import { useI18n } from 'vue-i18n'
+const { t: $t } = useI18n()
 
 const searchQuery = ref('')
 
@@ -17,10 +19,10 @@ const updateOptions = (options: any) => {
 }
 
 const headers = [
-  { title: 'Course Name', key: 'courseName' },
-  { title: 'Time', key: 'time', sortable: false },
-  { title: 'Progress', key: 'progress' },
-  { title: 'Status', key: 'status', sortable: false },
+  { title: $t('academy.courseName'), key: 'courseName' },
+  { title: $t('academy.time'), key: 'time', sortable: false },
+  { title: $t('academy.progress'), key: 'progress' },
+  { title: $t('academy.status'), key: 'status', sortable: false },
 ]
 
 // Fetch course Data
@@ -43,11 +45,11 @@ const totalCourse = computed(() => courseData.value.total)
     <VCardText>
       <div class="d-flex flex-wrap justify-space-between align-center gap-4">
         <h5 class="text-h5">
-          Courses you are taking
+            {{ $t('academy.coursesYouAreTaking') }}
         </h5>
         <VTextField
           v-model="searchQuery"
-          placeholder="Search Course"
+            :placeholder="$t('academy.searchCourse')"
           density="compact"
           style="max-inline-size: 300px; min-inline-size: 200px;"
         />
@@ -168,12 +170,12 @@ const totalCourse = computed(() => courseData.value.total)
 
         <div class="d-flex justify-end flex-wrap gap-x-6 px-2 py-1">
           <div class="d-flex align-center gap-x-2 text-medium-emphasis text-base">
-            Rows Per Page:
+            {{ $t('academy.rowsPerPage') }}:
             <VSelect
               v-model="itemsPerPage"
               class="per-page-select"
               variant="plain"
-              :items="[10, 20, 25, 50, 100]"
+              :items="[10, 20, 25, 50]"
             />
           </div>
 

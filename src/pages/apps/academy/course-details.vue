@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { VideoPlayer } from '@videojs-player/vue'
 import type { CourseDetails } from '@db/apps/academy/types'
 import instructorPosterImage from '@images/pages/instructor-poster-image.png'
+import { VideoPlayer } from '@videojs-player/vue'
 import 'video.js/dist/video-js.css'
 
 const courseDetails = ref<CourseDetails>()
@@ -24,12 +24,12 @@ const panelStatus = ref(0)
     >
       <VCard>
         <VCardItem
-          title="UI/UX Basic Fundamentals"
+            title="دوره آموزشی"
           class="pb-6"
         >
           <template #subtitle>
             <div class="text-body-1">
-              Prof. <span class="text-h6 d-inline-block">{{ courseDetails?.title }}</span>
+              <span class="text-h6 d-inline-block">{{ courseDetails?.title }}</span>
             </div>
           </template>
           <template #append>
@@ -39,7 +39,7 @@ const panelStatus = ref(0)
                 color="error"
                 size="small"
               >
-                UI/UX
+                رابط کاربری/تجربه کاربری
               </VChip>
               <VIcon
                 size="24"
@@ -71,7 +71,7 @@ const panelStatus = ref(0)
             </div>
             <VCardText>
               <h5 class="text-h5 mb-4">
-                About this course
+                {{ $t('academy.aboutThisCourse') }}
               </h5>
               <p class="text-body-1">
                 {{ courseDetails?.about }}
@@ -79,7 +79,7 @@ const panelStatus = ref(0)
               <VDivider class="my-6" />
 
               <h5 class="text-h5 mb-4">
-                By the numbers
+                {{ $t('academy.byTheNumbers') }}
               </h5>
               <div class="d-flex gap-x-12 gap-y-5 flex-wrap">
                 <div>
@@ -92,7 +92,7 @@ const panelStatus = ref(0)
                           class="me-n1"
                         />
                       </template>
-                      <VListItemTitle>Skill Level: {{ courseDetails?.skillLevel }}</VListItemTitle>
+                      <VListItemTitle>{{$t('academy.Skill Level')}}: {{ courseDetails?.skillLevel }}</VListItemTitle>
                     </VListItem>
                     <VListItem>
                       <template #prepend>
@@ -102,7 +102,7 @@ const panelStatus = ref(0)
                           class="me-n1"
                         />
                       </template>
-                      <VListItemTitle>Students: {{ courseDetails?.totalStudents }}</VListItemTitle>
+                      <VListItemTitle>{{$t('academy.Students')}}: {{ courseDetails?.totalStudents }}</VListItemTitle>
                     </VListItem>
                     <VListItem>
                       <template #prepend>
@@ -112,7 +112,7 @@ const panelStatus = ref(0)
                           class="me-n1"
                         />
                       </template>
-                      <VListItemTitle>Languages: {{ courseDetails?.language }}</VListItemTitle>
+                      <VListItemTitle>{{$t('academy.Languages')}}: {{ courseDetails?.language }}</VListItemTitle>
                     </VListItem>
                     <VListItem>
                       <template #prepend>
@@ -122,7 +122,14 @@ const panelStatus = ref(0)
                           class="me-n1"
                         />
                       </template>
-                      <VListItemTitle>Captions: {{ courseDetails?.isCaptions }}</VListItemTitle>
+                      <VListItemTitle>
+                        {{$t('academy.Captions')}}:
+                        {{
+                          courseDetails?.isCaptions 
+                            ? $t('true')
+                            : $t('false')
+                        }}
+                      </VListItemTitle>
                     </VListItem>
                   </VList>
                 </div>
@@ -137,7 +144,7 @@ const panelStatus = ref(0)
                           class="me-n1"
                         />
                       </template>
-                      <VListItemTitle>Lectures: {{ courseDetails?.totalLectures }}</VListItemTitle>
+                      <VListItemTitle>{{$t('academy.Lectures')}}: {{ courseDetails?.totalLectures }}</VListItemTitle>
                     </VListItem>
                     <VListItem>
                       <template #prepend>
@@ -147,7 +154,7 @@ const panelStatus = ref(0)
                           class="me-n1"
                         />
                       </template>
-                      <VListItemTitle>Video: {{ courseDetails?.length }}</VListItemTitle>
+                      <VListItemTitle>{{$t('academy.Video')}}: {{ courseDetails?.length }}</VListItemTitle>
                     </VListItem>
                   </VList>
                 </div>
@@ -155,7 +162,7 @@ const panelStatus = ref(0)
               <VDivider class="my-6" />
 
               <h5 class="text-h5 mb-4">
-                Description
+                {{$t('academy.Description')}}
               </h5>
               <!-- eslint-disable-next-line vue/no-v-html -->
               <div v-html="courseDetails?.description" />
@@ -163,7 +170,7 @@ const panelStatus = ref(0)
               <VDivider class="my-6" />
 
               <h5 class="text-h5 mb-4">
-                Instructor
+                {{$t('academy.Instructor')}}
               </h5>
               <div class="d-flex align-center">
                 <VAvatar

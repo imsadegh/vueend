@@ -54,11 +54,13 @@ const resolveChipColor = (tags: string) => {
       <div class="d-flex justify-space-between align-center flex-wrap gap-4 mb-6">
         <div>
           <h5 class="text-h5">
-            My Courses
+            {{ $t('academy.myCourses') }}
           </h5>
-          <div class="text-body-1">
-            Total 6 course you have purchased
-          </div>
+            <div class="text-body-1">
+              <!-- Todo - fetch from api -->
+            <!-- {{ $t('academy.totalCoursesPurchased', { count: totalCoursesPurchased }) }} -->
+            {{ $t('academy.totalCoursesPurchased') }}
+            </div>
         </div>
 
         <div class="d-flex flex-wrap align-center gap-y-4 gap-x-6">
@@ -66,18 +68,18 @@ const resolveChipColor = (tags: string) => {
             v-model="label"
             density="compact"
             :items="[
-              { title: 'Web', value: 'web' },
-              { title: 'Art', value: 'art' },
-              { title: 'UI/UX', value: 'ui/ux' },
-              { title: 'Psychology', value: 'psychology' },
-              { title: 'Design', value: 'design' },
-              { title: 'All Courses', value: 'All Courses' },
+              { title: $t('academy.web'), value: 'web' },
+              { title: $t('academy.art'), value: 'art' },
+              { title: $t('academy.uiUx'), value: 'ui/ux' },
+              { title: $t('academy.psychology'), value: 'psychology' },
+              { title: $t('academy.design'), value: 'design' },
+              { title: $t('academy.allCourses'), value: 'All Courses' },
             ]"
             style="min-inline-size: 250px;"
           />
-          <VSwitch
+            <VSwitch
             v-model="hideCompleted"
-            label="Hide Completed"
+            :label="$t('academy.hideCompleted')"
           />
         </div>
       </div>
@@ -192,7 +194,7 @@ const resolveChipColor = (tags: string) => {
                           class="flip-in-rtl"
                         />
                       </template>
-                      Start Over
+                        {{ $t('academy.startOver') }}
                     </VBtn>
                     <VBtn
                       v-if="course.completedTasks !== course.totalTasks"
@@ -206,7 +208,7 @@ const resolveChipColor = (tags: string) => {
                           class="flip-in-rtl"
                         />
                       </template>
-                      Continue
+                        {{ $t('academy.continue') }}
                     </VBtn>
                   </div>
                 </VCardText>
@@ -218,7 +220,7 @@ const resolveChipColor = (tags: string) => {
 
       <div v-else>
         <h4 class="text-h4 text-center mb-6">
-          No Course Found
+            {{ $t('academy.noCourseFound') }}
         </h4>
       </div>
 

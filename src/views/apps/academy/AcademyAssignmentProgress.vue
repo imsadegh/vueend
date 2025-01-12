@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const assignmentData = [
-  { title: 'User Experience Design', tasks: 120, progress: 72, color: 'primary' },
-  { title: 'Basic fundamentals', tasks: 32, progress: 48, color: 'success' },
-  { title: 'React Native components', tasks: 182, progress: 15, color: 'error' },
-  { title: 'Basic of music theory', tasks: 56, progress: 24, color: 'info' },
+  { title: 'طراحی تجربه کاربری', tasks: 120, progress: 72, color: 'primary' },
+  { title: 'مبانی اولیه', tasks: 32, progress: 48, color: 'success' },
+  { title: 'کامپوننت‌های React Native', tasks: 182, progress: 15, color: 'error' },
+  { title: 'مبانی تئوری موسیقی', tasks: 56, progress: 24, color: 'info' },
 ]
 
 const moreList = [
@@ -47,7 +47,9 @@ const moreList = [
             </div>
           </template>
 
-          <VListItemSubtitle>{{ assignment.tasks }} Tasks</VListItemSubtitle>
+          <VListItemSubtitle>{{ assignment.tasks }} 
+            {{ $t('academy.Tasks') }}
+          </VListItemSubtitle>
           <template #append>
             <VBtn
               variant="tonal"

@@ -1,4 +1,11 @@
 {
+  "2": "2",
+  "5": "5",
+  "10": "10",
+  "20": "20",
+  "25": "25",
+  "50": "50",
+  "100": "100",
   "UI Elements": "ÉLÉMENTS DE L'UI",
   "Forms & Tables": "Formulaires et tableaux",
   "Pages": "Des pages",
@@ -104,7 +111,6 @@
   "Page Not Found - 404": "Page introuvable - 404",
   "Not Authorized - 401": "Non autorisé - 401",
   "Server Error - 500": "Erreur de serveur - 500",
-  "2": "2",
   "Gamification": "Gamification",
   "Forms": "Formes",
   "Timeline": "Chronologie",
@@ -160,12 +166,6 @@
   "Swiper": "Swiper",
   "Widgets": "Widgets",
   "loading": "Chargement",
-  "5": "5",
-  "10": "10",
-  "20": "20",
-  "25": "25",
-  "50": "50",
-  "100": "100",
   "$vuetify": {
     "badge": "Badge",
     "noDataText": "Pas de données disponibles",
@@ -210,5 +210,8 @@
         "item": "Objet"
       }
     }
+  },
+  "academy": {
+    "viewCourses": ""
   }
 }

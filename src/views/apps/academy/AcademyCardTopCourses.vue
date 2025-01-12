@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const coursesData = [
-  { title: 'Videography Basic Design Course', views: '1.2k', icon: 'ri-video-download-line', color: 'primary' },
-  { title: 'Basic Front-end Development Course', views: '834', icon: 'ri-code-view', color: 'info' },
-  { title: 'Basic Fundamentals of Photography', views: '3.7k', icon: 'ri-image-2-line', color: 'success' },
-  { title: 'Advance Dribble Base Visual Design', views: '2.5k', icon: 'ri-palette-line', color: 'warning' },
-  { title: 'Your First Singing Lesson', views: '948', icon: 'ri-music-2-line', color: 'error' },
+  { title: 'دوره طراحی پایه فیلم‌برداری', views: '۱.۲k', icon: 'tabler-brand-zoom', color: 'primary' },
+  { title: 'دوره مقدماتی توسعه فرانت‌اند', views: '۸۳۴', icon: 'tabler-code', color: 'info' },
+  { title: 'مبانی عکاسی', views: '۳.۷k', icon: 'tabler-camera', color: 'success' },
+  { title: 'طراحی بصری پیشرفته Dribble', views: '۲.۵k', icon: 'tabler-brand-dribbble', color: 'warning' },
+  { title: 'اولین درس آواز شما', views: '۹۴۸', icon: 'tabler-microphone-2', color: 'error' },
 ]
 
 const moreList = [
@@ -16,7 +16,7 @@ const moreList = [
 
 <template>
   <VCard>
-    <VCardItem title="Top Courses">
+    <VCardItem :title="$t('academy.topCourses')">
       <template #append>
         <MoreBtn :menu-list="moreList" />
       </template>
@@ -54,7 +54,7 @@ const moreList = [
               color="secondary"
               size="small"
             >
-              {{ course.views }} Views
+                {{ course.views }} {{ $t('academy.views') }}
             </VChip>
           </template>
         </VListItem>

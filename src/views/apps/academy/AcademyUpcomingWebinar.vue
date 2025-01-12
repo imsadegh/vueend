@@ -14,14 +14,17 @@ import boyWithTablet from '@images/pages/boy-with-tablet.png'
       </div>
       <div>
         <h5 class="text-h5 mb-1">
-          Upcoming Webinar
+          {{ $t('academy.upcomingDiscussion') }}
         </h5>
         <div class="text-body-1">
-          Next Generation Frontend Architecture Using Layout Engine And Vue.
+          {{ $t('academy.discussionDescription') }}
         </div>
         <div class="d-flex justify-space-between my-6 gap-4 flex-wrap">
           <div
-            v-for="{ icon, title, value } in [{ icon: 'ri-calendar-line', title: '17 Nov 23', value: 'Date' }, { icon: 'ri-time-line', title: '32 Minutes', value: 'Duration' }]"
+            v-for="{ icon, title, value } in [
+                { icon: 'ri-calendar-line', title: '۱۷ شهریور', value: 'تاریخ' },
+                { icon: 'ri-time-line', title: '۳۲ دقیقه', value: 'مدت زمان' }
+              ]"
             :key="title"
             class="d-flex gap-x-4 align-center"
           >
@@ -43,7 +46,7 @@ import boyWithTablet from '@images/pages/boy-with-tablet.png'
           </div>
         </div>
         <VBtn block>
-          Join the event
+            {{ $t('academy.joinEvent') }}
         </VBtn>
       </div>
     </VCardText>
