@@ -1,6 +1,6 @@
-export type Actions = 'create' | 'read' | 'update' | 'delete' | 'manage'
+export type Actions = 'create' | 'read' | 'update' | 'delete' | 'manage' | 'submit' | 'grade' | 'assist'
 
-export type Subjects = 'Auth' | 'Admin' | 'AclDemo' | 'all'
+export type Subjects = 'Auth' | 'Admin' | 'AclDemo' | 'all' | 'Course' | 'Assignment' | 'Grade'
 
 export interface UserAbilityRule {
   action: Actions

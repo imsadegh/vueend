@@ -1,7 +1,7 @@
-import type { PathParams } from 'msw'
-import { HttpResponse, http } from 'msw'
 import { db } from '@db/auth/db'
 import type { UserOut } from '@db/auth/types'
+import type { PathParams } from 'msw'
+import { HttpResponse, http } from 'msw'
 
 // Handlers for auth
 export const handlerAuth = [
@@ -49,3 +49,5 @@ export const handlerAuth = [
     return HttpResponse.json({ errors }, { status: 400 })
   }),
 ]
+
+console.log('handlerAuth has been called sadegh!!!')

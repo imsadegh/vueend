@@ -30,6 +30,9 @@ definePage({
 
 const isPasswordVisible = ref(false)
 
+// todo - use the standard valdiator that is made by vuetify,
+// todo - users must login with the phone number instead of the email.
+
 const route = useRoute()
 const router = useRouter()
 const { t: $t } = useI18n()

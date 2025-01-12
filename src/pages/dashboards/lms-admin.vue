@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import CrmCongratulationsNorris from '@/views/dashboards/crm/CrmCongratulationsNorris.vue'
-import CrmExternalLinks from '@/views/dashboards/crm/CrmExternalLinks.vue'
-import CrmGrowthDonutCharts from '@/views/dashboards/crm/CrmGrowthDonutCharts.vue'
-import CrmMeetingSchedule from '@/views/dashboards/crm/CrmMeetingSchedule.vue'
-import CrmMonthlyBudget from '@/views/dashboards/crm/CrmMonthlyBudget.vue'
-import CrmMostSalesInCountries from '@/views/dashboards/crm/CrmMostSalesInCountries.vue'
-import CrmOrganicSessions from '@/views/dashboards/crm/CrmOrganicSessions.vue'
-import CrmPaymentHistory from '@/views/dashboards/crm/CrmPaymentHistory.vue'
-import CrmProfitBarWithGapCharts from '@/views/dashboards/crm/CrmProfitBarWithGapCharts.vue'
-import CrmProjectTimeline from '@/views/dashboards/crm/CrmProjectTimeline.vue'
-import CrmSocialNetworkVisits from '@/views/dashboards/crm/CrmSocialNetworkVisits.vue'
-import CrmUserList from '@/views/dashboards/crm/CrmUserList.vue'
-import CrmWeeklyOverview from '@/views/dashboards/crm/CrmWeeklyOverview.vue'
+import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue'
+import LmsMeetingSchedule from '@/views/dashboards/lms/LmsMeetingSchedule.vue'
+import LmsMostSalesInCountries from '@/views/dashboards/lms/LmsMostSalesInCountries.vue'
+import LmsPaymentHistory from '@/views/dashboards/lms/LmsPaymentHistory.vue'
+import LmsProjectTimeline from '@/views/dashboards/lms/LmsProjectTimeline.vue'
+import LmsUserList from '@/views/dashboards/lms/LmsUserList.vue'
 
 const statisticsVertical = [
   {
@@ -40,7 +33,7 @@ const statisticsVertical = [
       cols="12"
       md="4"
     >
-      <CrmCongratulationsNorris />
+      <LmsCongratulationsNorris />
     </VCol>
 
     <!-- 👉 Total Orders -->
@@ -51,7 +44,7 @@ const statisticsVertical = [
       sm="3"
       md="2"
     >
-      <CardStatisticsVertical v-bind="statistics" />
+      <!-- <CardStatisticsVertical v-bind="statistics" /> -->
     </VCol>
 
     <!-- 👉 Profile Line Charts -->
@@ -60,7 +53,7 @@ const statisticsVertical = [
       sm="3"
       md="2"
     >
-      <CrmProfitBarWithGapCharts />
+      <!-- <LmsProfitBarWithGapCharts /> -->
     </VCol>
 
     <!-- 👉 Total Growth -->
@@ -69,7 +62,7 @@ const statisticsVertical = [
       md="2"
       sm="3"
     >
-      <CrmGrowthDonutCharts />
+      <!-- <LmsGrowthDonutCharts /> -->
     </VCol>
 
     <!-- 👉 Organic Sessions -->
@@ -77,7 +70,7 @@ const statisticsVertical = [
       cols="12"
       md="4"
     >
-      <CrmOrganicSessions />
+      <!-- <LmsOrganicSessions /> -->
     </VCol>
 
     <!-- 👉 Project Timeline -->
@@ -85,7 +78,7 @@ const statisticsVertical = [
       cols="12"
       md="8"
     >
-      <CrmProjectTimeline />
+      <LmsProjectTimeline />
     </VCol>
 
     <!-- 👉 Weekly Overview -->
@@ -94,7 +87,7 @@ const statisticsVertical = [
       sm="6"
       md="4"
     >
-      <CrmWeeklyOverview />
+      <!-- <LmsWeeklyOverview /> -->
     </VCol>
 
     <!-- 👉 Social Network Visits -->
@@ -103,7 +96,7 @@ const statisticsVertical = [
       sm="6"
       md="4"
     >
-      <CrmSocialNetworkVisits />
+      <!-- <LmsSocialNetworkVisits /> -->
     </VCol>
 
     <!-- 👉 Monthly Budget -->
@@ -112,7 +105,7 @@ const statisticsVertical = [
       md="4"
       sm="6"
     >
-      <CrmMonthlyBudget />
+      <!-- <LmsMonthlyBudget /> -->
     </VCol>
 
     <!-- 👉 Meeting Schedule -->
@@ -121,7 +114,7 @@ const statisticsVertical = [
       md="4"
       sm="6"
     >
-      <CrmMeetingSchedule />
+      <LmsMeetingSchedule />
     </VCol>
 
     <!-- 👉 External Links -->
@@ -130,7 +123,7 @@ const statisticsVertical = [
       sm="6"
       md="4"
     >
-      <CrmExternalLinks />
+      <!-- <LmsExternalLinks /> -->
     </VCol>
 
     <!-- 👉 Payment History -->
@@ -139,7 +132,7 @@ const statisticsVertical = [
       sm="6"
       md="4"
     >
-      <CrmPaymentHistory />
+      <LmsPaymentHistory />
     </VCol>
 
     <!-- 👉 Most Sales in Countries -->
@@ -147,7 +140,7 @@ const statisticsVertical = [
       cols="12"
       md="4"
     >
-      <CrmMostSalesInCountries />
+      <LmsMostSalesInCountries />
     </VCol>
 
     <!-- 👉 User List -->
@@ -155,7 +148,7 @@ const statisticsVertical = [
       cols="12"
       md="8"
     >
-      <CrmUserList />
+      <LmsUserList />
     </VCol>
   </VRow>
 </template>

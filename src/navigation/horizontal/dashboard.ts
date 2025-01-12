@@ -10,7 +10,7 @@ export default [
       // },
       {
         title: 'LMS',
-        to: 'dashboards-lms',
+        to: 'dashboards-lms-admin',
         icon: { icon: 'ri-computer-line' },
       },
       {
