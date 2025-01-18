@@ -30,6 +30,7 @@ definePage({
 
 const isPasswordVisible = ref(false)
 
+// todo - use vuetify snackbar to show the error messages.
 // todo - use the standard valdiator that is made by vuetify,
 // todo - users must login with the phone number instead of the email.
 

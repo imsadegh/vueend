@@ -12,7 +12,7 @@ import { handlerAppsKanban } from '@db/apps/kanban/index'
 import { handlerAppLogistics } from '@db/apps/logistics/index'
 import { handlerAppsPermission } from '@db/apps/permission/index'
 import { handlerAppsUsers } from '@db/apps/users/index'
-// import { handlerAuth } from '@db/auth/index'
+import { handlerAuth } from '@db/auth/index'
 import { handlerPagesDatatable } from '@db/pages/datatable/index'
 import { handlerPagesFaq } from '@db/pages/faq/index'
 import { handlerPagesHelpCenter } from '@db/pages/help-center/index'
@@ -33,17 +33,17 @@ const worker = setupWorker(
   ...handlerPagesDatatable,
   ...handlerAppBarSearch,
   ...handlerAppLogistics,
-  // ...handlerAuth,
+  ...handlerAuth,
   ...handlerAppsKanban,
 )
 
-// export default function () {
-//   const workerUrl = `${import.meta.env.BASE_URL ?? '/'}mockServiceWorker.js`
+export default function () {
+  const workerUrl = `${import.meta.env.BASE_URL ?? '/'}mockServiceWorker.js`
 
-//   worker.start({
-//     serviceWorker: {
-//       url: workerUrl,
-//     },
-//     onUnhandledRequest: 'bypass',
-//   })
-// }
+  worker.start({
+    serviceWorker: {
+      url: workerUrl,
+    },
+    onUnhandledRequest: 'bypass',
+  })
+}

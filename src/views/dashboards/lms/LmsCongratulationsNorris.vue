@@ -1,5 +1,15 @@
 <script setup lang="ts">
-import trophy from '@images/cards/trophy.png'
+import trophy from '@images/cards/trophy.png';
+import { useI18n } from 'vue-i18n';
+
+const { t: $t } = useI18n()
+
+// TODO: Get type from backend
+const userData = useCookie<any>('userData')
+
+function getLocalizedRole(role: string) {
+  return $t(`roles.${role}`) || role;
+}
 </script>
 
 <template>
@@ -7,21 +17,26 @@ import trophy from '@images/cards/trophy.png'
     <VCardText>
       <div class="mb-3">
         <h5 class="text-h5 text-wrap">
-          Congratulations <strong>Norris!</strong> <span class="text-high-emphasis">🎉</span>
+          {{
+            $t('lms.welcome', { role: getLocalizedRole(userData.role) })
+          }}
+          <strong>{{ userData.first_name }}</strong> 
+          <span class="text-high-emphasis"> 🎉</span>
         </h5>
+
         <div class="text-subtitle-1">
-          Best seller of the month
+          <!-- Best seller of the month -->
         </div>
       </div>
       <h4 class="text-h4 text-primary">
-        $42.8k
+        <!-- $42.8k -->
       </h4>
       <div class="text-body-1 mb-3">
-        78% of target <span class="text-high-emphasis">🚀</span>
+        <!-- 78% of target <span class="text-high-emphasis">🚀</span> -->
       </div>
-      <VBtn size="small">
+      <!-- <VBtn size="small">
         View Sales
-      </VBtn>
+      </VBtn> -->
     </VCardText>
 
     <!-- Trophy -->

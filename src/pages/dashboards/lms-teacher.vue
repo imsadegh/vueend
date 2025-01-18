@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue';
+import LmsUserList from '@/views/dashboards/lms/LmsUserList.vue';
 
 // definePage({
 //   meta: {
@@ -154,7 +155,7 @@ const statisticsVertical = [
       cols="12"
       md="8"
     >
-      <!-- <LmsUserList /> -->
+      <LmsUserList />
     </VCol>
   </VRow>
 </template>

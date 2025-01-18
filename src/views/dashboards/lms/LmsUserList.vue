@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { UserProperties } from '@db/apps/users/types'
+import { useI18n } from 'vue-i18n'
 
 const searchQuery = ref('')
 const selectedRole = ref()
@@ -19,12 +20,13 @@ const updateOptions = (options: any) => {
   orderBy.value = options.sortBy[0]?.order
 }
 
+const { t: $t } = useI18n()
 // Headers
 const headers = [
-  { title: 'User', key: 'user', sortable: false },
-  { title: 'Email', key: 'email', sortable: false },
-  { title: 'Role', key: 'role', sortable: false },
-  { title: 'Status', key: 'status', sortable: false },
+  { title: $t('user'), key: 'user', sortable: false },
+  { title: $t('email'), key: 'email', sortable: false },
+  { title: $t('role'), key: 'role', sortable: false },
+  { title: $t('status'), key: 'status', sortable: false },
 ]
 
 // 👉 Fetching users

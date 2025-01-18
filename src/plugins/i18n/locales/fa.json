@@ -1,4 +1,44 @@
 {
+  "course": {
+    "name": "نام دوره",
+    "capacity": "ظرفیت دوره",
+    "titleCreate": "ایجاد دوره",
+    "create": "ایجاد",
+    "new": "جدید",
+    "course": "دوره",
+    "visibility": "قابلیت مشاهده",
+    "visibilityPublic": "عمومی",
+    "visibilityPrivate": "خصوصی",
+    "visibilityHidden": "مخفی",
+    "featured": "ویژه",
+    "description": "توضیحات",
+    "descriptionPlaceholder": "توضیحات دوره را وارد کنید",
+    "about": "درباره دوره",
+    "aboutPlaceholder": "درباره دوره توضیحات بیشتری وارد کنید",
+    "discussionGroupUrl": "لینک گروه مباحثه",
+    "status": "وضعیت",
+    "active": "فعال",
+    "inactive": "غیرفعال",
+    "archived": "بایگانی شده",
+    "allowWaitlist": "فعال کردن لیست انتظار",
+    "startDate": "تاریخ شروع",
+    "endDate": "تاریخ پایان",
+    "prerequisites": "پیش‌نیازها",
+    "prerequisitesPlaceholder": "پیش‌نیازهای دوره را وارد کنید",
+    "tags": "برچسب‌ها",
+    "tagsPlaceholder": "برچسب‌های دوره را وارد کنید",
+    "tagBeginner": "مبتدی",
+    "tagIntermediate": "متوسط",
+    "tagAdvanced": "پیشرفته",
+    "thumbnailUrl": "لینک تصویر"
+  },
+  "user": "کاربر",
+  "email": "ایمیل",
+  "role": "نقش",
+  "status": "وضعیت",
+  "lms": {
+    "welcome": "به پنل {role} خوش آمدید"
+  },
   "topics": {
     "uiDesign": "طراحی رابط کاربری",
     "uxDesign": "تجربه کاربری",
@@ -89,7 +129,11 @@
     }
   },
   "button": {
-    "backToHome": "بازگشت به خانه"
+    "backToHome": "بازگشت به خانه",
+    "create": "ایجاد",
+    "cancel": "لغو",
+    "close": "بستن",
+    "save": "ذخیره"
   },
   "footer": {
     "madeWith": "طراحی توسط تیم",
@@ -108,8 +152,12 @@
   "Page Not Found ⚠️": "صفحه پیدا نشد ⚠️",
   "We couldn't find the page you are looking for.": "صفحه‌ای که به دنبال آن هستید پیدا نشد.",
   "roles": {
-    "admin": "مدیر",
-    "Student": "دانش‌آموز"
+    "Role": "نقش",
+    "admin": "ادمین",
+    "student": "دانش‌آموز",
+    "teacher": "مدرس",
+    "assistant": "استادیار",
+    "Manager": "مدیر"
   },
   "Notifications": "اعلان‌ها",
   "Users": "کاربران",
@@ -163,11 +211,6 @@
   "Sign Up": "ثبت‌نام",
   "Field is required": "این فیلد لازمه!",
   "Forgot Password?": "رمز عبور خود را فراموش کرده‌اید؟",
-  "Role": "نقش",
-  "Student": "دانش‌آموز",
-  "Teacher": "معلم",
-  "Assistant": "استادیار",
-  "Manager": "مدیر",
   "UI Elements": "عناصر رابط کاربری",
   "Forms & Tables": "فرم‌ها و جداول",
   "Pages": "صفحات",

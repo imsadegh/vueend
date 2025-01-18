@@ -224,7 +224,19 @@
     "todaysFreeCourses": "Free courses today",
     "freeCoursesDescription": "We offer 284 free online courses from the best professors and companies to help you start or enhance your career skills. \nLearn today for free and fast.",
     "getPremiumCourses": "Receive special courses",
-    "Tasks": "exercise"
+    "Tasks": "exercise",
+    "Instructors": "professors"
   },
-  "welcome_back": "Welcome!"
+  "welcome_back": "Welcome!",
+  "lms": {
+    "welcome": "Welcome to the panel of professors"
+  },
+  "roles": {
+    "admin": "manager"
+  },
+  "course": {
+    "create": "create",
+    "course": "period",
+    "new": "new"
+  }
 }

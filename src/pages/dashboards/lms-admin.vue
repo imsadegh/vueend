@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue'
+import LmsCreateCourse from '@/views/dashboards/lms/LmsCreateCourse.vue'
 import LmsMeetingSchedule from '@/views/dashboards/lms/LmsMeetingSchedule.vue'
 import LmsMostSalesInCountries from '@/views/dashboards/lms/LmsMostSalesInCountries.vue'
 import LmsPaymentHistory from '@/views/dashboards/lms/LmsPaymentHistory.vue'
 import LmsProjectTimeline from '@/views/dashboards/lms/LmsProjectTimeline.vue'
 import LmsUserList from '@/views/dashboards/lms/LmsUserList.vue'
+
+
+
+// todo - add vuetify Outlined Timeline component with its backend
+// todo - register new student
+
 
 const statisticsVertical = [
   {
@@ -28,12 +35,20 @@ const statisticsVertical = [
 
 <template>
   <VRow class="match-height">
-    <!-- 👉 Award -->
+    <!-- 👉 Welcome -->
     <VCol
       cols="12"
       md="4"
     >
       <LmsCongratulationsNorris />
+    </VCol>
+
+    <!-- 👉 Create Course -->
+    <VCol
+      cols="12"
+      md="4"
+    >
+      <LmsCreateCourse />
     </VCol>
 
     <!-- 👉 Total Orders -->
