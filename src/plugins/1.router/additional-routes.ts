@@ -19,8 +19,8 @@ export const redirects: RouteRecordRaw[] = [
         return { name: 'dashboards-lms-admin' }
       if (userRole === 'student')
         return { name: 'access-control' }
-      if (userRole === 'teacher')
-        return { name: 'dashboards-lms-teacher' }
+      if (userRole === 'instructor')
+        return { name: 'dashboards-lms-instructor' }
 
       return { name: 'login', query: to.query }
     },

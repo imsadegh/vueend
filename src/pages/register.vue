@@ -258,12 +258,12 @@ const onSubmit = async () => {
                 <!-- Role -->
                 <VSelect
                   v-model="form.role_id"
-                  :label="$t('Role')"
+                  :label="$t('roles.Role')"
                   :items="[
-                    { text: $t('Student'), value: 1 },
-                    { text: $t('Teacher'), value: 2 },
-                    { text: $t('Assistant'), value: 3 },
-                    { text: $t('Manager'), value: 4 },
+                    { text: $t('roles.student'), value: 1 },
+                    { text: $t('roles.instructor'), value: 2 },
+                    { text: $t('roles.assistant'), value: 3 },
+                    { text: $t('roles.manager'), value: 4 },
                   ]"
                   item-title="text"
                   item-value="value"

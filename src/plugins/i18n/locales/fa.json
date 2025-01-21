@@ -155,9 +155,9 @@
     "Role": "نقش",
     "admin": "ادمین",
     "student": "دانش‌آموز",
-    "teacher": "مدرس",
+    "instructor": "مدرس",
     "assistant": "استادیار",
-    "Manager": "مدیر"
+    "manager": "مدیر"
   },
   "Notifications": "اعلان‌ها",
   "Users": "کاربران",

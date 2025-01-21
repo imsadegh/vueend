@@ -61,8 +61,8 @@ export const db: DB = {
     //   password: 'Sadegh@123',
 
     //   avatar: `${import.meta.env.BASE_URL ?? '/'}images/avatars/avatar-2.png`,
-    //   email: 'teacher@demo.com',
-    //   role: 'teacher',
+    //   email: 'instructor@demo.com',
+    //   role: 'instructor',
     //   abilityRules: [
     //     {
     //       action: 'read',
