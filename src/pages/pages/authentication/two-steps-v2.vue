@@ -41,8 +41,8 @@ definePage({
   },
 })
 
-// todo use global validator
-// todo convert persian number to english
+// TODO use global validator
+// TODO convert persian number to english
 const verifyOTP = async () => {
   try {
     const phone_number = route.query.phone_number // Retrieve phone number from query params
@@ -151,7 +151,7 @@ const convertToPersian = (number: string) => {
               {{$t ('Verify my account')}}
             </VBtn>
 
-            <!-- Todo write the api backend -->
+            <!-- TODO write the api backend -->
             <!-- back to login -->
             <div class="d-flex justify-center align-center flex-wrap">
               <span class="me-1">

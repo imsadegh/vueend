@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue'
-import LmsCreateCourse from '@/views/dashboards/lms/LmsCreateCourse.vue'
-import LmsMeetingSchedule from '@/views/dashboards/lms/LmsMeetingSchedule.vue'
-import LmsMostSalesInCountries from '@/views/dashboards/lms/LmsMostSalesInCountries.vue'
-import LmsPaymentHistory from '@/views/dashboards/lms/LmsPaymentHistory.vue'
-import LmsProjectTimeline from '@/views/dashboards/lms/LmsProjectTimeline.vue'
-import LmsUserList from '@/views/dashboards/lms/LmsUserList.vue'
+import LmsCourseCreate from '@/views/dashboards/lms/LmsCourseCreate.vue'
 
-
-
-// todo - add vuetify Outlined Timeline component with its backend
-// todo - register new student
-
+// TODO - add vuetify Outlined Timeline component with its backend
+// TODO - register new student
+// TODO for the panel admin, should be able to see the list of students and their courses, also instructors and be able to edit the courses info
 
 const statisticsVertical = [
   {
@@ -48,7 +41,7 @@ const statisticsVertical = [
       cols="12"
       md="4"
     >
-      <LmsCreateCourse />
+      <LmsCourseCreate />
     </VCol>
 
     <!-- 👉 Total Orders -->
@@ -93,7 +86,7 @@ const statisticsVertical = [
       cols="12"
       md="8"
     >
-      <LmsProjectTimeline />
+      <!-- <LmsProjectTimeline />+++++++++++ -->
     </VCol>
 
     <!-- 👉 Weekly Overview -->
@@ -129,7 +122,7 @@ const statisticsVertical = [
       md="4"
       sm="6"
     >
-      <LmsMeetingSchedule />
+      <!-- <LmsMeetingSchedule />+++++++++++++ -->
     </VCol>
 
     <!-- 👉 External Links -->
@@ -147,7 +140,7 @@ const statisticsVertical = [
       sm="6"
       md="4"
     >
-      <LmsPaymentHistory />
+      <!-- <LmsPaymentHistory />++++++++++++++ -->
     </VCol>
 
     <!-- 👉 Most Sales in Countries -->
@@ -155,7 +148,7 @@ const statisticsVertical = [
       cols="12"
       md="4"
     >
-      <LmsMostSalesInCountries />
+      <!-- <LmsMostSalesInCountries />++++++++++++ -->
     </VCol>
 
     <!-- 👉 User List -->
@@ -163,7 +156,7 @@ const statisticsVertical = [
       cols="12"
       md="8"
     >
-      <LmsUserList />
+      <!-- <LmsUserList />+++++++++++++ -->
     </VCol>
   </VRow>
 </template>

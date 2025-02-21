@@ -18,43 +18,23 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
   <div>
     <VCard class="mb-6">
       <VCardText class="py-12 position-relative">
-        <div
-          class="d-flex flex-column gap-y-4 mx-auto"
-          :class="$vuetify.display.mdAndUp ? 'w-50' : 'w-100'"
-        >
-            <h4
-            class="text-h4 text-center text-wrap mx-auto"
-            :class="$vuetify.display.mdAndUp ? 'w-75' : 'w-100'"
-            >
-            {{ $t('academy.educationTalentsCareer') }} <span class="text-primary">{{ $t('academy.allInOnePlace') }}</span>
-            </h4>
-            <p class="text-center text-wrap text-body-1 mx-auto mb-0">
+        <div class="d-flex flex-column gap-y-4 mx-auto" :class="$vuetify.display.mdAndUp ? 'w-50' : 'w-100'">
+          <h4 class="text-h4 text-center text-wrap mx-auto" :class="$vuetify.display.mdAndUp ? 'w-75' : 'w-100'">
+            {{ $t('academy.educationTalentsCareer') }} <span class="text-primary">{{ $t('academy.allInOnePlace')
+              }}</span>
+          </h4>
+          <p class="text-center text-wrap text-body-1 mx-auto mb-0">
             {{ $t('academy.growYourSkill') }}
-            </p>
+          </p>
           <div class="d-flex justify-center align-center gap-x-4">
-            <VTextField
-              v-model="searchQuery"
-              density="compact"
-                :placeholder="$t('academy.findYourCourse')"
-              style="max-inline-size: 318px;"
-            />
-            <VBtn
-              color="primary"
-              icon="ri-search-line"
-              class="rounded"
-            />
+            <!-- TODO active the search box -->
+            <VTextField v-model="searchQuery" density="compact" :placeholder="$t('academy.findYourCourse')"
+              style="max-inline-size: 318px;" />
+            <VBtn color="primary" icon="ri-search-line" class="rounded" />
           </div>
         </div>
-        <img
-          :src="academyCourseIllustration1"
-          class="illustration1 d-none d-md-block flip-in-rtl"
-          height="180"
-        >
-        <img
-          :src="academyCourseIllustration2"
-          class="illustration2 d-none d-md-block"
-          height="124"
-        >
+        <img :src="academyCourseIllustration1" class="illustration1 d-none d-md-block flip-in-rtl" height="180">
+        <img :src="academyCourseIllustration2" class="illustration2 d-none d-md-block" height="124">
       </VCardText>
     </VCard>
 
@@ -62,29 +42,20 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
 
     <div class="mb-6">
       <VRow>
-        <VCol
-          cols="12"
-          md="6"
-        >
-          <VCard
-            flat
-            color="rgba(var(--v-theme-info), 0.08)"
-          >
+        <VCol cols="12" md="6">
+          <VCard flat color="rgba(var(--v-theme-info), 0.08)">
             <VCardText>
               <div class="d-flex flex-column-reverse flex-sm-row gap-4 justify-space-between">
                 <div class="text-center text-sm-start">
-                    <h5 class="text-h5 text-info mb-2">
+                  <h5 class="text-h5 text-info mb-2">
                     {{ $t('academy.earnCertificate') }}
-                    </h5>
-                    <p class="text-body-1 text-high-emphasis mb-4">
+                  </h5>
+                  <p class="text-body-1 text-high-emphasis mb-4">
                     {{ $t('academy.getRightCertificateProgram') }}
-                    </p>
-                    <VBtn
-                    color="info"
-                    size="small"
-                    >
+                  </p>
+                  <VBtn color="info" size="small">
                     {{ $t('academy.viewPrograms') }}
-                    </VBtn>
+                  </VBtn>
                 </div>
 
                 <div class="text-center">
@@ -95,28 +66,19 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
           </VCard>
         </VCol>
 
-        <VCol
-          cols="12"
-          md="6"
-        >
-          <VCard
-            flat
-            color="rgba(var(--v-theme-error), 0.08)"
-          >
+        <VCol cols="12" md="6">
+          <VCard flat color="rgba(var(--v-theme-error), 0.08)">
             <VCardText>
               <div class="d-flex flex-column-reverse flex-sm-row gap-4 justify-space-between">
                 <div class="text-center text-sm-start">
                   <h5 class="text-h5 text-error mb-2">
-                  {{ $t('academy.bestRatedCourses') }}
+                    {{ $t('academy.bestRatedCourses') }}
                   </h5>
                   <p class="text-body-1 text-high-emphasis text-wrap mb-4">
-                  {{ $t('academy.enrollNowInPopularCourses') }}
+                    {{ $t('academy.enrollNowInPopularCourses') }}
                   </p>
-                  <VBtn
-                  color="error"
-                  size="small"
-                  >
-                  {{ $t('academy.viewCourses') }}
+                  <VBtn color="error" size="small">
+                    {{ $t('academy.viewCourses') }}
                   </VBtn>
                 </div>
 
@@ -133,49 +95,26 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
     <VCard>
       <VCardText>
         <VRow>
-          <VCol
-            cols="12"
-            md="4"
-          >
+          <VCol cols="12" md="4">
             <div class="d-flex flex-column align-center gap-y-4 h-100 justify-center">
-              <VAvatar
-                variant="tonal"
-                size="52"
-                rounded
-                color="primary"
-              >
-                <VIcon
-                  icon="ri-gift-line"
-                  size="36"
-                />
+              <VAvatar variant="tonal" size="52" rounded color="primary">
+                <VIcon icon="ri-gift-line" size="36" />
               </VAvatar>
-                <h4 class="text-h4">
+              <h4 class="text-h4">
                 {{ $t('academy.todaysFreeCourses') }}
-                </h4>
-                <p class="text-body-1 text-center mb-0">
+              </h4>
+              <p class="text-body-1 text-center mb-0">
                 {{ $t('academy.freeCoursesDescription') }}
-                </p>
-                <VBtn>{{ $t('academy.getPremiumCourses') }}</VBtn>
+              </p>
+              <VBtn>{{ $t('academy.getPremiumCourses') }}</VBtn>
             </div>
           </VCol>
-          <VCol
-            cols="12"
-            md="4"
-            sm="6"
-          >
-            <VCard
-              flat
-              border
-            >
+          <VCol cols="12" md="4" sm="6">
+            <VCard flat border>
               <div class="pa-2">
-                <VideoPlayer
-                  src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
-                  :poster="singingCoursePoster"
-                  controls
-                  plays-inline
-                  :height="$vuetify.display.mdAndUp ? 200 : 150"
-                  class="w-100 rounded"
-                />
+                <VideoPlayer src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
+                  :poster="singingCoursePoster" controls plays-inline :height="$vuetify.display.mdAndUp ? 200 : 150"
+                  class="w-100 rounded" />
               </div>
               <VCardText class="pt-3">
                 <h5 class="text-h5 mb-2">
@@ -187,24 +126,12 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
               </VCardText>
             </VCard>
           </VCol>
-          <VCol
-            cols="12"
-            md="4"
-            sm="6"
-          >
-            <VCard
-              flat
-              border
-            >
+          <VCol cols="12" md="4" sm="6">
+            <VCard flat border>
               <div class="pa-2">
-                <VideoPlayer
-                  src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
-                  :poster="guitarCoursePoster"
-                  controls
-                  plays-inline
-                  :height="$vuetify.display.mdAndUp ? 200 : 150"
-                  class="w-100 rounded"
-                />
+                <VideoPlayer src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
+                  :poster="guitarCoursePoster" controls plays-inline :height="$vuetify.display.mdAndUp ? 200 : 150"
+                  class="w-100 rounded" />
               </div>
               <VCardText class="pt-3">
                 <h5 class="text-h5 mb-2">

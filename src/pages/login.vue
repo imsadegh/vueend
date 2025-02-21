@@ -30,9 +30,10 @@ definePage({
 
 const isPasswordVisible = ref(false)
 
-// todo - use vuetify snackbar to show the error messages.
-// todo - use the standard valdiator that is made by vuetify,
-// todo - users must login with the phone number instead of the email.
+// TODO use the numberphone as login
+// TODO - use vuetify snackbar to show the error messages.
+// TODO - use the standard valdiator that is made by vuetify,
+// TODO - users must login with the phone number instead of the email.
 
 const route = useRoute()
 const router = useRouter()
@@ -224,7 +225,7 @@ const onSubmit = () => {
           >
             <VRow>
               <!-- phone number -->
-               <!-- todo add phone number that only gets number and if it is persian it will get eng; use register page. -->
+               <!-- TODO add phone number that only gets number and if it is persian it will get eng; use register page. -->
               <!-- <VCol cols="12">
                 <VTextField
                   v-model="credentials.phone_number"

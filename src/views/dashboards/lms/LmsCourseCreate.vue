@@ -6,8 +6,12 @@ import { useI18n } from 'vue-i18n';
 
 const { t: $t } = useI18n()
 
-// todo add the editors(exist in the demo) for the description and about fields
-// todo for the insructor_id and category_id and prerequisties, fetch the data from the server
+// TODO add the editors(exist in the demo) for the description and about fields
+// TODO research about that when the mother page is loaded that include this component, the dropdowns are not loaded
+// TODO If the instructor is not verified, do not show in the list.
+// TODO show a feedback message after the course is created successfully
+// Todo Enable setting course prerequisites, which students must meet before registering.
+// Todo Provide course category and tagging for better searchability.
 
 const isDialogVisible = ref(false);
 const course_name = ref('');
@@ -24,14 +28,16 @@ const status = ref('draft');
 const allow_waitlist = ref(false);
 const start_date = ref(null);
 const end_date = ref(null);
-const prerequisites = ref('');
+// const prerequisites = ref('');
+const prerequisites = ref<string[]>([]);
 const tags = ref([]);
 const thumbnail_url = ref('');
 const errors = ref<Record<string, string>>({});
 
 const instructors = ref([]);
 const categories = ref([]);
-const availablePrerequisites = ref([]);
+// const availablePrerequisites = ref([]);
+const availablePrerequisites = ref<{ title: string; value: string }[]>([]);
 
 const token = useCookie('accessToken').value;
 
@@ -91,6 +97,7 @@ const saveCourse = async () => {
         start_date: formattedStartDate,
         end_date: formattedEndDate,
         // prerequisites: prerequisites.value ? JSON.parse(prerequisites.value) : null,
+        // prerequisites: prerequisites.value ? prerequisites.value : null,
         // prerequisites: prerequisites.value, // Directly send the array
         // tags: tags.value,
         thumbnail_url: thumbnail_url.value || null,
@@ -107,9 +114,17 @@ const saveCourse = async () => {
     isDialogVisible.value = false;
     resetForm(); // Reset form
   } catch (error) {
-    console.error('Failed to create course:', error.response?.data || error.message);
+    if (axios.isAxiosError(error)) {
+      console.error('Failed to create course:', error.response?.data || error.message);
+    } else {
+      console.error('Failed to create course:', error);
+    }
     // errors.value = error.response?.data?.errors || {};
-    errors.value = localizeErrors(error.response?.data?.errors || {});
+    if (axios.isAxiosError(error) && error.response?.data?.errors) {
+      errors.value = localizeErrors(error.response.data.errors);
+    } else {
+      console.error('Failed to create course:', error);
+    }
     // console.error('Signup or OTP sending failed:', error)
   }
 };
@@ -137,7 +152,11 @@ const fetchDropdownData = async () => {
       value: prerequisite.course_code,
     }));
   } catch (error) {
-    console.error('Error fetching dropdown data:', error.response?.data || error.message);
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching dropdown data:', error.response?.data || error.message);
+    } else {
+      console.error('Error fetching dropdown data:', error);
+    }
   }
 };
 
@@ -159,7 +178,7 @@ const resetForm = () => {
   allow_waitlist.value = false;
   start_date.value = null;
   end_date.value = null;
-  prerequisites.value = '';
+  prerequisites.value = [];
   tags.value = [];
   thumbnail_url.value = '';
 };
@@ -241,21 +260,15 @@ fetchDropdownData();
               <!-- Instructor -->
               <VCol cols="12" sm="6">
                 <VSelect v-model="instructor_id" :label="$t('roles.instructor')"
-                :items="[
-                  { title: 'instructor 5', value: 5 },
-                  { title: 'instructor 2', value: 2 },
-                  { title: 'instructor 3', value: 3 }
-                ]" 
+                :items="instructors"
                 outlined :error-messages="errors.instructor_id" />
               </VCol>
 
               <!-- Category -->
               <VCol cols="12" sm="6">
-                <VSelect v-model="category_id" :label="$t('course.category')" :items="[
-                  { title: 'Category 7', value: 7 },
-                  { title: 'Category 1', value: 1 },
-                  { title: 'Category 2', value: 2 }
-                ]" outlined :error-messages="errors.category_id" />
+                <VSelect v-model="category_id" :label="$t('course.category')"
+                :items="categories"
+                outlined :error-messages="errors.category_id" />
               </VCol>
 
               <VRow>
@@ -304,7 +317,7 @@ fetchDropdownData();
               </VCol>
 
               <!-- Tags -->
-              <VCol cols="12" sm="6">
+              <!-- <VCol cols="12" sm="6">
                 <VChipGroup v-model="tags" multiple :label="$t('course.tags')"
                   :placeholder="$t('course.tagsPlaceholder')">
                   <VChip v-for="tag in [
@@ -315,16 +328,15 @@ fetchDropdownData();
                     {{ tag.text }}
                   </VChip>
                 </VChipGroup>
-              </VCol>
+              </VCol> -->
 
               <!-- Prerequisites -->
-              <VCol cols="12">
-                <VAutocomplete v-model="prerequisites" multiple chips :items="['CS101', 'CS102', 'CS103']"
-                  :label="$t('course.prerequisites')" outlined placeholder="Add prerequisites (e.g., CS101)" />
-                <small class="text-error" v-if="errors.prerequisites">
-                  {{ errors.prerequisites }}
-                </small>
-              </VCol>
+              <!-- <VCol cols="12">
+                <VAutocomplete v-model="prerequisites" multiple chips
+                  :items="availablePrerequisites" item-text="title" item-value="value"
+                  :label="$t('course.prerequisites')" outlined placeholder="Add prerequisites (e.g., CS101)"
+                  :error-messages="errors.prerequisites"/>
+              </VCol> -->
 
               <VRow>
                 <!-- Start Date -->

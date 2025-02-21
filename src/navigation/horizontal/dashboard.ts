@@ -28,6 +28,23 @@ export default [
         to: 'dashboards-academy',
         icon: { icon: 'ri-book-open-line' },
       },
+      // TODO - add it into vertical menu too
+      {
+        title: 'Student Dashboard',
+        to: 'dashboards-academy',
+        icon: { icon: 'ri-book-open-line' },
+        action: 'read',
+        subject: 'AclDemo',
+      },
+      // TODO - add it into vertical menu too
+      {
+        title: 'Instructor Dashboard',
+        to: 'dashboards-lms-instructor',
+        icon: { icon: 'ri-book-open-line' },
+        action: 'manage',
+        subject: 'Course',
+      },
+
       // {
       //   title: 'Logistics',
       //   to: 'dashboards-logistics',

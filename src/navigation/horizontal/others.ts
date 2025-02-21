@@ -7,8 +7,8 @@ export default [
         title: 'Access Control',
         icon: { icon: 'ri-shield-line' },
         to: 'access-control',
-        action: 'read',
-        subject: 'AclDemo',
+        // action: 'read',
+        // subject: 'AclDemo',
       },
       {
         title: 'Nav Levels',

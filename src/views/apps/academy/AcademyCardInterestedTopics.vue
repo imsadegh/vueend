@@ -63,7 +63,7 @@ const topicsChartConfig = {
       return topicsChartConfig.labels[opt.dataPointIndex]
     },
   },
-  // todo fetch the courses from the api
+  // TODO fetch the courses from the api
   labels: [
     $t('topics.uiDesign'), 
     $t('topics.uxDesign'), 

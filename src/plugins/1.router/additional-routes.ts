@@ -18,7 +18,8 @@ export const redirects: RouteRecordRaw[] = [
         // return { name: 'dashboards-crm' }
         return { name: 'dashboards-lms-admin' }
       if (userRole === 'student')
-        return { name: 'access-control' }
+        // return { name: 'access-control' }
+        return { name: 'dashboards-academy' }
       if (userRole === 'instructor')
         return { name: 'dashboards-lms-instructor' }
 
@@ -76,6 +77,11 @@ export const routes: RouteRecordRaw[] = [
     name: 'apps-ecommerce-dashboard',
     component: () => import('@/pages/dashboards/ecommerce.vue'),
   },
+  // {
+  //   path: '/academy/dashboard',
+  //   name: 'academy-dashboard',
+  //   component: () => import('@/pages/apps/academy/dashboard.vue'),
+  // },
   // {
   //   path: '/register',
   //   name: 'register',
