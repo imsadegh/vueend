@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue'
-import LmsCourseCreate from '@/views/dashboards/lms/LmsCourseCreate.vue'
+import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue';
+import LmsCourseCreate from '@/views/dashboards/lms/LmsCourseCreate.vue';
 
 // TODO - add vuetify Outlined Timeline component with its backend
 // TODO - register new student
@@ -29,133 +29,77 @@ const statisticsVertical = [
 <template>
   <VRow class="match-height">
     <!-- 👉 Welcome -->
-    <VCol
-      cols="12"
-      md="4"
-    >
+    <VCol cols="12" md="4">
       <LmsCongratulationsNorris />
     </VCol>
 
     <!-- 👉 Create Course -->
-    <VCol
-      cols="12"
-      md="4"
-    >
+    <VCol cols="12" md="4">
       <LmsCourseCreate />
     </VCol>
 
     <!-- 👉 Total Orders -->
-    <VCol
-      v-for="statistics in statisticsVertical"
-      :key="statistics.title"
-      cols="12"
-      sm="3"
-      md="2"
-    >
+    <VCol v-for="statistics in statisticsVertical" :key="statistics.title" cols="12" sm="3" md="2">
       <!-- <CardStatisticsVertical v-bind="statistics" /> -->
     </VCol>
 
     <!-- 👉 Profile Line Charts -->
-    <VCol
-      cols="12"
-      sm="3"
-      md="2"
-    >
+    <VCol cols="12" sm="3" md="2">
       <!-- <LmsProfitBarWithGapCharts /> -->
     </VCol>
 
     <!-- 👉 Total Growth -->
-    <VCol
-      cols="12"
-      md="2"
-      sm="3"
-    >
+    <VCol cols="12" md="2" sm="3">
       <!-- <LmsGrowthDonutCharts /> -->
     </VCol>
 
     <!-- 👉 Organic Sessions -->
-    <VCol
-      cols="12"
-      md="4"
-    >
+    <VCol cols="12" md="4">
       <!-- <LmsOrganicSessions /> -->
     </VCol>
 
     <!-- 👉 Project Timeline -->
-    <VCol
-      cols="12"
-      md="8"
-    >
+    <VCol cols="12" md="8">
       <!-- <LmsProjectTimeline />+++++++++++ -->
     </VCol>
 
     <!-- 👉 Weekly Overview -->
-    <VCol
-      cols="12"
-      sm="6"
-      md="4"
-    >
+    <VCol cols="12" sm="6" md="4">
       <!-- <LmsWeeklyOverview /> -->
     </VCol>
 
     <!-- 👉 Social Network Visits -->
-    <VCol
-      cols="12"
-      sm="6"
-      md="4"
-    >
+    <VCol cols="12" sm="6" md="4">
       <!-- <LmsSocialNetworkVisits /> -->
     </VCol>
 
     <!-- 👉 Monthly Budget -->
-    <VCol
-      cols="12"
-      md="4"
-      sm="6"
-    >
+    <VCol cols="12" md="4" sm="6">
       <!-- <LmsMonthlyBudget /> -->
     </VCol>
 
     <!-- 👉 Meeting Schedule -->
-    <VCol
-      cols="12"
-      md="4"
-      sm="6"
-    >
+    <VCol cols="12" md="4" sm="6">
       <!-- <LmsMeetingSchedule />+++++++++++++ -->
     </VCol>
 
     <!-- 👉 External Links -->
-    <VCol
-      cols="12"
-      sm="6"
-      md="4"
-    >
+    <VCol cols="12" sm="6" md="4">
       <!-- <LmsExternalLinks /> -->
     </VCol>
 
     <!-- 👉 Payment History -->
-    <VCol
-      cols="12"
-      sm="6"
-      md="4"
-    >
+    <VCol cols="12" sm="6" md="4">
       <!-- <LmsPaymentHistory />++++++++++++++ -->
     </VCol>
 
     <!-- 👉 Most Sales in Countries -->
-    <VCol
-      cols="12"
-      md="4"
-    >
+    <VCol cols="12" md="4">
       <!-- <LmsMostSalesInCountries />++++++++++++ -->
     </VCol>
 
     <!-- 👉 User List -->
-    <VCol
-      cols="12"
-      md="8"
-    >
+    <VCol cols="12" md="8">
       <!-- <LmsUserList />+++++++++++++ -->
     </VCol>
   </VRow>

@@ -152,10 +152,10 @@ fetchInstructorCourses()
       <VDataTableServer :items-per-page.sync="10" :items="instructorCourses" item-value="id"
         :items-length="totalCourses" :headers="[
           { title: $t('course.name'), key: 'course_name', sortable: true },
-          { title: $t('course.discussionGroupUrl'), key: 'course_discussionGroup', sortable: true },
-          { title: $t('course.status'), key: 'status', sortable: true },
-          { title: $t('course.visibility'), key: 'visibility', sortable: true },
-          { title: $t('actions.edit'), key: 'edit', sortable: false },
+          { title: $t('course.discussionGroupUrl'), key: 'course_discussionGroup', sortable: true, align: 'center' },
+          { title: $t('course.status'), key: 'status', sortable: true, align: 'center' },
+          { title: $t('course.visibility'), key: 'visibility', sortable: true, align: 'center' },
+          { title: $t('actions.edit'), key: 'edit', sortable: false, align: 'center' },
         ]" class="text-no-wrap rounded-0">
 
         <!-- Course Name -->
@@ -166,7 +166,9 @@ fetchInstructorCourses()
         <!-- Discussion Group Link (Clickable) -->
         <template #item.course_discussionGroup="{ item }">
           <a :href="item.discussion_group_url" target="_blank" class="text-primary">
-            {{ item.discussion_group_url }}
+            {{ item.discussion_group_url.replace(/^(https?:\/\/)?(www\.)?/, '').length > 30 
+              ? item.discussion_group_url.replace(/^(https?:\/\/)?(www\.)?/, '').substring(0, 10) + '...' 
+              : item.discussion_group_url.replace(/^(https?:\/\/)?(www\.)?/, '') }}
           </a>
         </template>
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LmsAssignmentList from '@/views/dashboards/lms/LmsAssignmentList.vue';
 import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue';
 import LmsCourseList from '@/views/dashboards/lms/LmsCourseList.vue';
 
@@ -19,36 +20,24 @@ import LmsCourseList from '@/views/dashboards/lms/LmsCourseList.vue';
   <VRow class="match-height">
     <!-- سلام -->
     <!-- 👉 Award -->
-    <VCol
-      cols="12"
-      md="4"
-    >
+    <VCol cols="12" md="4">
       <LmsCongratulationsNorris />
     </VCol>
 
-    <!-- 👉 Manage Course -->
-    <!-- <VCol
-      cols="12"
-      md="4"
-    >
-      <LmsCourseUpdate />
-    </VCol> -->
-    
     <!-- 👉 Course List -->
-    <VCol
-      cols="12"
-      md="8"
-    >
+    <VCol cols="12" md="12">
       <LmsCourseList />
     </VCol>
 
+    <!-- 👉 Assignment List -->
+    <VCol cols="12" md="12">
+      <LmsAssignmentList />
+    </VCol>
+
     <!-- 👉 User List -->
-    <!-- <VCol
-      cols="12"
-      md="8"
-    >
-      <LmsUserList />
-    </VCol> -->
+    <VCol cols="12" md="8">
+      <!-- <LmsUserList /> -->
+    </VCol>
   </VRow>
 </template>
 

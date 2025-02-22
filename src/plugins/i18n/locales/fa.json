@@ -1,5 +1,9 @@
 {
   "course": {
+    "titleEdit": "ویرایش دوره",
+    "public": "منتشر شده",
+    "private": "منتشر نشده",
+    "myCourses": "دوره‌های من",
     "name": "نام دوره",
     "capacity": "ظرفیت دوره",
     "titleCreate": "ایجاد دوره",
@@ -49,9 +53,31 @@
     "seo": "سئو"
   },
   "actions": {
+    "actions": "اقدامات",
     "refresh": "بارگذاری مجدد",
     "update": "به‌روزرسانی",
-    "share": "اشتراک‌گذاری"
+    "share": "اشتراک‌گذاری",
+    "edit": "ویرایش",
+    "delete": "حذف"
+  },
+  "assignment": {
+    "confirmDelete": "آیا مطمئن هستید که می‌خواهید این تکلیف را حذف کنید؟",
+    "editAssignment": "ویرایش تکلیف",
+    "createNew": "ایجاد تکلیف جدید",
+    "individual": "فردی",
+    "group": "گروهی",
+    "type": "نوع",
+    "myAssignments": "تکالیف من",
+    "visible": "قابل مشاهده",
+    "hidden": "مخفی",
+    "dueDate": "تاریخ تحویل",
+    "grade": "نمره",
+    "gradeType": "نوع نمره",
+    "courseName": "نام دوره",
+    "title": "عنوان",
+    "maxScore": "حداکثر نمره",
+    "submissonDeadline": "مهلت تحویل",
+    "description": "توضیحات"
   },
   "academy": {
     "joinEvent": "پیوستن به رویداد",
