@@ -37,6 +37,17 @@ export const setupGuards = (router: _RouterTyped<RouteNamedMap & { [key: string]
         return undefined
     }
 
+
+    // NEW: If not logged in, redirect to the login page.
+    if (!isLoggedIn) {
+      return {
+        name: 'login',
+        query: { to: to.fullPath },
+      }
+    }
+    // If all checks pass, allow the navigation.
+    return undefined
+
     // if (!canNavigate(to) && to.matched.length) {
     //   /* eslint-disable indent */
     //   return isLoggedIn

@@ -72,6 +72,7 @@ declare module 'vue-router/auto-routes' {
     'dashboards-ecommerce': RouteRecordInfo<'dashboards-ecommerce', '/dashboards/ecommerce', Record<never, never>, Record<never, never>>,
     'dashboards-lms-admin': RouteRecordInfo<'dashboards-lms-admin', '/dashboards/lms-admin', Record<never, never>, Record<never, never>>,
     'dashboards-lms-instructor': RouteRecordInfo<'dashboards-lms-instructor', '/dashboards/lms-instructor', Record<never, never>, Record<never, never>>,
+    'dashboards-lms-student': RouteRecordInfo<'dashboards-lms-student', '/dashboards/lms-student', Record<never, never>, Record<never, never>>,
     'extensions-swiper': RouteRecordInfo<'extensions-swiper', '/extensions/swiper', Record<never, never>, Record<never, never>>,
     'extensions-tour': RouteRecordInfo<'extensions-tour', '/extensions/tour', Record<never, never>, Record<never, never>>,
     'forgot-password': RouteRecordInfo<'forgot-password', '/forgot-password', Record<never, never>, Record<never, never>>,

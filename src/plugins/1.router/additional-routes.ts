@@ -19,7 +19,8 @@ export const redirects: RouteRecordRaw[] = [
         return { name: 'dashboards-lms-admin' }
       if (userRole === 'student')
         // return { name: 'access-control' }
-        return { name: 'dashboards-academy' }
+        // return { name: 'dashboards-academy' }
+        return { name: 'dashboards-lms-student' }
       if (userRole === 'instructor')
         return { name: 'dashboards-lms-instructor' }
 
@@ -91,4 +92,11 @@ export const routes: RouteRecordRaw[] = [
   //     public: false,
   //   },
   // }
+
+  {
+    path: '/apps/chat',
+    name: 'apps-chat',
+    component: () => import('@/pages/apps/chat.vue'),
+    meta: { disable: true }
+  }
 ]
