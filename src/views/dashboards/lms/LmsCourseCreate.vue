@@ -131,10 +131,10 @@ const saveCourse = async () => {
 
 const fetchDropdownData = async () => {
   try {
-    const [instructorResponse, categoryResponse, prerequisiteResponse] = await Promise.all([
+    const [instructorResponse, categoryResponse] = await Promise.all([
       axios.get(`${API_BASE_URL}/instructors`, { headers: { Authorization: `Bearer ${token}` } }),
       axios.get(`${API_BASE_URL}/categories`, { headers: { Authorization: `Bearer ${token}` } }),
-      axios.get(`${API_BASE_URL}/courses/prerequisites`, { headers: { Authorization: `Bearer ${token}` } }),
+      // axios.get(`${API_BASE_URL}/courses/prerequisites`, { headers: { Authorization: `Bearer ${token}` } }),
     ]);
 
     instructors.value = instructorResponse.data.map((instructor: any) => ({
@@ -147,10 +147,10 @@ const fetchDropdownData = async () => {
       value: category.id,
     }));
 
-    availablePrerequisites.value = prerequisiteResponse.data.map((prerequisite: any) => ({
-      title: prerequisite.course_name,
-      value: prerequisite.course_code,
-    }));
+    // availablePrerequisites.value = prerequisiteResponse.data.map((prerequisite: any) => ({
+    //   title: prerequisite.course_name,
+    //   value: prerequisite.course_code,
+    // }));
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Error fetching dropdown data:', error.response?.data || error.message);

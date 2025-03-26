@@ -1,6 +1,6 @@
 export default [
   {
-    title: 'Dashboards',
+    title: 'Dashboard',
     icon: { icon: 'ri-home-smile-line' },
     children: [
       // {
@@ -36,6 +36,7 @@ export default [
         action: 'read',
         subject: 'AclDemo',
       },
+      
       // TODO - add it into vertical menu too
       {
         title: 'Instructor Dashboard',
@@ -51,6 +52,14 @@ export default [
       //   icon: { icon: 'ri-truck-line' },
       // },
     ],
+  },
+
+  {
+    title: 'My courses',
+    to: 'all-courses',
+    icon: { icon: 'ri-book-open-line' },
+    action: 'read',
+    subject: 'AclDemo',
   },
 
 ]

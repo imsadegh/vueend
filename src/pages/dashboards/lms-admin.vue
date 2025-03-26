@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue';
 import LmsCourseCreate from '@/views/dashboards/lms/LmsCourseCreate.vue';
+import LmsEnrollStudents from '@/views/dashboards/lms/LmsEnrollStudents.vue';
 
 // TODO - add vuetify Outlined Timeline component with its backend
 // TODO - register new student
@@ -36,6 +37,11 @@ const statisticsVertical = [
     <!-- 👉 Create Course -->
     <VCol cols="12" md="4">
       <LmsCourseCreate />
+    </VCol>
+
+    <!-- 👉 Enroll Students -->
+    <VCol cols="12" md="4">
+      <LmsEnrollStudents />
     </VCol>
 
     <!-- 👉 Total Orders -->

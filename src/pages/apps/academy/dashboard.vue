@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import AcademyAssignmentProgress from '@/views/apps/academy/AcademyAssignmentProgress.vue'
-import AcademyCardInterestedTopics from '@/views/apps/academy/AcademyCardInterestedTopics.vue'
-import AcademyCardPopularInstructors from '@/views/apps/academy/AcademyCardPopularInstructors.vue'
-import AcademyCardTopCourses from '@/views/apps/academy/AcademyCardTopCourses.vue'
-import AcademyCourseTable from '@/views/apps/academy/AcademyCourseTable.vue'
-import AcademyUpcomingWebinar from '@/views/apps/academy/AcademyUpcomingWebinar.vue'
+
+import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue'
+// import LmsPaymentHistory from '@/views/dashboards/lms/LmsPaymentHistory.vue'
+import LmsTuitionHistory from '@/views/dashboards/lms/LmsTuitionHistory.vue'
+
 
 import customCheck from '@images/svg/check.svg'
 import customLaptop from '@images/svg/laptop.svg'
@@ -163,6 +162,24 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
         </div>
       </VCol>
 
+      <VRow class="match-height">
+
+        <!-- 👉 Award -->
+        <VCol cols="12" md="4">
+          <LmsCongratulationsNorris />
+        </VCol>
+
+        <!-- 👉 Payment History -->
+        <!-- <VCol cols="12" md="4">
+          <LmsPaymentHistory />
+        </VCol> -->
+
+        <!-- 👉 Tuition History -->
+        <VCol cols="12" md="4">
+          <LmsTuitionHistory />
+        </VCol>
+      </VRow>
+
       <!-- 👉 Time Spending -->
       <VCol
         cols="12"
@@ -211,7 +228,7 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
         md="8"
       >
         <!-- 👉 Topic You are Interested in -->
-        <AcademyCardInterestedTopics />
+        <!-- <AcademyCardInterestedTopics /> -->
       </VCol>
 
       <!-- 👉 Popular Instructors  -->
@@ -220,7 +237,7 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
         md="4"
         sm="6"
       >
-        <AcademyCardPopularInstructors />
+        <!-- <AcademyCardPopularInstructors /> -->
       </VCol>
 
       <!-- 👉 Academy Top Courses  -->
@@ -229,7 +246,7 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
         md="4"
         sm="6"
       >
-        <AcademyCardTopCourses />
+        <!-- <AcademyCardTopCourses /> -->
       </VCol>
 
       <!-- 👉 Academy Upcoming Webinar -->
@@ -238,7 +255,7 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
         md="4"
         sm="6"
       >
-        <AcademyUpcomingWebinar />
+        <!-- <AcademyUpcomingWebinar /> -->
       </VCol>
 
       <!-- 👉 Academy Assignment Progress  -->
@@ -247,12 +264,12 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
         md="4"
         sm="6"
       >
-        <AcademyAssignmentProgress />
+        <!-- <AcademyAssignmentProgress /> -->
       </VCol>
 
       <!-- 👉 Academy Course Table  -->
       <VCol>
-        <AcademyCourseTable />
+        <!-- <AcademyCourseTable /> -->
       </VCol>
     </VRow>
   </div>

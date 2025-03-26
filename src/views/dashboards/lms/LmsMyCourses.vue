@@ -1,0 +1,215 @@
+<script setup lang="ts">
+import { API_BASE_URL } from '@/config/config';
+import axios from 'axios';
+import { onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
+interface Props {
+  searchQuery: string;
+}
+
+const props = defineProps<Props>();
+const token = useCookie('accessToken').value;
+const router = useRouter();
+// const token = useCookie('accessToken').value;
+
+
+// Table/pagination & filter state
+const itemsPerPage = ref(6);
+const page = ref(1);
+const sortBy = ref<string | null>(null);
+const orderBy = ref<string | null>(null);
+const hideCompleted = ref(true);
+const label = ref('All Courses');
+
+// Data state for enrolled courses
+const enrolledCourses = ref<any[]>([]);
+const totalCourses = ref(0);
+
+const fetchEnrolledCourses = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/student/courses`, {
+      headers: { Authorization: `Bearer ${token}` },
+      params: {
+        q: props.searchQuery,
+        hideCompleted: hideCompleted.value,
+        label: label.value,
+        itemsPerPage: itemsPerPage.value,
+        page: page.value,
+        sortBy: sortBy.value,
+        orderBy: orderBy.value,
+      },
+    });
+    // Assume the API returns an object with courses and total count
+    enrolledCourses.value = response.data.courses;
+    totalCourses.value = response.data.total;
+  } catch (error) {
+    console.error('Error fetching enrolled courses:', error.response?.data || error.message);
+  }
+};
+
+watch(
+  [hideCompleted, label, () => props.searchQuery, page, sortBy, orderBy],
+  () => {
+    page.value = 1; // Reset to first page on filter changes
+    fetchEnrolledCourses();
+  }
+);
+
+onMounted(() => {
+  fetchEnrolledCourses();
+});
+
+// Utility: Resolve chip color based on a tag
+// const resolveChipColor = (tag: string) => {
+//   if (tag === 'Web') return 'primary';
+//   if (tag === 'Art') return 'success';
+//   if (tag === 'UI/UX') return 'error';
+//   if (tag === 'Psychology') return 'warning';
+//   if (tag === 'Design') return 'info';
+//   return 'default';
+// };
+
+// Add a function to handle redirection based on enrollment status.
+const goToCourse = (course: any) => {
+  if (course.can_redirect) {
+    router.push({ name: 'course-details', params: { courseId: course.id } });
+  } else {
+    console.warn(
+      `Course "${course.course_name}" is not accessible. Enrollment status: ${course.enrollment_status}`
+    );
+  }
+};
+</script>
+
+<template>
+  <VCard class="mb-6">
+    <VCardText>
+      <!-- Header with filtering options -->
+      <div class="d-flex justify-space-between align-center flex-wrap gap-4 mb-6">
+        <div>
+          <h5 class="text-h5">{{ $t('academy.myCourses') }}</h5>
+          <div class="text-body-1">
+            {{ $t('academy.totalCoursesPurchased', { count: totalCourses }) }}
+          </div>
+        </div>
+        <div class="d-flex flex-wrap align-center gap-y-4 gap-x-6">
+          <VSelect
+            v-model="label"
+            density="compact"
+            :items="[
+              { title: $t('academy.web'), value: 'web' },
+              { title: $t('academy.art'), value: 'art' },
+              { title: $t('academy.uiUx'), value: 'ui/ux' },
+              { title: $t('academy.psychology'), value: 'psychology' },
+              { title: $t('academy.design'), value: 'design' },
+              { title: $t('academy.allCourses'), value: 'All Courses' }
+            ]"
+            style="min-inline-size: 250px;"
+          />
+          <VSwitch v-model="hideCompleted" :label="$t('academy.hideCompleted')" />
+        </div>
+      </div>
+
+      <!-- Enrolled Courses List -->
+      <div v-if="enrolledCourses.length" class="mb-6">
+        <VRow class="match-height">
+          <template v-for="course in enrolledCourses" :key="course.id">
+            <VCol cols="12" md="4" sm="6">
+              <VCard flat border>
+                
+                <!-- Course Thumbnail -->
+                <!-- <div class="pa-2">
+                  <VImg
+                    @click="router.push({ name: 'course-details', params: { courseId: course.id } })"
+                    class="cursor-pointer"
+                  />
+                </div> -->
+                <VCardText class="pt-3">
+                  
+                  <!-- Tags / Category Chips -->
+                  <!-- <div class="d-flex justify-space-between align-center mb-4">
+                    <VChip
+                      v-if="course.tags && course.tags.length"
+                      variant="tonal"
+                      :color="resolveChipColor(course.tags[0])"
+                      size="small"
+                    >
+                      {{ course.tags[0] }}
+                    </VChip>
+                  </div> -->
+                  
+                  <!-- Course Title -->
+                  <h5 class="text-h5 mb-1">
+                    <!-- <RouterLink :to="{ name: 'apps-academy-course-details', params: { courseId: course.id } }" class="course-title">
+                      {{ course.course_name }}
+                    </RouterLink> -->
+                    
+                    <!-- <RouterLink 
+                      v-if="course.can_redirect" 
+                      :to="{ name: 'apps-academy-course-details', params: { courseId: course.id } }"
+                      class="course-title">
+                      {{ course.course_name }}
+                    </RouterLink>
+                    <span v-else class="course-title disabled">
+                      {{ course.course_name }} ({{ course.enrollment_status }})
+                    </span> -->
+
+                    <span 
+                      class="course-title"
+                      @click="goToCourse(course)"
+                      style="cursor: pointer;"
+                    >
+                      {{ course.course_name }}
+                    </span>
+                    <small v-if="!course.can_redirect">
+                      ({{ course.enrollment_status }})
+                    </small>
+
+
+                  </h5>
+
+                  <!-- Course Description -->
+                  <p>{{ course.description }}</p>
+                  
+                  <!-- Course Progress (if available) -->
+                  <!-- <div v-if="course.progress !== undefined" class="mb-2">
+                    <VProgressLinear
+                      :model-value="course.progress"
+                      rounded
+                      rounded-bar
+                      color="primary"
+                      height="8"
+                      class="mb-4"
+                    />
+                    <span class="text-body-1">Progress: {{ course.progress }}%</span>
+                  </div> -->
+                  
+                  <!-- Action Buttons -->
+                  <!-- <div class="d-flex flex-wrap gap-4">
+                    <VBtn variant="outlined" color="secondary" class="flex-grow-1"
+                      :to="{ name: 'course-details', params: { courseId: course.id } }">
+                      {{ $t('academy.viewCourse') }}
+                    </VBtn>
+                  </div> -->
+                </VCardText>
+              </VCard>
+            </VCol>
+          </template>
+        </VRow>
+      </div>
+      <div v-else>
+        <h4 class="text-h4 text-center mb-6">{{ $t('academy.noCourseFound') }}</h4>
+      </div>
+      <VPagination v-model="page" rounded color="primary" :length="Math.ceil(totalCourses / itemsPerPage)" />
+    </VCardText>
+  </VCard>
+</template>
+
+<style scoped>
+/* Custom styles for the student course dashboard */
+.course-title {
+  color: inherit;
+  text-decoration: none;
+}
+</style>

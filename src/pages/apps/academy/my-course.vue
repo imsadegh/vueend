@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import AcademyMyCourses from '@/views/apps/academy/AcademyMyCourses.vue'
+// import AcademyMyCourses from '@/views/apps/academy/AcademyMyCourses.vue'
+import AcademyMyCourses from '@/views/dashboards/lms/LmsMyCourses.vue'
 import academyCourseIllustration1 from '@images/pages/academy-course-illustration1.png'
 import academyCourseIllustration2Dark from '@images/pages/academy-course-illustration2-dark.png'
 import academyCourseIllustration2Light from '@images/pages/academy-course-illustration2-light.png'
 import boyAcademyIllustration from '@images/pages/boy-academy-illustration.png'
 import girlAcademyIllustration from '@images/pages/girl-academy-illustration.png'
-import guitarCoursePoster from '@images/pages/guitar-course.png'
-import singingCoursePoster from '@images/pages/singing-course.png'
-import { VideoPlayer } from '@videojs-player/vue'
 
 const searchQuery = ref('')
 
@@ -16,6 +14,8 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
 
 <template>
   <div>
+
+    <!-- search card -->
     <VCard class="mb-6">
       <VCardText class="py-12 position-relative">
         <div class="d-flex flex-column gap-y-4 mx-auto" :class="$vuetify.display.mdAndUp ? 'w-50' : 'w-100'">
@@ -40,6 +40,7 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
 
     <AcademyMyCourses :search-query="searchQuery" />
 
+    <!-- earnCertificate and best courses card -->
     <div class="mb-6">
       <VRow>
         <VCol cols="12" md="6">
@@ -92,7 +93,8 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
       </VRow>
     </div>
 
-    <VCard>
+    <!-- todaysFreeCourses -->
+    <!-- <VCard>
       <VCardText>
         <VRow>
           <VCol cols="12" md="4">
@@ -109,6 +111,7 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
               <VBtn>{{ $t('academy.getPremiumCourses') }}</VBtn>
             </div>
           </VCol>
+
           <VCol cols="12" md="4" sm="6">
             <VCard flat border>
               <div class="pa-2">
@@ -126,6 +129,7 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
               </VCardText>
             </VCard>
           </VCol>
+
           <VCol cols="12" md="4" sm="6">
             <VCard flat border>
               <div class="pa-2">
@@ -143,9 +147,11 @@ const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustra
               </VCardText>
             </VCard>
           </VCol>
+
         </VRow>
       </VCardText>
-    </VCard>
+    </VCard> -->
+    
   </div>
 </template>
 
