@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import { API_BASE_URL } from '@/config/config'
 import axios from 'axios'
@@ -19,6 +18,10 @@ const assignments = ref<any[]>([])
 const isDialogVisible = ref(false)
 const isEditMode = ref(false)
 
+const instructorCourses = ref<any[]>([]);
+const selectedCourseId = ref<number | null>(null);
+
+
 // Assignment form
 const form = ref({
   id: null,
@@ -35,8 +38,8 @@ const errors = ref<Record<string, string[] | undefined>>({})
 
 // Table headers
 const headers = [
-  { title: $t('assignment.title'), key: 'title', sortable: false},
-  { title: $t('assignment.courseName'), key: 'course_name', sortable: false, align: 'center' as const},
+  { title: $t('assignment.title'), key: 'title', sortable: false },
+  { title: $t('assignment.courseName'), key: 'course_name', sortable: false, align: 'center' as const },
   { title: $t('assignment.type'), key: 'type', sortable: false, align: 'center' as const },
   { title: $t('assignment.visible'), key: 'visible', sortable: false, align: 'center' as const },
   { title: $t('actions.actions'), key: 'actions', sortable: false, align: 'center' as const },
@@ -59,6 +62,24 @@ const fetchAssignments = async () => {
     console.error('Error fetching assignments:', error.response?.data || error.message)
   }
 }
+
+ const fetchInstructorCourses = async () => {
+   try {
+     const response = await axios.get(`${API_BASE_URL}/instructor/courses`, {
+       headers: { Authorization: `Bearer ${token}` },
+     });
+     instructorCourses.value = response.data;
+   } catch (error) {
+     console.error('Error fetching instructor courses:', error.response?.data || error.message);
+   }
+ };
+
+ // Call fetchInstructorCourses once on component mount
+ onMounted(() => {
+   fetchInstructorCourses();
+   fetchAssignments(); // existing function
+ });
+
 
 // Open dialog to create a new assignment
 const openCreateDialog = () => {
@@ -91,8 +112,11 @@ const openEditDialog = (assignment: any) => {
 const createAssignment = async () => {
   resetErrors()
   try {
+    if (!selectedCourseId.value) {
+      throw new Error("Please select a course for the assignment.");
+    }
     await axios.post(
-      `${API_BASE_URL}/courses/${courseId}/assignments`,
+      `${API_BASE_URL}/courses/${selectedCourseId.value}/assignments`,
       {
         title: form.value.title,
         description: form.value.description,
@@ -222,12 +246,8 @@ fetchAssignments()
       </VCardTitle>
 
       <!-- Assignment List Table -->
-      <VDataTableServer
-        :items="assignments"
-        :headers="headers"
-        :items-length="assignments.length"
-        class="text-no-wrap rounded-0"
-      >
+      <VDataTableServer :items="assignments" :headers="headers" :items-length="assignments.length"
+        class="text-no-wrap rounded-0">
         <!-- Title -->
         <template #item.title="{ item }">
           <strong>{{ item.title }}</strong>
@@ -250,11 +270,11 @@ fetchAssignments()
           <VChip :color="item.visible ? 'success' : 'secondary'" size="small">
             {{ item.visible ? $t('assignment.visible') : $t('assignment.hidden') }}
           </VChip>
-        </template> 
+        </template>
 
         <!-- Actions -->
         <template #item.actions="{ item }">
-          <VBtn color="primary" class="ma-1" @click="openEditDialog(item)"> 
+          <VBtn color="primary" class="ma-1" @click="openEditDialog(item)">
             {{ $t('actions.edit') }}
           </VBtn>
           <VBtn color="error" class="ma-1" @click="deleteAssignment(item.id)">
@@ -289,10 +309,18 @@ fetchAssignments()
             <VRow>
               <!-- Title -->
               <VCol cols="12" sm="6">
-                <VTextField
-                  v-model="form.title"
-                  :label="$t('assignment.title')"
-                  :error-messages="errors.title"
+                <VTextField v-model="form.title" :label="$t('assignment.title')" :error-messages="errors.title" outlined
+                  required />
+              </VCol>
+
+              <!-- Course Selection Dropdown -->
+              <VCol cols="12" sm="6">
+                <VSelect
+                  v-model="selectedCourseId"
+                  :items="instructorCourses"
+                  item-title="course_name"
+                  item-value="id"
+                  :label="$t('assignment.selectCourse')"
                   outlined
                   required
                 />
@@ -300,63 +328,33 @@ fetchAssignments()
 
               <!-- Type (individual/group) -->
               <VCol cols="12" sm="6">
-                <VSelect
-                  v-model="form.type"
-                  :label="$t('assignment.type')"
-                  :items="[
-                    { title: 'Individual', value: 'individual' },
-                    { title: 'Group', value: 'group' },
-                  ]"
-                  :error-messages="errors.type"
-                  outlined
-                  required
-                />
+                <VSelect v-model="form.type" :label="$t('assignment.type')" :items="[
+                  { title: 'Individual', value: 'individual' },
+                  { title: 'Group', value: 'group' },
+                ]" :error-messages="errors.type" outlined required />
               </VCol>
 
               <!-- Max Score -->
               <VCol cols="12" sm="6">
-                <VTextField
-                  v-model="form.max_score"
-                  :label="$t('assignment.maxScore')"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  max="100"
-                  :error-messages="errors.max_score"
-                  outlined
-                  required
-                />
+                <VTextField v-model="form.max_score" :label="$t('assignment.maxScore')" type="number" step="0.01"
+                  min="0" max="100" :error-messages="errors.max_score" outlined required />
               </VCol>
 
               <!-- Visibility -->
               <VCol cols="12" sm="6">
-                <VSwitch
-                  v-model="form.visible"
-                  :label="$t('assignment.visible')"
-                  inset
-                />
+                <VSwitch v-model="form.visible" :label="$t('assignment.visible')" inset />
               </VCol>
 
               <!-- Deadline -->
               <VCol cols="12" sm="6">
-                <VTextField
-                  v-model="form.submission_deadline"
-                  :label="$t('assignment.submissionDeadline')"
-                  type="datetime-local"
-                  :error-messages="errors.submission_deadline"
-                  outlined
-                />
+                <VTextField v-model="form.submission_deadline" :label="$t('assignment.submissionDeadline')"
+                  type="datetime-local" :error-messages="errors.submission_deadline" outlined />
               </VCol>
 
               <!-- Description -->
               <VCol cols="12">
-                <VTextarea
-                  v-model="form.description"
-                  :label="$t('assignment.description')"
-                  :error-messages="errors.description"
-                  rows="4"
-                  outlined
-                />
+                <VTextarea v-model="form.description" :label="$t('assignment.description')"
+                  :error-messages="errors.description" rows="4" outlined />
               </VCol>
             </VRow>
           </VForm>

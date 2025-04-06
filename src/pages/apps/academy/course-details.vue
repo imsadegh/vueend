@@ -1,13 +1,20 @@
 <script setup lang="ts">
 // import instructorPosterImage from '@images/pages/instructor-poster-image.png'
-import { API_BASE_URL } from '@/config/config'
-import { VideoPlayer } from '@videojs-player/vue'
-import axios from 'axios'
-import QRCodeStyling from 'qr-code-styling'
-import 'video.js/dist/video-js.css'
-import { onMounted, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
+import LmsAssignmentSubmission from '@/views/dashboards/lms/LmsAssignmentSubmission.vue';
+const isSubmissionDialogVisible = ref(false)
+const assignments = ref<any[]>([]);
+const selectedAssignmentId = ref<number | null>(null);
+
+const token = useCookie('accessToken').value
+
+import { API_BASE_URL } from '@/config/config';
+import { VideoPlayer } from '@videojs-player/vue';
+import axios from 'axios';
+import QRCodeStyling from 'qr-code-styling';
+import 'video.js/dist/video-js.css';
+import { onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 const route = useRoute()
 const { t: $t } = useI18n()
 
@@ -21,30 +28,30 @@ const { t: $t } = useI18n()
 
 
 interface CourseDetails {
-   id: number;
-   course_name: string;
-   about: string;
-   description: string;
-   skill_level: string;
-   total_lectures: number;
-   lecture_length: number;
-   language: string;
-   is_captions: boolean;
-   table_of_content: Array<{
+  id: number;
+  course_name: string;
+  about: string;
+  description: string;
+  skill_level: string;
+  total_lectures: number;
+  lecture_length: number;
+  language: string;
+  is_captions: boolean;
+  table_of_content: Array<{
     title: string;
     status: string;
     time: string;
     topics: Array<{
-     title: string;
-     time: string;
-     isCompleted: boolean;
+      title: string;
+      time: string;
+      isCompleted: boolean;
     }>;
   }>;
-   enrolled_students_count: number;
-   discussion_group_url: string;
-   instructor_name: string;
-   instructor_pfp: string;
- }
+  enrolled_students_count: number;
+  discussion_group_url: string;
+  instructor_name: string;
+  instructor_pfp: string;
+}
 const courseData = ref<CourseDetails | null>(null)
 
 // Add these lines near the top of your script section:
@@ -68,6 +75,19 @@ const videoOptions = ref({
     }
   ]
 });
+
+// Fetch assignments for the loaded course
+const fetchAssignments = async () => {
+  try {
+    const courseId = route.params.courseId;
+    const response = await axios.get(`${API_BASE_URL}/courses/${courseId}/assignments`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    assignments.value = response.data; // Expecting an array of assignments
+  } catch (error) {
+    console.error("Error fetching assignments:", error.response?.data || error.message);
+  }
+};
 
 onMounted(async () => {
   try {
@@ -106,10 +126,10 @@ onMounted(async () => {
       gradient: {
         type: "linear",
         rotation: 45,
-        colorStops: [{ offset: 0, color: '#4267b2' }, {  offset: 1, color: '#e9ebee' }]
+        colorStops: [{ offset: 0, color: '#4267b2' }, { offset: 1, color: '#e9ebee' }]
       },
       type: "extra-rounded",
-      roundSize:true
+      roundSize: true
     },
     cornersSquareOptions: {
       color: "#4267b2",
@@ -135,9 +155,12 @@ onMounted(async () => {
   if (container) {
     qrCode.append(container);
   }
- })
 
- const localizedSkillLevel = computed(() => {
+  fetchAssignments();
+
+})
+
+const localizedSkillLevel = computed(() => {
   if (!courseData.value || !courseData.value.skill_level) return '';
   const level = courseData.value.skill_level.toLowerCase();
   switch (level) {
@@ -153,6 +176,11 @@ onMounted(async () => {
 });
 
 const panelStatus = ref(0)
+
+const openSubmissionDialog = (assignmentId: number) => {
+  selectedAssignmentId.value = assignmentId;
+  isSubmissionDialogVisible.value = true;
+};
 </script>
 
 <template>
@@ -183,7 +211,7 @@ const panelStatus = ref(0)
               :poster="instructorPosterImage" controls plays-inline :height="$vuetify.display.mdAndUp ? 440 : 250"
               class="w-100 rounded" /> -->
               <VideoPlayer class="w-100 rounded" :options="videoOptions"
-              :height="$vuetify.display.mdAndUp ? 440 : 250"/>
+                :height="$vuetify.display.mdAndUp ? 440 : 250" />
               <div id="qr-code"></div>
             </div>
 
@@ -216,7 +244,8 @@ const panelStatus = ref(0)
                       <template #prepend>
                         <VIcon icon="ri-group-line" size="20" class="me-n1" />
                       </template>
-                      <VListItemTitle>{{ $t('academy.Students') }}: {{ courseData?.enrolled_students_count }}</VListItemTitle>
+                      <VListItemTitle>{{ $t('academy.Students') }}: {{ courseData?.enrolled_students_count }}
+                      </VListItemTitle>
                     </VListItem>
 
                     <!-- language -->
@@ -224,10 +253,10 @@ const panelStatus = ref(0)
                       <template #prepend>
                         <VIcon icon="ri-global-line" size="20" class="me-n1" />
                       </template>
-                        <VListItemTitle>
-                        {{ $t('academy.Languages') }}: 
+                      <VListItemTitle>
+                        {{ $t('academy.Languages') }}:
                         {{ courseData?.language === 'fa' ? $t('farsi') : courseData?.language }}
-                        </VListItemTitle>
+                      </VListItemTitle>
                     </VListItem>
 
                     <!-- caption -->
@@ -262,7 +291,9 @@ const panelStatus = ref(0)
                       <template #prepend>
                         <VIcon icon="ri-time-line" size="20" class="me-n1" />
                       </template>
-                      <VListItemTitle>{{ $t('academy.Video') }}: {{ courseData?.lecture_length }} {{ $t('academy.minute') }}</VListItemTitle>
+                      <VListItemTitle>{{ $t('academy.Video') }}: {{ courseData?.lecture_length }} {{
+                        $t('academy.minute') }}
+                      </VListItemTitle>
                     </VListItem>
 
                   </VList>
@@ -337,6 +368,62 @@ const panelStatus = ref(0)
           </VExpansionPanel>
         </VExpansionPanels>
       </div>
+
+      <div class="course-assignment">
+        <VCard class="mt-6">
+          <VCardTitle class="pb-4">
+            <h3>{{ $t('assignment.myAssignments') }}</h3>
+          </VCardTitle>
+          <VCardText>
+            <VList>
+              <VListItem v-for="assignment in assignments" :key="assignment.id">
+                <div>
+                  <VListItemTitle>{{ assignment.title }}</VListItemTitle>
+                  <!-- <VListItemSubtitle>{{ assignment.description }}</VListItemSubtitle> -->
+                </div>
+                <template #append>
+                  <VBtn variant="tonal" color="primary" @click="openSubmissionDialog(assignment.id)">
+                    {{ $t('academy.view') }}
+                  </VBtn>
+                </template>
+              </VListItem>
+            </VList>
+          </VCardText>
+        </VCard>
+      </div>
+
+
+
+
+      <VDialog v-model="isSubmissionDialogVisible" max-width="600">
+        <LmsAssignmentSubmission :assignmentId="selectedAssignmentId ?? ''" />
+      </VDialog>
+
+
+      <div class="course-disscussiongroup">
+        <VCard class="mt-6">
+          <VCardItem title="گروه بحث" class="pb-6 text-h2">
+            <template #subtitle>
+              <div class="text-h6">
+                <span class="d-inline-block">عنوان گروه</span>
+              </div>
+            </template>
+          </VCardItem>
+
+          <VCardText>
+            <p class="text-body-1">
+              توضیحات گروه
+            </p>
+          </VCardText>
+
+          <VCardActions>
+            <VBtn variant="tonal" color="primary" class="text-h6">
+              {{ $t('academy.join') }}
+            </VBtn>
+          </VCardActions>
+
+        </VCard>
+      </div>
     </VCol>
   </VRow>
 </template>
@@ -347,11 +434,40 @@ const panelStatus = ref(0)
 }
 
 .course-content {
-  position: sticky;
+  /* position: sticky; */
   inset-block: 4rem 0;
 
   .card-list {
     --v-card-list-gap: 1rem;
+  }
+}
+
+.course-assignment {
+  /* position: sticky; */
+  inset-block-start: calc(4rem + 1rem);
+
+  /* Adjust to match spacing */
+  margin-block-start: 1rem;
+
+  .v-card {
+    padding: 7px;
+    border-radius: 10px;
+
+    /* background-color: rgba(var(--v-primary-container), var(--v-primary-container-opacity));
+    color: rgba(var(--v-primary), var(--v-primary-opacity)); */
+  }
+}
+
+.course-disscussiongroup {
+  position: sticky;
+  inset-block-start: calc(4rem + 1rem);
+
+  /* Adjust to match spacing */
+  margin-block-start: 1rem;
+
+  .v-card {
+    padding: 7px;
+    border-radius: 10px;
   }
 }
 
@@ -423,4 +539,21 @@ const panelStatus = ref(0)
     }
   }
 }
+
+/* .course-assignment {
+  .v-card {
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: rgba(var(--v-primary-container), var(--v-primary-container-opacity));
+    color: rgba(var(--v-primary), var(--v-primary-opacity));
+
+    .v-card-item {
+      border-radius: 10px;
+      background-color: rgba(var(--v-primary), var(--v-primary-opacity));
+      color: rgba(var(--v-primary), var(--v-primary-opacity));
+      padding-block: 0.5rem;
+      padding-inline: 1rem;
+    }
+  }
+} */
 </style>

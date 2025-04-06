@@ -64,22 +64,22 @@ export const routes: RouteRecordRaw[] = [
   },
 
   {
-    path: '/dashboards/logistics',
+    path: '/logistics/dashboards',
     name: 'dashboards-logistics',
     component: () => import('@/pages/apps/logistics/dashboard.vue'),
   },
   {
-    path: '/dashboards/academy',
+    path: '/academy/dashboard',
     name: 'dashboards-academy',
     component: () => import('@/pages/apps/academy/dashboard.vue'),
   },
   {
-    path: '/courses',
+    path: '/academy/my-courses',
     name: 'all-courses',
     component: () => import('@/pages/apps/academy/my-course.vue'),
   },
   {
-    path: '/apps/academy/course-details/:courseId',
+    path: '/academy/course-details/:courseId',
     name: 'course-details',
     component: () => import('@/pages/apps/academy/course-details.vue'),
   },

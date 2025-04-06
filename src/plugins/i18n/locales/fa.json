@@ -16,7 +16,7 @@
     "waitlisted": "در لیست انتظار",
     "completed": "تکمیل شده",
     "dropped": "رها شده",
-    "pending": "در انتظار",
+    "pending": "در حال تکمیل ثبت‌نام",
     "manageEnrollments": "مدیریت ثبت‌نام‌ها",
     "selectCourse": "انتخاب دوره",
     "studentName": "نام دانش‌آموز",
@@ -88,6 +88,11 @@
     "delete": "حذف"
   },
   "assignment": {
+    "notActive": "غیرفعال",
+    "selectCourse": "دوره را انتخاب کنید",
+    "submitAssignment": "ارسال تکلیف",
+    "comments": "توضیحات",
+    "createAssignment": "ایجاد تکلیف",
     "confirmDelete": "آیا مطمئن هستید که می‌خواهید این تکلیف را حذف کنید؟",
     "editAssignment": "ویرایش تکلیف",
     "createNew": "ایجاد تکلیف جدید",
@@ -103,10 +108,11 @@
     "courseName": "نام دوره",
     "title": "عنوان",
     "maxScore": "حداکثر نمره",
-    "submissonDeadline": "مهلت تحویل",
+    "submissionDeadline": "مهلت تحویل",
     "description": "توضیحات"
   },
   "academy": {
+    "view": "مشاهده",
     "joinEvent": "پیوستن به رویداد",
     "upcomingDiscussion": "مباحثه آینده",
     "interestedIn": "موضوعات مورد علاقه شما",
@@ -172,7 +178,10 @@
     "Instructor": "استاد",
     "beginner": "مبتدی",
     "intermediate": "متوسط",
-    "advanced": "پیشرفته"
+    "advanced": "پیشرفته",
+    "viewCourse": "مشاهده دوره",
+    "start": "ارسال تمرین",
+    "join": "مشاهده"
   },
   "true": "دارد",
   "false": "ندارد",
@@ -186,6 +195,7 @@
     }
   },
   "button": {
+    "submit": "ارسال",
     "backToHome": "بازگشت به خانه",
     "create": "ایجاد",
     "cancel": "لغو",

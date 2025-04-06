@@ -162,9 +162,9 @@ const goToCourse = (course: any) => {
                     >
                       {{ course.course_name }}
                     </span>
-                    <small v-if="!course.can_redirect">
-                      ({{ course.enrollment_status }})
-                    </small>
+                    <!-- <small v-if="!course.can_redirect">
+                      ({{ $t(`enrollment.${course.enrollment_status}`) }})
+                    </small> -->
 
 
                   </h5>
@@ -186,12 +186,17 @@ const goToCourse = (course: any) => {
                   </div> -->
                   
                   <!-- Action Buttons -->
-                  <!-- <div class="d-flex flex-wrap gap-4">
-                    <VBtn variant="outlined" color="secondary" class="flex-grow-1"
-                      :to="{ name: 'course-details', params: { courseId: course.id } }">
-                      {{ $t('academy.viewCourse') }}
-                    </VBtn>
-                  </div> -->
+                    <div class="d-flex flex-wrap gap-4">
+                        <VBtn
+                        :variant="course.can_redirect ? 'elevated' : 'elevated'"
+                        :color="course.can_redirect ? 'primary' : 'secondary'"
+                        class="flex-grow-1"
+                        :disabled="!course.can_redirect"
+                        @click="goToCourse(course)"
+                        >
+                        {{ course.can_redirect ? $t('academy.viewCourse') : $t(`enrollment.${course.enrollment_status}`) }}
+                        </VBtn>
+                    </div>
                 </VCardText>
               </VCard>
             </VCol>
