@@ -85,7 +85,8 @@ const fetchAssignments = async () => {
     });
     assignments.value = response.data; // Expecting an array of assignments
   } catch (error) {
-    console.error("Error fetching assignments:", error.response?.data || error.message);
+    // console.error("Error fetching assignments:", error.response?.data || error.message);
+    console.error("Error fetching assignments:", (error as any).response?.data || (error as any).message);
   }
 };
 

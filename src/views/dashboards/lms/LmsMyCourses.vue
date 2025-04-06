@@ -44,7 +44,7 @@ const fetchEnrolledCourses = async () => {
     enrolledCourses.value = response.data.courses;
     totalCourses.value = response.data.total;
   } catch (error) {
-    console.error('Error fetching enrolled courses:', error.response?.data || error.message);
+    console.error('Error fetching enrolled courses:', (error as any).response?.data || (error as any).message);
   }
 };
 

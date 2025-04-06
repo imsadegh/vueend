@@ -26,7 +26,7 @@ const fetchAssignmentDetails = async () => {
     })
     assignment.value = response.data
   } catch (error) {
-    console.error('Error fetching assignment details:', error.response?.data || error.message)
+    console.error('Error fetching assignment details:', (error as any).response?.data || (error as any).message)
   }
 }
 

@@ -59,7 +59,7 @@ const fetchAssignments = async () => {
       }
     })
   } catch (error) {
-    console.error('Error fetching assignments:', error.response?.data || error.message)
+    console.error('Error fetching assignments:', (error as any).response?.data || (error as any).message)
   }
 }
 
@@ -70,7 +70,7 @@ const fetchAssignments = async () => {
      });
      instructorCourses.value = response.data;
    } catch (error) {
-     console.error('Error fetching instructor courses:', error.response?.data || error.message);
+     console.error('Error fetching instructor courses:', (error as any).response?.data || (error as any).message);
    }
  };
 
@@ -187,7 +187,7 @@ const deleteAssignment = async (assignmentId: number) => {
     )
     fetchAssignments()
   } catch (error) {
-    console.error('Error deleting assignment:', error.response?.data || error.message)
+    console.error('Error deleting assignment:', (error as any).response?.data || (error as any).message)
   }
 }
 
