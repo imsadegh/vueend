@@ -74,12 +74,7 @@ const fetchAssignments = async () => {
    }
  };
 
- // Call fetchInstructorCourses once on component mount
- onMounted(() => {
-   fetchInstructorCourses();
-   fetchAssignments(); // existing function
- });
-
+ 
 
 // Open dialog to create a new assignment
 const openCreateDialog = () => {
@@ -233,7 +228,19 @@ const handleAxiosError = (error: unknown) => {
 }
 
 // On component load, fetch assignments
-fetchAssignments()
+watch(isDialogVisible, (newValue) => {
+  if (newValue) {
+    fetchAssignments();
+  }
+});
+
+
+// Call fetchInstructorCourses once on component mount
+onMounted(() => {
+   fetchInstructorCourses();
+   fetchAssignments(); // existing function
+ });
+
 </script>
 
 

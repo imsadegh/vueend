@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { API_BASE_URL } from '@/config/config';
-import trophy from '@images/cards/trophy.png';
 import axios from 'axios';
 import { useI18n } from 'vue-i18n';
 
@@ -32,6 +31,14 @@ const end_date = ref(null);
 const prerequisites = ref<string[]>([]);
 const tags = ref([]);
 const thumbnail_url = ref('');
+
+const formattedStartDate = start_date.value
+    ? new Date(start_date.value).toISOString()
+    : null;
+  const formattedEndDate = end_date.value
+    ? new Date(end_date.value).toISOString()
+    : null;
+
 const errors = ref<Record<string, string>>({});
 
 const instructors = ref([]);
@@ -46,32 +53,25 @@ const saveCourse = async () => {
 
   console.log('Authorization Header:', `Bearer ${token}`);
 
-  const formattedStartDate = start_date.value
-    ? new Date(start_date.value).toISOString()
-    : null;
-  const formattedEndDate = end_date.value
-    ? new Date(end_date.value).toISOString()
-    : null;
-
-  console.log('Payload:', {
-    course_name: course_name.value,
-    course_code: `COURSE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-    instructor_id: instructor_id.value,
-    category_id: category_id.value,
-    capacity: capacity.value ? parseInt(capacity.value) : null,
-    visibility: visibility.value === 'true',
-    featured: featured.value,
-    description: description.value,
-    about: about.value,
-    discussion_group_url: discussion_group_url.value || null,
-    status: status.value,
-    allow_waitlist: allow_waitlist.value,
-    start_date: formattedStartDate,
-    end_date: formattedEndDate,
-    prerequisites: prerequisites.value,
-    tags: tags.value,
-    thumbnail_url: thumbnail_url.value || null,
-  });
+  // console.log('Payload:', {
+  //   course_name: course_name.value,
+  //   course_code: `COURSE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+  //   instructor_id: instructor_id.value,
+  //   category_id: category_id.value,
+  //   capacity: capacity.value ? parseInt(capacity.value) : null,
+  //   visibility: visibility.value === 'true',
+  //   featured: featured.value,
+  //   description: description.value,
+  //   about: about.value,
+  //   discussion_group_url: discussion_group_url.value || null,
+  //   status: status.value,
+  //   allow_waitlist: allow_waitlist.value,
+  //   start_date: formattedStartDate,
+  //   end_date: formattedEndDate,
+  //   prerequisites: prerequisites.value,
+  //   tags: tags.value,
+  //   thumbnail_url: thumbnail_url.value || null,
+  // });
 
   try {
     if (!token) {
@@ -112,21 +112,25 @@ const saveCourse = async () => {
 
     console.log('Course created successfully:', response.data);
     isDialogVisible.value = false;
-    resetForm(); // Reset form
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('Failed to create course:', error.response?.data || error.message);
-    } else {
-      console.error('Failed to create course:', error);
+
+    // Only reset the form if the course was created successfully
+    if (response.status === 201) {
+      resetForm();
     }
-    // errors.value = error.response?.data?.errors || {};
-    if (axios.isAxiosError(error) && error.response?.data?.errors) {
-      errors.value = localizeErrors(error.response.data.errors);
-    } else {
-      console.error('Failed to create course:', error);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Failed to create course:', error.response?.data || error.message);
+      } else {
+        console.error('Failed to create course:', error);
+      }
+      // errors.value = error.response?.data?.errors || {};
+      if (axios.isAxiosError(error) && error.response?.data?.errors) {
+        errors.value = localizeErrors(error.response.data.errors);
+      } else {
+        console.error('Failed to create course:', error);
+      }
+      // console.error('Signup or OTP sending failed:', error)
     }
-    // console.error('Signup or OTP sending failed:', error)
-  }
 };
 
 const fetchDropdownData = async () => {
@@ -181,6 +185,8 @@ const resetForm = () => {
   prerequisites.value = [];
   tags.value = [];
   thumbnail_url.value = '';
+  instructors.value = [];
+  categories.value = [];
 };
 
 const localizeErrors = (errors: Record<string, string[]>) => {
@@ -192,7 +198,11 @@ const localizeErrors = (errors: Record<string, string[]>) => {
 };
 
 // Fetch dropdown data when the component is initialized
-fetchDropdownData();
+watch(isDialogVisible, (newValue) => {
+  if (newValue) {
+    fetchDropdownData();
+  }
+});
 
 </script>
 
@@ -204,7 +214,7 @@ fetchDropdownData();
           {{ $t('course.create') }}
           <strong>{{ $t('course.course') }}</strong>
           {{ $t('course.new') }}
-          <span class="text-high-emphasis"> 🎉</span>
+          <span class="text-high-emphasis"> 🎓</span>
         </h5>
 
         <div class="text-subtitle-1">
@@ -370,7 +380,7 @@ fetchDropdownData();
     </VCardText>
 
     <!-- Trophy -->
-    <VImg :src="trophy" class="trophy flip-in-rtl" />
+    <!-- <VImg :src="trophy" class="trophy flip-in-rtl" /> -->
   </VCard>
 </template>
 

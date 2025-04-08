@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { API_BASE_URL } from '@/config/config';
 import axios from 'axios';
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t: $t } = useI18n();
@@ -45,7 +45,7 @@ const fetchAvailableCourses = async () => {
     });
     availableCourses.value = response.data;
   } catch (error) {
-    console.error('Error fetching courses:', error.response?.data || error.message);
+    console.error('Error fetching courses:', (error as any).response?.data || (error as any).message);
   }
 };
 
@@ -70,14 +70,26 @@ const fetchEnrollments = async () => {
     });
 
   } catch (error) {
-    console.error('Error fetching enrollments:', error.response?.data || error.message);
+    console.error('Error fetching enrollments:', (error as any).response?.data || (error as any).message);
   }
 };
 
 // Watch for changes in the selected course to fetch its enrollments
-watch(selectedCourseId, () => {
-  fetchEnrollments();
+watch([selectedCourseId, isDialogVisible], ([courseId, dialogVisible]) => {
+  if (dialogVisible) {
+    fetchAvailableCourses();
+  }
+  if (courseId) {
+    fetchEnrollments();
+  }
 });
+
+// watch(isModuleDialogVisible, (visible) => {
+//    if (visible) {
+//      fetchCourses()
+//        console.log('Module dialog opened')
+//    }
+//  })
 
 // Update a single enrollment's status
 const updateEnrollmentStatus = async (enrollment: any) => {
@@ -91,20 +103,49 @@ const updateEnrollmentStatus = async (enrollment: any) => {
     enrollment.status = enrollment.editedStatus;
     console.log('Enrollment updated successfully.');
   } catch (error) {
-    console.error('Error updating enrollment:', error.response?.data || error.message);
+    console.error('Error updating enrollment:', (error as any).response?.data || (error as any).message);
   }
 };
 
-onMounted(() => {
-  fetchAvailableCourses();
-});
+// onMounted(() => {
+//   fetchAvailableCourses();
+//   console.log('meooow.');
+// });
 </script>
 
 <template>
   <section>
+    
+    <VCard class="position-relative">
+    <VCardText>
+      <div class="mb-3">
+        <h5 class="text-h5 text-wrap">
+          {{ $t('manage') }}
+          <strong>{{ $t('course.enroll') }}</strong>
+          <!-- {{ $t('course.new') }} -->
+          <span class="text-high-emphasis"> </span>
+        </h5>
+
+        <div class="text-subtitle-1">
+          <!-- Best seller of the month -->
+        </div>
+      </div>
+
+      <h4 class="text-h4 text-primary">
+        <!-- $42.8k -->
+      </h4>
+      <div class="text-body-1 mb-3">
+        <!-- 78% of target <span class="text-high-emphasis">🚀</span> -->
+      </div>
+
+      <!-- <VBtn size="small">
+    {{$t('course.create')}}
+    </VBtn> -->
+
+
     <!-- Button to open the Manage Enrollments dialog -->
     <VBtn color="primary" @click="isDialogVisible = true">
-      {{ $t('enrollment.manageEnrollments') }}
+      {{ $t('View') }}
     </VBtn>
 
     <!-- Enrollment Management Dialog -->
@@ -185,6 +226,12 @@ onMounted(() => {
         </VCardActions>
       </VCard>
     </VDialog>
+
+    </VCardText>
+
+    <!-- Trophy -->
+    <!-- <VImg :src="trophy" class="trophy flip-in-rtl" /> -->
+  </VCard>
   </section>
 </template>
 

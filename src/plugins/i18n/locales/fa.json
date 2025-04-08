@@ -24,6 +24,7 @@
     "totalPaid": "پرداخت شده"
   },
   "course": {
+    "addModule": "اضافه کردن ماژول",
     "enrollStudent": "ثبت‌نام دانش‌آموز",
     "enroll": "ثبت‌نام",
     "students": "دانش‌آموزان",
@@ -62,7 +63,24 @@
     "tagBeginner": "مبتدی",
     "tagIntermediate": "متوسط",
     "tagAdvanced": "پیشرفته",
-    "thumbnailUrl": "لینک تصویر"
+    "thumbnailUrl": "لینک تصویر",
+    "video": "فیلم",
+    "article": "متن",
+    "quiz": "کوییز",
+    "assignment": "تمرین",
+    "modules": "ماژول‌ها",
+    "moduleType": "نوع",
+    "moduleTitle": "عنوان",
+    "saveModules": "ذخیره",
+    "removeModule": "حذف",
+    "selectCourse": "انتخاب دوره",
+    "createModule": "ایجاد ماژول دوره",
+    "moduleContentUrl": "آدرس URL",
+    "modulePosition": "ترتیب قرار گیری",
+    "moduleVisible": "قابلیت مشاهده",
+    "moduleReleaseDate": "تاریخ انتشار",
+    "moduleDuration": "مدت یادگیری",
+    "moduleMandatory": "اجباری"
   },
   "user": "کاربر",
   "email": "ایمیل",
@@ -495,5 +513,6 @@
     "courseCost": "هزینه دوره",
     "totalPaid": "پرداخت شده",
     "remainingBalance": "باقی مانده"
-  }
+  },
+  "manage": "مدیریت"
 }

@@ -12,7 +12,7 @@ import { VideoPlayer } from '@videojs-player/vue';
 import axios from 'axios';
 import QRCodeStyling from 'qr-code-styling';
 import 'video.js/dist/video-js.css';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 const route = useRoute()
@@ -90,6 +90,28 @@ const fetchAssignments = async () => {
   }
 };
 
+const localizedSkillLevel = computed(() => {
+  if (!courseData.value || !courseData.value.skill_level) return '';
+  const level = courseData.value.skill_level.toLowerCase();
+  switch (level) {
+    case 'beginner':
+      return $t('academy.beginner');
+    case 'intermediate':
+      return $t('academy.intermediate');
+    case 'advanced':
+      return $t('academy.advanced');
+    default:
+      return courseData.value.skill_level;
+  }
+});
+
+const panelStatus = ref(0)
+
+const openSubmissionDialog = (assignmentId: number) => {
+  selectedAssignmentId.value = assignmentId;
+  isSubmissionDialogVisible.value = true;
+};
+
 onMounted(async () => {
   try {
     const courseId = route.params.courseId
@@ -161,27 +183,7 @@ onMounted(async () => {
 
 })
 
-const localizedSkillLevel = computed(() => {
-  if (!courseData.value || !courseData.value.skill_level) return '';
-  const level = courseData.value.skill_level.toLowerCase();
-  switch (level) {
-    case 'beginner':
-      return $t('academy.beginner');
-    case 'intermediate':
-      return $t('academy.intermediate');
-    case 'advanced':
-      return $t('academy.advanced');
-    default:
-      return courseData.value.skill_level;
-  }
-});
 
-const panelStatus = ref(0)
-
-const openSubmissionDialog = (assignmentId: number) => {
-  selectedAssignmentId.value = assignmentId;
-  isSubmissionDialogVisible.value = true;
-};
 </script>
 
 <template>
@@ -211,8 +213,7 @@ const openSubmissionDialog = (assignmentId: number) => {
               <!-- <VideoPlayer src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
               :poster="instructorPosterImage" controls plays-inline :height="$vuetify.display.mdAndUp ? 440 : 250"
               class="w-100 rounded" /> -->
-              <VideoPlayer class="w-100 rounded" :options="videoOptions"
-                :height="$vuetify.display.mdAndUp ? 440 : 250" />
+              <VideoPlayer class="w-100 rounded" :options="videoOptions" :height="$vuetify.display.mdAndUp ? 440 : 250" />
               <div id="qr-code"></div>
             </div>
 

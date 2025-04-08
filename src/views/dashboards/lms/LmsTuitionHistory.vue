@@ -37,7 +37,7 @@ async function fetchCourses() {
     });
     courses.value = response.data;
   } catch (error) {
-    console.error('Error fetching courses:', error.response?.data || error.message);
+    console.error('Error fetching courses:', (error as any).response?.data || (error as any).message);
   }
 }
 
@@ -51,7 +51,7 @@ async function fetchTuitionSummary() {
     totalPaid.value = res.data.total_paid;
     remainingBalance.value = res.data.remaining_balance;
   } catch (error) {
-    console.error('Error fetching tuition summary:', error.response?.data || error.message);
+    console.error('Error fetching tuition summary:', (error as any).response?.data || (error as any).message);
   }
 }
 

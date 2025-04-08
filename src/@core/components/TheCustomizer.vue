@@ -313,11 +313,11 @@ const resetCustomizer = async () => {
       <div class="customizer-heading d-flex align-center justify-space-between">
         <div>
           <h6 class="text-h6">
-            Theme Customizer
+            شخصی‌سازی تم
           </h6>
-          <p class="text-body-2 mb-0">
+          <!-- <p class="text-body-2 mb-0">
             Customize & Preview in Real Time
-          </p>
+          </p> -->
         </div>
 
         <div class="d-flex align-center">
@@ -370,7 +370,7 @@ const resetCustomizer = async () => {
           <!-- 👉 Primary Color -->
           <div class="d-flex flex-column gap-2">
             <h6 class="text-h6">
-              Primary Color
+              رنگ اصلی
             </h6>
 
             <div
@@ -441,7 +441,7 @@ const resetCustomizer = async () => {
           <!-- 👉 Mode -->
           <div class="d-flex flex-column gap-2">
             <h6 class="text-h6">
-              Mode
+             حالت تاریک
             </h6>
 
             <CustomRadiosWithImage
@@ -473,7 +473,7 @@ const resetCustomizer = async () => {
           <!-- 👉 Skin -->
           <div class="d-flex flex-column gap-2">
             <h6 class="text-h6">
-              Skin
+              پوسته
             </h6>
 
             <CustomRadiosWithImage
@@ -519,7 +519,7 @@ const resetCustomizer = async () => {
           <!-- 👉 Layouts -->
           <div class="d-flex flex-column gap-2">
             <h6 class="text-base font-weight-medium">
-              Layout
+              نوع چیدمان
             </h6>
 
             <CustomRadiosWithImage
@@ -537,7 +537,7 @@ const resetCustomizer = async () => {
           <!-- 👉 Content Width -->
           <div class="d-flex flex-column gap-2">
             <h6 class="text-base font-weight-medium">
-              Content
+              چیدمان محتوا
             </h6>
 
             <CustomRadiosWithImage
@@ -555,7 +555,7 @@ const resetCustomizer = async () => {
           <!-- 👉 Direction -->
           <div class="d-flex flex-column gap-2">
             <h6 class="text-base font-weight-medium">
-              Direction
+              جهت
             </h6>
 
             <CustomRadiosWithImage

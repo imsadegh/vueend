@@ -40,10 +40,12 @@ function getLocalizedRole(role: string) {
     </VCardText>
 
     <!-- Trophy -->
-    <VImg
+    <div class="trophy-container">
+      <VImg
       :src="trophy"
       class="trophy flip-in-rtl"
-    />
+      />
+    </div>
   </VCard>
 </template>
 
@@ -57,8 +59,21 @@ function getLocalizedRole(role: string) {
 
 .v-card .trophy {
   position: absolute;
+
+  /* z-index: 1; */
   inline-size: 6.625rem;
   inset-block-end: 0;
   inset-inline-end: 1.25rem;
+  pointer-events: none; /* Prevent interaction issues */
+}
+
+</style>
+
+<style scoped>
+.v-card-text {
+  position: relative;
+  z-index: 2;
+  margin-inline-end: 9rem; /* Slightly increase spacing to ensure no overlap */
+  word-wrap: break-word; /* Ensure long text wraps properly */
 }
 </style>
