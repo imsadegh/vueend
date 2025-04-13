@@ -8,11 +8,12 @@ const selectedAssignmentId = ref<number | null>(null);
 const token = useCookie('accessToken').value
 
 import { API_BASE_URL } from '@/config/config';
-import { VideoPlayer } from '@videojs-player/vue';
+// import { VideoPlayer } from '@videojs-player/vue';
 import axios from 'axios';
 import QRCodeStyling from 'qr-code-styling';
+import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
-import { computed, onMounted, ref } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 const route = useRoute()
@@ -61,20 +62,20 @@ const courseData = ref<CourseDetails | null>(null)
 const userData = useCookie<any>('userData')
 // const phoneNumber = ref(userData.phone_number);
 
-const videoUrl = "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4";
-const videoOptions = ref({
-  autoplay: false,
-  // poster: instructorPosterImage,
-  controls: true,
-  playsinline: true,
-  PictureInPictureEvent: false,
-  sources: [
-    {
-      src: videoUrl,
-      type: "video/mp4"
-    }
-  ]
-});
+// const videoUrl = "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4";
+// const videoOptions = ref({
+//   autoplay: false,
+//   // poster: instructorPosterImage,
+//   controls: true,
+//   playsinline: true,
+//   PictureInPictureEvent: false,
+//   sources: [
+//     {
+//       src: videoUrl,
+//       type: "video/mp4"
+//     }
+//   ]
+// });
 
 // Fetch assignments for the loaded course
 const fetchAssignments = async () => {
@@ -183,6 +184,103 @@ onMounted(async () => {
 
 })
 
+const modules = ref<any[]>([])
+const isVideoDialogVisible = ref(false)
+const selectedVideoModule = ref<any>(null)
+const isArticleDialogVisible = ref(false)
+const selectedArticleModule = ref<any>(null)
+
+let player: videojs.Player | null = null;
+const videoElementRef = ref<HTMLVideoElement | null>(null);
+
+watch(isVideoDialogVisible, (visible) => {
+  if (visible) {
+    nextTick(() => {
+      if (videoElementRef.value && selectedVideoModule.value) {
+        player = videojs(videoElementRef.value, {
+          autoplay: false,
+          controls: true,
+          playsinline: true,
+          sources: [{ src: selectedVideoModule.value.content_url, type: 'video/mp4' }],
+          width: 1280,
+          height: 720
+        });
+        player.ready(() => {
+          const key = `video_current_time_${selectedVideoModule.value.id}`;
+          const savedTime = localStorage.getItem(key);
+          if (savedTime) {
+            player!.currentTime(parseFloat(savedTime));
+          }
+          player!.on('timeupdate', () => {
+            localStorage.setItem(key, player!.currentTime().toString());
+          });
+        });
+      }
+    });
+  } else {
+    if (player) {
+      player.dispose();
+      player = null;
+    }
+  }
+});
+
+onBeforeUnmount(() => {
+  if (player) {
+    player.dispose();
+    player = null;
+  }
+});
+
+
+const fetchModules = async () => {
+  try {
+    const courseId = route.params.courseId
+    const response = await axios.get(`${API_BASE_URL}/courses/${courseId}/modules`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    modules.value = response.data
+  } catch (error) {
+    console.error("Error fetching modules:", (error as any).response?.data || (error as any).message)
+  }
+}
+
+const videoModules = computed(() => modules.value.filter(m => m.type === 'video' && m.visible))
+const articleModules = computed(() => modules.value.filter(m => m.type === 'article' && m.visible))
+
+function getVideoOptions(module: any) {
+  // Dynamic height based on display (adjust if needed)
+  return {
+    autoplay: false,
+    controls: true,
+    playsinline: true,
+    sources: [
+      { src: module.content_url, type: 'video/mp4' }
+    ],
+    width: 1280,
+    height: 720,
+  }
+}
+
+function openVideoDialog(module: any) {
+  selectedVideoModule.value = module
+  isVideoDialogVisible.value = true
+}
+function openArticleDialog(module: any) {
+  selectedArticleModule.value = module
+  isArticleDialogVisible.value = true
+}
+
+const openDiscussionGroup = () => {
+  if (courseData.value?.discussion_group_url) {
+    window.open(courseData.value.discussion_group_url, '_blank');
+  }
+};
+
+onMounted(() => {
+  // fetchCourseDetails() // if still needed
+  fetchModules()
+});
 
 </script>
 
@@ -213,9 +311,107 @@ onMounted(async () => {
               <!-- <VideoPlayer src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4"
               :poster="instructorPosterImage" controls plays-inline :height="$vuetify.display.mdAndUp ? 440 : 250"
               class="w-100 rounded" /> -->
-              <VideoPlayer class="w-100 rounded" :options="videoOptions" :height="$vuetify.display.mdAndUp ? 440 : 250" />
+              <!-- <VideoPlayer class="w-100 rounded" :options="videoOptions" :height="$vuetify.display.mdAndUp ? 440 : 250" /> -->
               <div id="qr-code"></div>
             </div>
+
+            <div style="margin: 16px;">
+              <!-- Video Modules Section -->
+              <VRow v-if="videoModules.length">
+                <VCol cols="12">
+                  <h3>{{ $t('course.videoModules') }}</h3>
+                </VCol>
+                <VCol v-for="module in videoModules" :key="module.id" cols="24" md="4">
+                  <VCard class="mb-4" style="cursor: pointer;" >
+                    <VCardTitle class="mt-1 pb-3">
+                      {{ module.title }}
+                    </VCardTitle>
+                    <VCardText class="d-flex justify-center">
+                      <!-- <VCardActions class="d-flex justify-center"> -->
+
+                      <!-- <div>{{ module.description }}</div> -->
+                      <VBtn variant="tonal" color="primary"
+                      @click="openVideoDialog(module)">
+                        {{ $t('course.viewVideo') }}
+                      </VBtn>
+                      <!-- </VCardActions> -->
+                    </VCardText>
+                  </VCard>
+                </VCol>
+              </VRow>
+
+              <VDialog v-model="isVideoDialogVisible" max-width="90vw">
+                <VCard>
+                  <VCardTitle>{{ selectedVideoModule?.title }}</VCardTitle>
+                  <VCardText>
+                    <div v-if="selectedVideoModule">
+                      <p>{{ selectedVideoModule.description }}</p>
+                      <video ref="videoElementRef" class="video-js vjs-default-skin w-100"></video>
+                    </div>
+                  </VCardText>
+                  <VCardActions>
+                    <VBtn color="primary" @click="isVideoDialogVisible = false">{{ $t('button.close') }}</VBtn>
+                  </VCardActions>
+                </VCard>
+              </VDialog>
+
+              <VDivider class="my-4"/>
+
+              <!-- Article Modules Section -->
+              <VRow v-if="articleModules.length">
+                <VCol cols="12">
+                  <h3>{{ $t('course.articleModules') }}</h3>
+                </VCol>
+                <VCol v-for="module in articleModules" :key="module.id" cols="24" md="4">
+                  <VCard class="mb-4" style="cursor: pointer;">
+                    <VCardTitle class="mt-1 pb-3">
+                      {{ module.title }}
+                    </VCardTitle>
+                    <VCardText class="d-flex justify-center">
+                      <!-- <VCardActions class="d-flex justify-center"> -->
+                        <!-- <div v-else-if="module.content_url">
+                        {{ $t('course.readArticle') }}
+                        </div> -->
+                        <!-- <div v-if="module.module_data">
+                          {{ module.module_data }}
+                        </div> -->
+                        <VBtn variant="tonal" color="primary"
+                        @click="openArticleDialog(module)">
+                          {{ $t('course.readArticle') }}
+                        </VBtn>
+                      <!-- </VCardActions> -->
+                    </VCardText>
+                  </VCard>
+                </VCol>
+
+                <VDialog v-model="isArticleDialogVisible" max-width="800">
+                  <VCard>
+                    <VCardTitle>{{ selectedArticleModule?.title }}</VCardTitle>
+                    <VCardText>
+                      <div v-if="selectedArticleModule?.type === 'article'">
+                        <div v-if="selectedArticleModule?.description" class="mb-3">
+                          <h4>توضیحات</h4>
+                          <p>{{ selectedArticleModule.description }}</p>
+                        </div>
+                        <div>
+                          <h4>متن</h4>
+                          <div v-html="selectedArticleModule?.article_content"></div>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <!-- Fallback for non-article modules (e.g., video) -->
+                        <iframe :src="selectedArticleModule?.content_url" style=" block-size: 600px;inline-size: 100%;" frameborder="0"></iframe>
+                      </div>
+                    </VCardText>
+                    <VCardActions>
+                      <VBtn color="primary" @click="isArticleDialogVisible = false">{{ $t('button.close') }}</VBtn>
+                    </VCardActions>
+                  </VCard>
+                </VDialog>
+              </VRow>
+            </div>
+
+            <VDivider class="my-7" :thickness="3" />
 
             <VCardText>
               <h5 class="text-h5 mb-4">
@@ -373,7 +569,7 @@ onMounted(async () => {
 
       <div class="course-assignment">
         <VCard class="mt-6">
-          <VCardTitle class="pb-4">
+          <VCardTitle class="pb-3">
             <h3>{{ $t('assignment.myAssignments') }}</h3>
           </VCardTitle>
           <VCardText>
@@ -404,24 +600,24 @@ onMounted(async () => {
 
       <div class="course-disscussiongroup">
         <VCard class="mt-6">
-          <VCardItem title="گروه بحث" class="pb-6 text-h2">
-            <template #subtitle>
-              <div class="text-h6">
-                <span class="d-inline-block">عنوان گروه</span>
-              </div>
-            </template>
-          </VCardItem>
+          <VCardTitle class="pb-3">
+            <h3>{{ $t('course.discussionGroup') }}</h3>
+          </VCardTitle>
 
           <VCardText>
             <p class="text-body-1">
-              توضیحات گروه
+              برای مشاهده گروه درسی ایتا کلیک کنید.
             </p>
           </VCardText>
 
-          <VCardActions>
-            <VBtn variant="tonal" color="primary" class="text-h6">
+          <VCardActions class="d-flex justify-center">
+            <!-- <div class="d-flex justify-center"> -->
+              <VBtn variant="tonal" color="primary"
+               :disabled="!courseData?.discussion_group_url"
+               @click="openDiscussionGroup">
               {{ $t('academy.join') }}
-            </VBtn>
+              </VBtn>
+            <!-- </div> -->
           </VCardActions>
 
         </VCard>

@@ -1,95 +1,74 @@
 <template>
-  <div class="video-container">
-    <video controls>
-      <source :src="videoUrl" type="video/mp4" />
+  <div>
+    <!-- Video element with video.js classes -->
+    <video 
+      ref="videoPlayer" 
+      class="video-js vjs-default-skin" 
+      controls 
+      preload="auto" 
+      width="600">
+      <source 
+        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" 
+        type="video/mp4" />
       Your browser does not support the video tag.
     </video>
-    <div id="qr-code"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import QRCodeStyling from 'qr-code-styling';
-import { onMounted } from 'vue';
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
-const videoUrl = "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4";
+const videoPlayer = ref<HTMLVideoElement | null>(null);
+let player: videojs.Player | null = null;
+const LOCAL_STORAGE_KEY = 'video-current-time';
+
+// Save the current playback time in localStorage.
+const saveCurrentTime = () => {
+  if (player) {
+    localStorage.setItem(LOCAL_STORAGE_KEY, player.currentTime().toString());
+  }
+};
 
 onMounted(() => {
-  const qrCode = new QRCodeStyling({
-    width: 150,
-    height: 150,
-    type: "canvas",
-    shape: "square",
-    data: "1234567890",
-    margin: 5,
-    qrOptions: {
-      typeNumber: 0,
-      mode: "Numeric",
-      errorCorrectionLevel: "H"
-    },
-    // image: "/src/assets/images/avatars/avatar-3.png",
-    // imageOptions: {
-    //   hideBackgroundDots: true,
-    //   imageSize: 33,
-    //   margin: 4,
-    //   crossOrigin: "anonymous",
-    //   saveAsBlob: true
-    // },
-    dotsOptions: {
-      color: "#4267b2",
-      gradient: {
-        type: "linear",
-        rotation: 45,
-        colorStops: [{ offset: 0, color: '#4267b2' }, {  offset: 1, color: '#e9ebee' }]
-      },
-      type: "extra-rounded",
-      roundSize:true
-    },
-    cornersSquareOptions: {
-      color: "#4267b2",
-      // gradient: 
-      // type: "dot"
-    },
-    cornersDotOptions: {
-      color: "#4267b2",
-      // gradient: {
-      //   type: "radial",
-      //   colorStops: [{ offset: 0, color: "#e9ebee" }, { offset: 1, color: "#e9ebee" }]
-      // }
-      type: "dot"
-    },
-    backgroundOptions: {
-      // color: "#e9ebee",
-      color: "transparent",
-      // gradient:
-    },
+  if (videoPlayer.value) {
+    // Initialize the video.js player instance.
+    player = videojs(videoPlayer.value, {
+      controls: true,
+      autoplay: false,
+      preload: 'auto'
+    });
 
-  });
+    // When the player is ready, restore the saved playback time.
+    player.ready(() => {
+      const savedTime = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (savedTime) {
+        player!.currentTime(parseFloat(savedTime));
+      }
+    });
 
-  const container = document.getElementById("qr-code");
-  if (container) {
-    qrCode.append(container);
+    // Save the playback time if the user closes or reloads the page.
+    window.addEventListener('beforeunload', saveCurrentTime);
+  }
+});
+
+onBeforeUnmount(() => {
+  // Save the current playback time and remove event listeners before unmounting.
+  saveCurrentTime();
+  window.removeEventListener('beforeunload', saveCurrentTime);
+  if (player) {
+    player.dispose();
+    player = null;
   }
 });
 </script>
 
 <style scoped>
-.video-container {
-  position: relative;
-  inline-size: 640px;
+/* Center the video element */
+.video-js {
+  display: block;
   margin-block: 0;
   margin-inline: auto;
-}
-
-video {
-  display: block;
-  inline-size: 100%;
-}
-
-#qr-code {
-  position: absolute;
-  z-index: 10;
-  inset-block-end: 90px;
-  inset-inline-end: 10px;
 }
 </style>

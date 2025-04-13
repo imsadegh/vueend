@@ -18,19 +18,19 @@ const selectedCourseId = ref(props.courseId);
 const title = ref('')
 const type = ref('article')
 const content_url = ref('')
+const article_content = ref('')
+const description = ref('')
 const position = ref<number | null>(null)
 const visible = ref(true)
 const release_date = ref('')   // Use the proper format (e.g. "YYYY-MM-DDTHH:mm") with datetime-local input
 const is_mandatory = ref(false)
 const estimated_duration_minutes = ref<number | null>(null)
-const slug = ref('')
+
 
 // Module types for the dropdown, localized
 const moduleTypes = ref([
   { title: $t('course.video'), value: 'video' },
   { title: $t('course.article'), value: 'article' },
-  { title: $t('course.quiz'), value: 'quiz' },
-  { title: $t('course.assignment'), value: 'assignment' },
 ])
 
 // Get token and user data (created_by is the id of the user creating the module)
@@ -68,12 +68,13 @@ const createModule = async () => {
       title: title.value,
       type: type.value,
       content_url: content_url.value,
+      article_content: article_content.value,
+      description: description.value,
       position: position.value,
       visible: visible.value,
       release_date: release_date.value,
       is_mandatory: is_mandatory.value,
       estimated_duration_minutes: estimated_duration_minutes.value,
-      slug: slug.value,
       created_by: created_by,
     }
     const response = await axios.post(
@@ -91,12 +92,13 @@ const createModule = async () => {
     title.value = ''
     type.value = 'article'
     content_url.value = ''
+    article_content.value = ''
+    description.value = ''
     position.value = null
     visible.value = true
     release_date.value = ''
     is_mandatory.value = false
     estimated_duration_minutes.value = null
-    slug.value = ''
   } catch (error) {
     console.error('Error creating module:', (error as any).response?.data || (error as any).message)
   }
@@ -144,10 +146,26 @@ watch(isModuleDialogVisible, (visible) => {
             required
             class="mb-3"
           />
-          <!-- Content URL -->
-          <VTextField
+            <!-- Content URL (Visible only if module type is 'video') -->
+            <VTextField
+            v-if="type === 'video'"
             v-model="content_url"
             :label="$t('course.moduleContentUrl')"
+            outlined
+            class="mb-3"
+            />
+            <!-- Article Content (Visible only if module type is 'article') -->
+            <VTextarea
+            v-if="type === 'article'"
+            v-model="article_content"
+            :label="$t('course.moduleArticleContent')"
+            outlined
+            class="mb-3"
+            />
+          <!-- Description -->
+          <VTextarea
+            v-model="description"
+            :label="$t('course.moduleDescription')"
             outlined
             class="mb-3"
           />
@@ -184,13 +202,6 @@ watch(isModuleDialogVisible, (visible) => {
             v-model="estimated_duration_minutes"
             type="number"
             :label="$t('course.moduleDuration')"
-            outlined
-            class="mb-3"
-          />
-          <!-- Slug -->
-          <VTextField
-            v-model="slug"
-            :label="$t('course.moduleSlug')"
             outlined
             class="mb-3"
           />
