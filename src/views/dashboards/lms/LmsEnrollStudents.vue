@@ -115,123 +115,105 @@ const updateEnrollmentStatus = async (enrollment: any) => {
 
 <template>
   <section>
-    
+
     <VCard class="position-relative">
-    <VCardText>
-      <div class="mb-3">
-        <h5 class="text-h5 text-wrap">
-          {{ $t('manage') }}
-          <strong>{{ $t('course.enroll') }}</strong>
-          <!-- {{ $t('course.new') }} -->
-          <span class="text-high-emphasis"> </span>
-        </h5>
+      <VCardText>
+        <div class="mb-3">
+          <h5 class="text-h5 text-wrap">
+            {{ $t('manage') }}
+            <strong>{{ $t('course.enroll') }}</strong>
+            <!-- {{ $t('course.new') }} -->
+            <span class="text-high-emphasis"> 👥</span>
+          </h5>
 
-        <div class="text-subtitle-1">
-          <!-- Best seller of the month -->
+          <div class="text-subtitle-1">
+            <!-- Best seller of the month -->
+          </div>
         </div>
-      </div>
 
-      <h4 class="text-h4 text-primary">
-        <!-- $42.8k -->
-      </h4>
-      <div class="text-body-1 mb-3">
-        <!-- 78% of target <span class="text-high-emphasis">🚀</span> -->
-      </div>
+        <h4 class="text-h4 text-primary">
+          <!-- $42.8k -->
+        </h4>
+        <div class="text-body-1 mb-3">
+          <!-- 78% of target <span class="text-high-emphasis">🚀</span> -->
+        </div>
 
-      <!-- <VBtn size="small">
+        <!-- <VBtn size="small">
     {{$t('course.create')}}
     </VBtn> -->
 
 
-    <!-- Button to open the Manage Enrollments dialog -->
-    <VBtn color="primary" @click="isDialogVisible = true">
-      {{ $t('View') }}
-    </VBtn>
+        <!-- Button to open the Manage Enrollments dialog -->
+        <VBtn color="primary" @click="isDialogVisible = true">
+          {{ $t('View') }}
+        </VBtn>
 
-    <!-- Enrollment Management Dialog -->
-    <VDialog v-model="isDialogVisible" max-width="900">
-      <VCard>
-        <VCardTitle>
-          {{ $t('enrollment.manageEnrollments') }}
-        </VCardTitle>
-        <VCardText>
-          <!-- Select Course Dropdown -->
-          <VSelect
-            v-model="selectedCourseId"
-            :items="availableCourses"
-            item-title="course_name"
-            item-value="id"
-            :label="$t('enrollment.selectCourse')"
-            outlined
-            clearable
-          />
+        <!-- Enrollment Management Dialog -->
+        <VDialog v-model="isDialogVisible" max-width="900">
+          <VCard>
+            <VCardTitle>
+              {{ $t('enrollment.manageEnrollments') }}
+            </VCardTitle>
+            <VCardText>
+              <!-- Select Course Dropdown -->
+              <VSelect v-model="selectedCourseId" :items="availableCourses" item-title="course_name" item-value="id"
+                :label="$t('enrollment.selectCourse')" outlined clearable />
 
-          <!-- Display enrollments only if a course is selected -->
-          <div v-if="selectedCourseId">
-            <VDataTable
-                :headers="headers"
-              :items="enrollments"
-              class="mt-4"
-              :items-length="enrollments.length"
-            >
-              <!-- Student Name Column -->
-              <template #item.studentName="{ item }">
-                <span>{{ item.student.first_name }} {{ item.student.last_name }}</span>
-              </template>
-              <!-- Status Column: Inline editable via VSelect -->
-              <template #item.status="{ item }">
-                <VSelect
-                  v-model="item.editedStatus"
-                  :items="enrollmentStatuses"
-                  item-title="title"
-                  item-value="value"
-                  dense
-                  outlined
-                />
-              </template>
-              <!-- Total Paid Column -->
-              <template #item.total_paid="{ item }">
-                <span>{{ new Intl.NumberFormat('en-US').format(item.total_paid) }} ریال</span>
-              </template>
+              <!-- Display enrollments only if a course is selected -->
+              <div v-if="selectedCourseId">
+                <VDataTable :headers="headers" :items="enrollments" class="mt-4" :items-length="enrollments.length">
+                  <!-- Student Name Column -->
+                  <template #item.studentName="{ item }">
+                    <span>{{ item.student.first_name }} {{ item.student.last_name }}</span>
+                  </template>
+                  <!-- Status Column: Inline editable via VSelect -->
+                  <template #item.status="{ item }">
+                    <VSelect v-model="item.editedStatus" :items="enrollmentStatuses" item-title="title"
+                      item-value="value" dense outlined />
+                  </template>
+                  <!-- Total Paid Column -->
+                  <template #item.total_paid="{ item }">
+                    <span>{{ new Intl.NumberFormat('en-US').format(item.total_paid) }} ریال</span>
+                  </template>
 
-              <!-- Course Name Column -->
-              <!-- <template #item.courseName="{ item }">
+                  <!-- Course Name Column -->
+                  <!-- <template #item.courseName="{ item }">
                 <span>{{ item.courseName }}</span>
               </template> -->
 
-              <!-- Remaining Price Column -->
-              <template #item.remainPrice="{ item }">
-                <span>{{ new Intl.NumberFormat('en-US').format(item.remainPrice) }} ریال</span>
-              </template>
+                  <!-- Remaining Price Column -->
+                  <template #item.remainPrice="{ item }">
+                    <span>{{ new Intl.NumberFormat('en-US').format(item.remainPrice) }} ریال</span>
+                  </template>
 
-              <!-- Course Price Column -->
-              <template #item.coursePrice="{ item }">
-                <span>{{ new Intl.NumberFormat('en-US').format(item.coursePrice) }} ریال</span>
-              </template>
+                  <!-- Course Price Column -->
+                  <template #item.coursePrice="{ item }">
+                    <span>{{ new Intl.NumberFormat('en-US').format(item.coursePrice) }} ریال</span>
+                  </template>
 
-              <!-- Actions Column: Update button -->
-              <template #item.actions="{ item }">
-                <VBtn color="primary" small @click="updateEnrollmentStatus(item)">
-                  {{ $t('actions.update') }}
-                </VBtn>
-              </template>
+                  <!-- Actions Column: Update button -->
+                  <template #item.actions="{ item }">
+                    <VBtn color="primary" small @click="updateEnrollmentStatus(item)">
+                      {{ $t('actions.update') }}
+                    </VBtn>
+                  </template>
 
-            </VDataTable>
-          </div>
-        </VCardText>
-        <VCardActions>
-          <VBtn color="secondary" @click="isDialogVisible = false">
-            {{ $t('button.close') }}
-          </VBtn>
-        </VCardActions>
-      </VCard>
-    </VDialog>
+                </VDataTable>
+              </div>
+            </VCardText>
+            <VCardActions>
+              <VBtn color="secondary" @click="isDialogVisible = false">
+                {{ $t('button.close') }}
+              </VBtn>
+            </VCardActions>
+          </VCard>
+        </VDialog>
 
-    </VCardText>
+      </VCardText>
 
-    <!-- Trophy -->
-    <!-- <VImg :src="trophy" class="trophy flip-in-rtl" /> -->
-  </VCard>
+      <!-- Trophy -->
+      <!-- <VImg :src="trophy" class="trophy flip-in-rtl" /> -->
+    </VCard>
   </section>
 </template>
 

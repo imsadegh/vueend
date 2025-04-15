@@ -24,7 +24,7 @@
     "totalPaid": "پرداخت شده"
   },
   "course": {
-    "addModule": "اضافه کردن ماژول",
+    "Module": "ماژول",
     "enrollStudent": "ثبت‌نام دانش‌آموز",
     "enroll": "ثبت‌نام",
     "students": "دانش‌آموزان",
@@ -113,6 +113,20 @@
     "delete": "حذف"
   },
   "assignment": {
+    "reviewSubmissions": "بررسی تمرین‌ها",
+    "revisionNumber": "شماره ویرایش",
+    "isLate": "تاخیر",
+    "lastReviewedAt": "آخرین بررسی در",
+    "reviewedBy": "بررسی توسط",
+    "gradeVisibility": "قابلیت مشاهده نمره",
+    "studentName": "نام دانش‌آموز",
+    "assignmentTitle": "عنوان تکلیف",
+    "submissionDate": "تاریخ تحویل",
+    "file": "فایل",
+    "score": "نمره",
+    "feedback": "بازخورد",
+    "active": "فعال",
+    "review": "بررسی",
     "notActive": "غیرفعال",
     "selectCourse": "دوره را انتخاب کنید",
     "submitAssignment": "ارسال تکلیف",
@@ -134,7 +148,8 @@
     "title": "عنوان",
     "maxScore": "حداکثر نمره",
     "submissionDeadline": "مهلت تحویل",
-    "description": "توضیحات"
+    "description": "توضیحات",
+    "reviewed": "بررسی شده"
   },
   "academy": {
     "view": "مشاهده",

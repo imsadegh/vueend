@@ -113,76 +113,6 @@ const openSubmissionDialog = (assignmentId: number) => {
   isSubmissionDialogVisible.value = true;
 };
 
-onMounted(async () => {
-  try {
-    const courseId = route.params.courseId
-    const token = useCookie('accessToken').value
-    const response = await axios.get(`${API_BASE_URL}/courses/${courseId}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    courseData.value = response.data
-  } catch (err) {
-    console.error('Error fetching course details:', err)
-  }
-
-  const qrCode = new QRCodeStyling({
-    width: 150,
-    height: 150,
-    type: "canvas",
-    shape: "square",
-    data: userData.value?.phone_number || '',
-    margin: 5,
-    qrOptions: {
-      typeNumber: 0,
-      mode: "Numeric",
-      errorCorrectionLevel: "H"
-    },
-    // image: "/src/assets/images/avatars/avatar-3.png",
-    // imageOptions: {
-    //   hideBackgroundDots: true,
-    //   imageSize: 33,
-    //   margin: 4,
-    //   crossOrigin: "anonymous",
-    //   saveAsBlob: true
-    // },
-    dotsOptions: {
-      color: "#4267b2",
-      gradient: {
-        type: "linear",
-        rotation: 45,
-        colorStops: [{ offset: 0, color: '#4267b2' }, { offset: 1, color: '#e9ebee' }]
-      },
-      type: "extra-rounded",
-      roundSize: true
-    },
-    cornersSquareOptions: {
-      color: "#4267b2",
-      // gradient: 
-      // type: "dot"
-    },
-    cornersDotOptions: {
-      color: "#4267b2",
-      // gradient: {
-      //   type: "radial",
-      //   colorStops: [{ offset: 0, color: "#e9ebee" }, { offset: 1, color: "#e9ebee" }]
-      // }
-      type: "dot"
-    },
-    backgroundOptions: {
-      // color: "#e9ebee",
-      color: "transparent",
-      // gradient:
-    },
-
-  });
-  const container = document.getElementById("qr-code");
-  if (container) {
-    qrCode.append(container);
-  }
-
-  fetchAssignments();
-
-})
 
 const modules = ref<any[]>([])
 const isVideoDialogVisible = ref(false)
@@ -277,10 +207,81 @@ const openDiscussionGroup = () => {
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
+  try {
+    const courseId = route.params.courseId
+    const token = useCookie('accessToken').value
+    const response = await axios.get(`${API_BASE_URL}/courses/${courseId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    courseData.value = response.data
+  } catch (err) {
+    console.error('Error fetching course details:', err)
+  }
+
+  const qrCode = new QRCodeStyling({
+    width: 150,
+    height: 150,
+    type: "canvas",
+    shape: "square",
+    data: userData.value?.phone_number || '',
+    margin: 5,
+    qrOptions: {
+      typeNumber: 0,
+      mode: "Numeric",
+      errorCorrectionLevel: "H"
+    },
+    // image: "/src/assets/images/avatars/avatar-3.png",
+    // imageOptions: {
+    //   hideBackgroundDots: true,
+    //   imageSize: 33,
+    //   margin: 4,
+    //   crossOrigin: "anonymous",
+    //   saveAsBlob: true
+    // },
+    dotsOptions: {
+      color: "#4267b2",
+      gradient: {
+        type: "linear",
+        rotation: 45,
+        colorStops: [{ offset: 0, color: '#4267b2' }, { offset: 1, color: '#e9ebee' }]
+      },
+      type: "extra-rounded",
+      roundSize: true
+    },
+    cornersSquareOptions: {
+      color: "#4267b2",
+      // gradient: 
+      // type: "dot"
+    },
+    cornersDotOptions: {
+      color: "#4267b2",
+      // gradient: {
+      //   type: "radial",
+      //   colorStops: [{ offset: 0, color: "#e9ebee" }, { offset: 1, color: "#e9ebee" }]
+      // }
+      type: "dot"
+    },
+    backgroundOptions: {
+      // color: "#e9ebee",
+      color: "transparent",
+      // gradient:
+    },
+
+  });
+  const container = document.getElementById("qr-code");
+  if (container) {
+    qrCode.append(container);
+  }
+
+  fetchAssignments();
+  
   // fetchCourseDetails() // if still needed
   fetchModules()
-});
+})
+
+// onMounted(() => {
+// });
 
 </script>
 
@@ -322,7 +323,7 @@ onMounted(() => {
                   <h3>{{ $t('course.videoModules') }}</h3>
                 </VCol>
                 <VCol v-for="module in videoModules" :key="module.id" cols="24" md="4">
-                  <VCard class="mb-4" style="cursor: pointer;" >
+                  <VCard class="mb-4" style="cursor: pointer;">
                     <VCardTitle class="mt-1 pb-3">
                       {{ module.title }}
                     </VCardTitle>
@@ -330,8 +331,7 @@ onMounted(() => {
                       <!-- <VCardActions class="d-flex justify-center"> -->
 
                       <!-- <div>{{ module.description }}</div> -->
-                      <VBtn variant="tonal" color="primary"
-                      @click="openVideoDialog(module)">
+                      <VBtn variant="tonal" color="primary" @click="openVideoDialog(module)">
                         {{ $t('course.viewVideo') }}
                       </VBtn>
                       <!-- </VCardActions> -->
@@ -355,7 +355,7 @@ onMounted(() => {
                 </VCard>
               </VDialog>
 
-              <VDivider class="my-4"/>
+              <VDivider class="my-4" />
 
               <!-- Article Modules Section -->
               <VRow v-if="articleModules.length">
@@ -369,16 +369,15 @@ onMounted(() => {
                     </VCardTitle>
                     <VCardText class="d-flex justify-center">
                       <!-- <VCardActions class="d-flex justify-center"> -->
-                        <!-- <div v-else-if="module.content_url">
+                      <!-- <div v-else-if="module.content_url">
                         {{ $t('course.readArticle') }}
                         </div> -->
-                        <!-- <div v-if="module.module_data">
+                      <!-- <div v-if="module.module_data">
                           {{ module.module_data }}
                         </div> -->
-                        <VBtn variant="tonal" color="primary"
-                        @click="openArticleDialog(module)">
-                          {{ $t('course.readArticle') }}
-                        </VBtn>
+                      <VBtn variant="tonal" color="primary" @click="openArticleDialog(module)">
+                        {{ $t('course.readArticle') }}
+                      </VBtn>
                       <!-- </VCardActions> -->
                     </VCardText>
                   </VCard>
@@ -400,7 +399,8 @@ onMounted(() => {
                       </div>
                       <div v-else>
                         <!-- Fallback for non-article modules (e.g., video) -->
-                        <iframe :src="selectedArticleModule?.content_url" style=" block-size: 600px;inline-size: 100%;" frameborder="0"></iframe>
+                        <iframe :src="selectedArticleModule?.content_url" style=" block-size: 600px;inline-size: 100%;"
+                          frameborder="0"></iframe>
                       </div>
                     </VCardText>
                     <VCardActions>
@@ -578,10 +578,11 @@ onMounted(() => {
                 <div>
                   <VListItemTitle>{{ assignment.title }}</VListItemTitle>
                   <!-- <VListItemSubtitle>{{ assignment.description }}</VListItemSubtitle> -->
-                </div>
+              </div>
                 <template #append>
-                  <VBtn variant="tonal" color="primary" @click="openSubmissionDialog(assignment.id)">
-                    {{ $t('academy.view') }}
+                  <VBtn variant="tonal" color="primary" @click="openSubmissionDialog(assignment.id)"
+                  :disabled="!!assignment.feedback">
+                    {{ assignment.feedback ? $t('assignment.reviewed') : $t('academy.view')  }}
                   </VBtn>
                 </template>
               </VListItem>
@@ -589,9 +590,6 @@ onMounted(() => {
           </VCardText>
         </VCard>
       </div>
-
-
-
 
       <VDialog v-model="isSubmissionDialogVisible" max-width="600">
         <LmsAssignmentSubmission :assignmentId="selectedAssignmentId ?? ''" />
@@ -612,11 +610,10 @@ onMounted(() => {
 
           <VCardActions class="d-flex justify-center">
             <!-- <div class="d-flex justify-center"> -->
-              <VBtn variant="tonal" color="primary"
-               :disabled="!courseData?.discussion_group_url"
-               @click="openDiscussionGroup">
+            <VBtn variant="tonal" color="primary" :disabled="!courseData?.discussion_group_url"
+              @click="openDiscussionGroup">
               {{ $t('academy.join') }}
-              </VBtn>
+            </VBtn>
             <!-- </div> -->
           </VCardActions>
 

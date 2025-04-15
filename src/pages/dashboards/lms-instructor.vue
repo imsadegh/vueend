@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LmsAssignmentList from '@/views/dashboards/lms/LmsAssignmentList.vue';
+import LmsAssignmentSubmissionList from '@/views/dashboards/lms/LmsAssignmentSubmissionList.vue';
 import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue';
 import LmsCourseList from '@/views/dashboards/lms/LmsCourseList.vue';
 
@@ -32,6 +33,11 @@ import LmsCourseList from '@/views/dashboards/lms/LmsCourseList.vue';
     <!-- 👉 Assignment List -->
     <VCol cols="12" md="12">
       <LmsAssignmentList />
+    </VCol>
+
+    <!-- 👉 Assignment Submission List -->
+     <VCol cols="12" md="12">
+      <LmsAssignmentSubmissionList />
     </VCol>
 
     <!-- 👉 User List -->

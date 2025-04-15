@@ -17,6 +17,7 @@ const token = useCookie('accessToken').value
 const submissionFile = ref<File | null>(null)
 const comments = ref('')
 const errors = ref<Record<string, string>>({})
+const submission = ref<any>(null)
 
 // Fetch assignment details (to display title, description, etc.)
 const fetchAssignmentDetails = async () => {
@@ -25,16 +26,10 @@ const fetchAssignmentDetails = async () => {
       headers: { Authorization: `Bearer ${token}` }
     })
     assignment.value = response.data
+    // assignment.value = response.data.assignment
+    // submission.value = response.data.submission
   } catch (error) {
     console.error('Error fetching assignment details:', (error as any).response?.data || (error as any).message)
-  }
-}
-
-// Handle file input change
-const onFileChange = (e: Event) => {
-  const target = e.target as HTMLInputElement
-  if (target.files && target.files.length > 0) {
-    submissionFile.value = target.files[0]
   }
 }
 
@@ -86,20 +81,23 @@ onMounted(() => {
       <div v-if="assignment && !assignment.is_active" class="text-error">
         {{ $t('assignment.notActive') }}
       </div>
+
+       <!-- 📌 Show feedback if reviewed -->
+      <!-- <div v-if="assignment?.feedback" class="mt-4">
+        <p><strong>{{ $t('assignment.instructorFeedback') }}:</strong> {{ assignment.feedback }}</p>
+      </div> -->
+
       <!-- <VForm @submit.prevent="submitAssignment"> -->
       <VForm v-if="assignment && assignment.is_active" @submit.prevent="submitAssignment">
-        <VTextField
-          type="file"
-          @change="onFileChange"
-          label="بارگذاری فایل"
-          accept=".pdf,.doc,.docx,.ppt,.pptx,.txt"
-          outlined
-        />
-        <VTextarea
-          v-model="comments"
-          :label="$t('assignment.comments')"
-          outlined
-        />
+      <!-- <VForm v-if="assignment && assignment.is_active && !submission?.feedback" @submit.prevent="submitAssignment"> -->
+
+        <div v-if="submission?.feedback" class="mt-4 text-success">
+          <p><strong>{{ $t('assignment.instructorFeedback') }}:</strong> {{ submission.feedback }}</p>
+          <p><strong>{{ $t('assignment.score') }}:</strong> {{ submission.score ?? '-' }}</p>
+        </div>
+
+        <!-- <VTextarea :label="$t('assignment.comments')" outlined /> -->
+        <VTextarea v-model="comments" :label="$t('assignment.comments')" outlined />
         <div v-if="errors.comments" class="text-error">{{ errors.comments }}</div>
         <VBtn type="submit" color="primary">{{ $t('button.submit') }}</VBtn>
       </VForm>

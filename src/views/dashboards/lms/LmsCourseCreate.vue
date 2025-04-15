@@ -33,11 +33,11 @@ const tags = ref([]);
 const thumbnail_url = ref('');
 
 const formattedStartDate = start_date.value
-    ? new Date(start_date.value).toISOString()
-    : null;
-  const formattedEndDate = end_date.value
-    ? new Date(end_date.value).toISOString()
-    : null;
+  ? new Date(start_date.value).toISOString()
+  : null;
+const formattedEndDate = end_date.value
+  ? new Date(end_date.value).toISOString()
+  : null;
 
 const errors = ref<Record<string, string>>({});
 
@@ -117,20 +117,20 @@ const saveCourse = async () => {
     if (response.status === 201) {
       resetForm();
     }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error('Failed to create course:', error.response?.data || error.message);
-      } else {
-        console.error('Failed to create course:', error);
-      }
-      // errors.value = error.response?.data?.errors || {};
-      if (axios.isAxiosError(error) && error.response?.data?.errors) {
-        errors.value = localizeErrors(error.response.data.errors);
-      } else {
-        console.error('Failed to create course:', error);
-      }
-      // console.error('Signup or OTP sending failed:', error)
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Failed to create course:', error.response?.data || error.message);
+    } else {
+      console.error('Failed to create course:', error);
     }
+    // errors.value = error.response?.data?.errors || {};
+    if (axios.isAxiosError(error) && error.response?.data?.errors) {
+      errors.value = localizeErrors(error.response.data.errors);
+    } else {
+      console.error('Failed to create course:', error);
+    }
+    // console.error('Signup or OTP sending failed:', error)
+  }
 };
 
 const fetchDropdownData = async () => {
@@ -237,7 +237,7 @@ watch(isDialogVisible, (newValue) => {
         <!-- Dialog Activator -->
         <template #activator="{ props }">
           <VBtn v-bind="props">
-            {{ $t('course.create') }}
+            {{ $t('button.create') }}
           </VBtn>
         </template>
 
@@ -249,7 +249,8 @@ watch(isDialogVisible, (newValue) => {
             <VRow>
               <!-- Course Name -->
               <VCol cols="12" sm="6" md="4">
-                <VTextField v-model="course_name" :label="$t('course.name')" placeholder="CourseName" :autofocus='true' />
+                <VTextField v-model="course_name" :label="$t('course.name')" placeholder="CourseName"
+                  :autofocus='true' />
               </VCol>
 
               <!-- Capacity -->
@@ -264,21 +265,19 @@ watch(isDialogVisible, (newValue) => {
                   { title: $t('course.visibilityPublic'), value: 'true' },
                   // { title: $t('course.visibilityPrivate'), value: 'Private' },
                   { title: $t('course.visibilityHidden'), value: 'false' }
-                ]" outlined/>
+                ]" outlined />
               </VCol>
 
               <!-- Instructor -->
               <VCol cols="12" sm="6">
-                <VSelect v-model="instructor_id" :label="$t('roles.instructor')"
-                :items="instructors"
-                outlined :error-messages="errors.instructor_id" />
+                <VSelect v-model="instructor_id" :label="$t('roles.instructor')" :items="instructors" outlined
+                  :error-messages="errors.instructor_id" />
               </VCol>
 
               <!-- Category -->
               <VCol cols="12" sm="6">
-                <VSelect v-model="category_id" :label="$t('course.category')"
-                :items="categories"
-                outlined :error-messages="errors.category_id" />
+                <VSelect v-model="category_id" :label="$t('course.category')" :items="categories" outlined
+                  :error-messages="errors.category_id" />
               </VCol>
 
               <VRow>

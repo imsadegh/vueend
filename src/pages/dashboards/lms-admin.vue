@@ -36,13 +36,13 @@ const statisticsVertical = [
     </VCol>
 
     <!-- 👉 Create Course -->
-    <VCol cols="12" md="4">
+    <VCol cols="12" md="3">
       <LmsCourseCreate />
     </VCol>
 
     <!-- 👉 Create Module -->
-    <VCol cols="12" md="4">
-      <LmsCourseModuleCreate :courseId="1" />
+    <VCol cols="12" md="3">
+      <LmsCourseModuleCreate/>
     </VCol>
 
     <!-- 👉 Enroll Students -->
