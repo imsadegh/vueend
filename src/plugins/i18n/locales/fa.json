@@ -149,7 +149,8 @@
     "maxScore": "حداکثر نمره",
     "submissionDeadline": "مهلت تحویل",
     "description": "توضیحات",
-    "reviewed": "بررسی شده"
+    "reviewed": "بررسی شده",
+    "instructorFeedback": "پاسخ استاد"
   },
   "academy": {
     "view": "مشاهده",

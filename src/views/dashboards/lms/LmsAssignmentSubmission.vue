@@ -20,14 +20,29 @@ const errors = ref<Record<string, string>>({})
 const submission = ref<any>(null)
 
 // Fetch assignment details (to display title, description, etc.)
+// const fetchAssignmentDetails = async () => {
+//   try {
+//     const response = await axios.get(`${API_BASE_URL}/assignments/${assignmentId.value}`, {
+//       headers: { Authorization: `Bearer ${token}` }
+//     })
+//     // assignment.value = response.data
+//     assignment.value = response.data.assignment
+//     submission.value = response.data.submission
+//     // if (response.data.submission) {
+//     //   submission.value = response.data.submission
+//     // }
+//   } catch (error) {
+//     console.error('Error fetching assignment details:', (error as any).response?.data || (error as any).message)
+//   }
+// }
 const fetchAssignmentDetails = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/assignments/${assignmentId.value}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
-    assignment.value = response.data
-    // assignment.value = response.data.assignment
-    // submission.value = response.data.submission
+    assignment.value = response.data.assignment
+    submission.value = response.data.submission
+    comments.value = submission.value ? submission.value.comments : '';
   } catch (error) {
     console.error('Error fetching assignment details:', (error as any).response?.data || (error as any).message)
   }
@@ -68,6 +83,18 @@ const submitAssignment = async () => {
 onMounted(() => {
   fetchAssignmentDetails()
 })
+
+// watch(() => props.assignmentId, (newVal) => {
+//   if (newVal) {
+//     assignmentId.value = newVal
+//     fetchAssignmentDetails()
+//   }
+// })
+watch(() => props.assignmentId, (newVal) => {
+  if (newVal) {
+    fetchAssignmentDetails();
+  }
+});
 </script>
 
 <template>
@@ -82,24 +109,21 @@ onMounted(() => {
         {{ $t('assignment.notActive') }}
       </div>
 
-       <!-- 📌 Show feedback if reviewed -->
-      <!-- <div v-if="assignment?.feedback" class="mt-4">
-        <p><strong>{{ $t('assignment.instructorFeedback') }}:</strong> {{ assignment.feedback }}</p>
-      </div> -->
-
       <!-- <VForm @submit.prevent="submitAssignment"> -->
       <VForm v-if="assignment && assignment.is_active" @submit.prevent="submitAssignment">
-      <!-- <VForm v-if="assignment && assignment.is_active && !submission?.feedback" @submit.prevent="submitAssignment"> -->
-
-        <div v-if="submission?.feedback" class="mt-4 text-success">
-          <p><strong>{{ $t('assignment.instructorFeedback') }}:</strong> {{ submission.feedback }}</p>
-          <p><strong>{{ $t('assignment.score') }}:</strong> {{ submission.score ?? '-' }}</p>
+        <!-- <VForm v-if="assignment && assignment.is_active && !submission?.feedback" @submit.prevent="submitAssignment"> -->
+        
+        <div v-if="submission?.feedback || submission?.score" class="mt-4 text-success">
+          <p v-if="submission?.feedback"><strong>{{ $t('assignment.instructorFeedback') }}:</strong> {{
+            submission.feedback }}</p>
+          <p v-if="submission?.score"><strong>{{ $t('assignment.score') }}:</strong> {{ submission.score }}</p>
         </div>
 
-        <!-- <VTextarea :label="$t('assignment.comments')" outlined /> -->
-        <VTextarea v-model="comments" :label="$t('assignment.comments')" outlined />
+        <VTextarea v-model="comments" :label="$t('assignment.comments')" outlined class="mt-4" :disabled="!!submission?.feedback || !!submission?.score" />
         <div v-if="errors.comments" class="text-error">{{ errors.comments }}</div>
-        <VBtn type="submit" color="primary">{{ $t('button.submit') }}</VBtn>
+        <VBtn type="submit" color="primary" class="mt-4" :disabled="!!submission?.feedback || !!submission?.score">
+          {{ (submission?.feedback || submission?.score) ? $t('assignment.reviewed') : $t('button.submit') }}
+        </VBtn>
       </VForm>
     </VCardText>
   </VCard>

@@ -275,7 +275,7 @@ onMounted(async () => {
   }
 
   fetchAssignments();
-  
+
   // fetchCourseDetails() // if still needed
   fetchModules()
 })
@@ -338,22 +338,23 @@ onMounted(async () => {
                     </VCardText>
                   </VCard>
                 </VCol>
-              </VRow>
 
-              <VDialog v-model="isVideoDialogVisible" max-width="90vw">
-                <VCard>
-                  <VCardTitle>{{ selectedVideoModule?.title }}</VCardTitle>
-                  <VCardText>
-                    <div v-if="selectedVideoModule">
-                      <p>{{ selectedVideoModule.description }}</p>
-                      <video ref="videoElementRef" class="video-js vjs-default-skin w-100"></video>
-                    </div>
-                  </VCardText>
-                  <VCardActions>
-                    <VBtn color="primary" @click="isVideoDialogVisible = false">{{ $t('button.close') }}</VBtn>
-                  </VCardActions>
-                </VCard>
-              </VDialog>
+
+                <VDialog v-model="isVideoDialogVisible" max-width="90vw">
+                  <VCard>
+                    <VCardTitle>{{ selectedVideoModule?.title }}</VCardTitle>
+                    <VCardText>
+                      <div v-if="selectedVideoModule">
+                        <p>{{ selectedVideoModule.description }}</p>
+                        <video ref="videoElementRef" class="video-js vjs-default-skin w-100"></video>
+                      </div>
+                    </VCardText>
+                    <VCardActions>
+                      <VBtn color="primary" @click="isVideoDialogVisible = false">{{ $t('button.close') }}</VBtn>
+                    </VCardActions>
+                  </VCard>
+                </VDialog>
+              </VRow>
 
               <VDivider class="my-4" />
 
@@ -526,8 +527,9 @@ onMounted(async () => {
       </VCard>
     </VCol>
 
-    <!-- Table of content -->
     <VCol cols="12" md="4">
+
+      <!-- Table of content -->
       <div class="course-content">
         <VExpansionPanels v-model="panelStatus" variant="accordion">
           <VExpansionPanel v-for="(section, index) in courseData?.table_of_content" :key="index" elevation="0"
@@ -578,11 +580,11 @@ onMounted(async () => {
                 <div>
                   <VListItemTitle>{{ assignment.title }}</VListItemTitle>
                   <!-- <VListItemSubtitle>{{ assignment.description }}</VListItemSubtitle> -->
-              </div>
+                </div>
                 <template #append>
                   <VBtn variant="tonal" color="primary" @click="openSubmissionDialog(assignment.id)"
-                  :disabled="!!assignment.feedback">
-                    {{ assignment.feedback ? $t('assignment.reviewed') : $t('academy.view')  }}
+                    :disabled="!!assignment.feedback">
+                    {{ assignment.feedback ? $t('assignment.reviewed') : $t('academy.view') }}
                   </VBtn>
                 </template>
               </VListItem>
