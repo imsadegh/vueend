@@ -3,6 +3,7 @@ import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsN
 import LmsCourseCreate from '@/views/dashboards/lms/LmsCourseCreate.vue';
 import LmsCourseModuleCreate from '@/views/dashboards/lms/LmsCourseModuleCreate.vue';
 import LmsEnrollStudents from '@/views/dashboards/lms/LmsEnrollStudents.vue';
+import LmsExamCreate from '@/views/dashboards/lms/LmsExamCreate.vue';
 
 // TODO - add vuetify Outlined Timeline component with its backend
 // TODO - register new student
@@ -48,6 +49,13 @@ const statisticsVertical = [
     <!-- 👉 Enroll Students -->
     <VCol cols="12" md="4">
       <LmsEnrollStudents />
+    </VCol>
+
+    <VCol cols="12" md="8">
+    </VCol>
+    <!-- 👉 Exam -->
+    <VCol cols="12" md="12">
+      <LmsExamCreate />
     </VCol>
 
     <!-- 👉 Total Orders -->

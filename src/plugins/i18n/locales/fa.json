@@ -222,7 +222,19 @@
     "advanced": "پیشرفته",
     "viewCourse": "مشاهده دوره",
     "start": "ارسال تمرین",
-    "join": "مشاهده"
+    "join": "مشاهده",
+    "openTime": "زمان شروع",
+    "closeTime": "زمان پایان",
+    "timeLimit": "مدت آزمون (دقیقه)",
+    "grade": "حداکثر نمره",
+    "numberOfQuestions": "تعداد سوالات",
+    "type": "نوع",
+    "shuffleQuestion": "سوال رندوم",
+    "shuffleAnswers": "گزینه رندوم",
+    "attempts": "دفعات امتحان",
+    "feedbackEnabled": "بازبینی استاد",
+    "version": "نسخه",
+    "timeClose": "زمان پایان"
   },
   "true": "دارد",
   "false": "ندارد",
@@ -537,5 +549,24 @@
     "totalPaid": "پرداخت شده",
     "remainingBalance": "باقی مانده"
   },
-  "manage": "مدیریت"
+  "manage": "مدیریت",
+  "examTypes": {
+    "multipleChoice": "چند گزینه",
+    "shortAnswer": "پاسخ کوتاه",
+    "trueFalse": "صحیح غلط",
+    "essay": "تشریحی"
+  },
+  "examStatus": {
+    "active": "فعال",
+    "inactive": "غیر فعال",
+    "draft": "پیش‌نویس"
+  },
+  "exam": {
+    "edit": "ویرایش امتحان",
+    "new": "ایجاد امتحان",
+    "exam": "آزمون‌ها",
+    "confirmCreate": "آیا مطمئن هستید که می‌خواهید این آزمون را ایجاد کنید؟",
+    "confirmDelete": "آیا مطمئن هستید که می‌خواهید این آزمون را حذف کنید؟",
+    "confirmEdit": "آیا مطمئن هستید که می‌خواهید این آزمون را به‌روزرسانی کنید؟"
+  }
 }
