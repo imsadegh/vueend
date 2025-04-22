@@ -247,22 +247,28 @@ onMounted(() => {
 <template>
   <section>
     <VCard>
-      <VCardTitle>
+      <VCardTitle class="mt-1">
         <!-- <h3>{{ $t('assignment.myAssignmentsForCourse') }} #{{ courseId }}</h3> -->
-        <h3>{{ $t('assignment.myAssignments') }}</h3>
+        <h4>{{ $t('assignment.myAssignments') }}</h4>
       </VCardTitle>
+
+      <VCardActions class="d-flex justify-start">
+        <VBtn color="primary" @click="openCreateDialog">
+          <strong>{{ $t('assignment.createNew') }}</strong>
+        </VBtn>
+      </VCardActions>
 
       <!-- Assignment List Table -->
       <VDataTableServer :items="assignments" :headers="headers" :items-length="assignments.length"
         class="text-no-wrap rounded-0">
         <!-- Title -->
         <template #item.title="{ item }">
-          <strong>{{ item.title }}</strong>
+          {{ item.title }}
         </template>
 
         <!-- Course Name -->
         <template #item.course_name="{ item }">
-          <strong>{{ item.course_name }}</strong>
+          {{ item.course_name }}
         </template>
 
         <!-- Type -->
@@ -281,11 +287,14 @@ onMounted(() => {
 
         <!-- Actions -->
         <template #item.actions="{ item }">
-          <VBtn color="primary" class="ma-1" @click="openEditDialog(item)">
+          <VBtn class="ma-1" variant="tonal" color="info" @click="openEditDialog(item)">
             {{ $t('actions.edit') }}
+            <VIcon end icon="ri-pencil-line" />
           </VBtn>
-          <VBtn color="error" class="ma-1" @click="deleteAssignment(item.id)">
+
+          <VBtn class="ma-1" variant="tonal" color="error" @click="deleteAssignment(item.id)">
             {{ $t('actions.delete') }}
+            <VIcon end icon="ri-delete-bin-line" />
           </VBtn>
         </template>
 
@@ -296,11 +305,7 @@ onMounted(() => {
         </template>
       </VDataTableServer>
 
-      <VCardActions>
-        <VBtn color="primary" @click="openCreateDialog">
-          {{ $t('assignment.createNew') }}
-        </VBtn>
-      </VCardActions>
+      
     </VCard>
 
     <!-- Create/Edit Assignment Dialog -->

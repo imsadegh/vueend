@@ -100,6 +100,7 @@ export const themes: Record<string, ThemeDefinition> = {
       'on-error': '#fff',
       'background': '#282A42',
       'on-background': '#EAEAFF',
+      // 'surface': '#30334E',
       'surface': '#30334E',
       'on-surface': '#EAEAFF',
       'grey-50': '#2A2E42',
@@ -113,8 +114,13 @@ export const themes: Record<string, ThemeDefinition> = {
       'grey-800': '#CFD3EC',
       'grey-900': '#E7E9F6',
       'perfect-scrollbar-thumb': '#4a5072',
-      'skin-bordered-background': '#30334E',
+
+      // 'skin-bordered-background': '#30334E',
+      'skin-bordered-background': '#292C43',
+
+      // 'skin-bordered-surface': '#30334E',
       'skin-bordered-surface': '#30334E',
+      
       'expansion-panel-text-custom-bg': '#333851',
       'track-bg': '#3C3F59',
       'chat-bg': '#343752',

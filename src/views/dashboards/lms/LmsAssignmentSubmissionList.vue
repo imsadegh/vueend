@@ -15,7 +15,7 @@ const reviewGradeVisibility = ref(true)
 const reviewComments = ref('')
 const reviewRevisionNumber = ref(1)
 const reviewReviewedBy = ref('')         // for display (full name)
-const reviewReviewedById = ref<number|null>(null) // for submission (user ID)
+const reviewReviewedById = ref<number | null>(null) // for submission (user ID)
 const reviewLastReviewedAt = ref('')
 const reviewStudentName = ref('')
 
@@ -99,63 +99,68 @@ onMounted(() => {
 
 <template>
   <VCard>
-    <VCardTitle>{{ $t('assignment.reviewSubmissions') }}</VCardTitle>
-    <VCardText>
-      <VDataTable :items="submissions" :headers="[
-        { title: $t('assignment.studentName'), value: 'student_name' },
-        { title: $t('assignment.assignmentTitle'), value: 'assignment_title' },
-        { title: $t('assignment.submissionDate'), value: 'submission_date' },
-        // { title: $t('assignment.file'), value: 'file_path' },
-        { title: $t('assignment.score'), value: 'score' },
-        { title: $t('assignment.feedback'), value: 'feedback' },
-        // { title: $t('assignment.comments'), value: 'comments' },
-        // { title: $t('assignment.revisionNumber'), value: 'revision_number' },
-        { title: $t('assignment.isLate'), value: 'is_late' },
-        // { title: $t('assignment.lastReviewedAt'), value: 'last_reviewed_at' },
-        { title: $t('assignment.reviewedBy'), value: 'reviewed_by' },
-        // { title: $t('assignment.gradeVisibility'), value: 'grade_visibility' }
-        { title: $t('actions.actions'), value: 'actions' },
-      ]" class="elevation-1">
-        <template v-slot:item.file_path="{ item }">
+    <VCardTitle class="mt-1">
+      <h4>{{ $t('assignment.reviewSubmissions') }}</h4>
+    </VCardTitle>
+    <VDataTable :items="submissions" :headers="[
+      { title: $t('assignment.studentName'), value: 'student_name' },
+      { title: $t('assignment.assignmentTitle'), value: 'assignment_title' },
+      { title: $t('assignment.submissionDate'), value: 'submission_date' },
+      // { title: $t('assignment.file'), value: 'file_path' },
+      { title: $t('assignment.score'), value: 'score' },
+      { title: $t('assignment.feedback'), value: 'feedback' },
+      // { title: $t('assignment.comments'), value: 'comments' },
+      // { title: $t('assignment.revisionNumber'), value: 'revision_number' },
+      { title: $t('assignment.isLate'), value: 'is_late' },
+      // { title: $t('assignment.lastReviewedAt'), value: 'last_reviewed_at' },
+      { title: $t('assignment.reviewedBy'), value: 'reviewed_by' },
+      // { title: $t('assignment.gradeVisibility'), value: 'grade_visibility' }
+      { title: $t('actions.actions'), value: 'actions' },
+    ]" class="elevation-1">
+      <!-- <template v-slot:item.file_path="{ item }">
           <a :href="item.file_path" target="_blank">{{ $t('assignment.viewFile') }}</a>
-        </template>
-        <template v-slot:item.actions="{ item }">
-          <VBtn color="primary" @click="openReviewDialog(item)">
+        </template> -->
+      <template v-slot:item.actions="{ item }">
+        <VBtn class="ma-1" variant="tonal" color="info" @click="openReviewDialog(item)">
             {{ $t('assignment.review') }}
+            <VIcon end icon="ri-edit-2-line" />
           </VBtn>
 
-        </template>
-      </VDataTable>
-      <VDialog v-model="isReviewDialogVisible" max-width="600">
-        <VCard>
-          <VCardTitle>{{ $t('assignment.reviewSubmission') }}</VCardTitle>
-          <VCardText>
-            <VForm @submit.prevent="submitReview">
-              <VTextField v-model="reviewStudentName" :label="$t('assignment.studentName')" outlined readonly
-                class="mb-4" />
+      </template>
+    </VDataTable>
 
-              <VTextField :label="$t('assignment.comments')" v-model="reviewComments" outlined readonly class="mb-4"/>
-
-              <VTextField :label="$t('assignment.revisionNumber')" v-model="reviewRevisionNumber" outlined readonly class="mb-4"/>
-
-              <VTextField :label="$t('assignment.reviewedBy')" v-model="reviewReviewedBy" outlined readonly class="mb-4"/>
-
-              <VTextField :label="$t('assignment.lastReviewedAt')" v-model="reviewLastReviewedAt" outlined readonly class="mb-4"/>
-
-              <VTextField v-model="reviewScore" :label="$t('assignment.score')" type="number" outlined required class="mb-4"/>
-
-              <VTextarea v-model="reviewFeedback" :label="$t('assignment.feedback')" outlined class="mb-4"/>
-
-              <VSwitch v-model="reviewGradeVisibility" :label="$t('assignment.gradeVisibility')" />
-              <VCardActions>
-                <VBtn type="submit" color="primary">{{ $t('button.save') }}</VBtn>
-                <VBtn variant="text" color="secondary" @click="isReviewDialogVisible = false">{{ $t('button.cancel') }}
-                </VBtn>
-              </VCardActions>
-            </VForm>
-          </VCardText>
-        </VCard>
-      </VDialog>
-    </VCardText>
   </VCard>
+  <VDialog v-model="isReviewDialogVisible" max-width="600">
+    <VCard>
+      <VCardTitle>{{ $t('assignment.reviewSubmission') }}</VCardTitle>
+      <VCardText>
+        <VForm @submit.prevent="submitReview">
+          <VTextField v-model="reviewStudentName" :label="$t('assignment.studentName')" outlined readonly
+            class="mb-4" />
+
+          <VTextField :label="$t('assignment.comments')" v-model="reviewComments" outlined readonly class="mb-4" />
+
+          <VTextField :label="$t('assignment.revisionNumber')" v-model="reviewRevisionNumber" outlined readonly
+            class="mb-4" />
+
+          <VTextField :label="$t('assignment.reviewedBy')" v-model="reviewReviewedBy" outlined readonly class="mb-4" />
+
+          <VTextField :label="$t('assignment.lastReviewedAt')" v-model="reviewLastReviewedAt" outlined readonly
+            class="mb-4" />
+
+          <VTextField v-model="reviewScore" :label="$t('assignment.score')" type="number" outlined required
+            class="mb-4" />
+
+          <VTextarea v-model="reviewFeedback" :label="$t('assignment.feedback')" outlined class="mb-4" />
+
+          <VSwitch v-model="reviewGradeVisibility" :label="$t('assignment.gradeVisibility')" />
+          <VCardActions>
+            <VBtn type="submit" color="primary">{{ $t('button.save') }}</VBtn>
+            <VBtn variant="text" color="secondary" @click="isReviewDialogVisible = false">{{ $t('button.cancel') }}
+            </VBtn>
+          </VCardActions>
+        </VForm>
+      </VCardText>
+    </VCard>
+  </VDialog>
 </template>

@@ -2,16 +2,14 @@
   <section>
     <VCard>
       <VCardTitle>
-        <h3 class="text-h5 mb-2 mt-2">{{$t('exam.exam') }}</h3>
+        <h3 class="text-h5 mb-2 mt-2">{{ $t('exam.exam') }}</h3>
         <VSpacer />
-        <VBtn class= "mb-2"color="primary"
-          @click="openCreate()">
-          {{$t('exam.new') }}
+        <VBtn class="mb-2" color="primary" @click="openCreate()">
+          {{ $t('exam.new') }}
         </VBtn>
       </VCardTitle>
 
-      <VCardText>
-        <VDataTable :items="exams" :headers="headers" item-value="id" class="elevation-1">
+        <VDataTableServer :items="exams" :headers="headers" :items-length="exams.length" item-value="id" class="elevation-1">
           <template #item.course_name="{ item }">
             {{ item.course?.course_name }}
           </template>
@@ -22,27 +20,39 @@
             {{ formatDate(item.time_close) }}
           </template>
           <template #item.actions="{ item }">
-            <div class="d-flex gap-x-2">
-              <VBtn icon small @click="openShow(item)">
+              <!-- <VBtn icon small @click="openShow(item)">
                 <VIcon> ri-eye-fill</VIcon>
+              </VBtn> -->
+              <VBtn class="ma-1" @click="openShow(item)">
+                {{ $t('actions.show') }}
+                <VIcon end icon="ri-eye-line" />
               </VBtn>
-              <VBtn icon small color="primary" @click="openEdit(item)">
+
+              <!-- <VBtn icon small color="primary" @click="openEdit(item)">
                 <VIcon>ri-pencil-fill</VIcon>
+              </VBtn> -->
+              <VBtn class="ma-1" variant="tonal" color="info" @click="openEdit(item)">
+                {{ $t('actions.edit') }}
+                <VIcon end icon="ri-pencil-line" />
               </VBtn>
-              <VBtn icon small color="error" @click="deleteExam(item.id)">
+
+              <!-- <VBtn icon small color="error" @click="deleteExam(item.id)">
                 <VIcon>ri-delete-bin-5-fill</VIcon>
+              </VBtn> -->
+              <VBtn class="ma-1" variant="tonal" color="error" @click="deleteExam(item.id)">
+                {{ $t('actions.delete') }}
+                <VIcon end icon="ri-delete-bin-line" />
               </VBtn>
-            </div>
+
           </template>
-        </VDataTable>
-      </VCardText>
+        </VDataTableServer>
     </VCard>
 
     <!-- Create / Edit Dialog -->
     <VDialog v-model="isDialogVisible" max-width="800px">
       <VCard>
-        <VCardTitle>
-          {{ isEditMode ? $t('exam.edit') : $t('exam.new')  }}
+        <VCardTitle class="mt-1">
+          <h4>{{ isEditMode ? $t('exam.edit') : $t('exam.new') }}</h4>
         </VCardTitle>
         <VCardText>
           <VForm @submit.prevent="handleSave">
@@ -122,77 +132,40 @@
           <pre>{{ selectedExam }}</pre>
         </VCardText> -->
         <VCardText>
-     <VRow class="g-4">
-       <VCol cols="12" sm="6">
-         <VTextField
-           :label="$t('academy.course')"
-           :model-value="selectedExam.course.name"
-           readonly
-           outlined
-         />
-       </VCol>
-       <VCol cols="12" sm="6">
-         <VTextField
-           :label="$t('academy.Quiz')"
-           :model-value="selectedExam.name"
-           readonly
-           outlined
-         />
-       </VCol>
+          <VRow class="g-4">
+            <VCol cols="12" sm="6">
+              <VTextField :label="$t('academy.course')" :model-value="selectedExam.course.name" readonly outlined />
+            </VCol>
+            <VCol cols="12" sm="6">
+              <VTextField :label="$t('academy.Quiz')" :model-value="selectedExam.name" readonly outlined />
+            </VCol>
 
-       <VCol cols="12">
-         <VTextarea
-           :label="$t('academy.Description')"
-           :model-value="selectedExam.intro"
-           readonly
-           outlined
-           rows="3"
-         />
-       </VCol>
+            <VCol cols="12">
+              <VTextarea :label="$t('academy.Description')" :model-value="selectedExam.intro" readonly outlined
+                rows="3" />
+            </VCol>
 
-       <VCol cols="12" sm="6">
-         <VTextField
-           :label="$t('academy.openTime')"
-           :model-value="new Date(selectedExam.time_open).toLocaleString()"
-           readonly
-           outlined
-         />
-       </VCol>
-       <VCol cols="12" sm="6">
-         <VTextField
-           :label="$t('academy.closeTime')"
-           :model-value="new Date(selectedExam.time_close).toLocaleString()"
-           readonly
-           outlined
-         />
-       </VCol>
+            <VCol cols="12" sm="6">
+              <VTextField :label="$t('academy.openTime')"
+                :model-value="new Date(selectedExam.time_open).toLocaleString()" readonly outlined />
+            </VCol>
+            <VCol cols="12" sm="6">
+              <VTextField :label="$t('academy.closeTime')"
+                :model-value="new Date(selectedExam.time_close).toLocaleString()" readonly outlined />
+            </VCol>
 
-       <VCol cols="12" sm="4">
-         <VTextField
-           :label="$t('academy.timeLimit')"
-           :model-value="selectedExam.time_limit + ' دقیقه'"
-           readonly
-           outlined
-         />
-       </VCol>
-       <VCol cols="12" sm="4">
-         <VTextField
-           :label="$t('academy.attempts')"
-           :model-value="selectedExam.attempts"
-           readonly
-           outlined
-         />
-       </VCol>
-       <VCol cols="12" sm="4">
-         <VTextField
-           :label="$t('academy.status')"
-           :model-value="selectedExam.status"
-           readonly
-           outlined
-         />
-       </VCol>
-     </VRow>
-   </VCardText>
+            <VCol cols="12" sm="4">
+              <VTextField :label="$t('academy.timeLimit')" :model-value="selectedExam.time_limit + ' دقیقه'" readonly
+                outlined />
+            </VCol>
+            <VCol cols="12" sm="4">
+              <VTextField :label="$t('academy.attempts')" :model-value="selectedExam.attempts" readonly outlined />
+            </VCol>
+            <VCol cols="12" sm="4">
+              <VTextField :label="$t('academy.status')" :model-value="selectedExam.status" readonly outlined />
+            </VCol>
+          </VRow>
+        </VCardText>
         <VCardActions class="justify-end">
           <VBtn variant="text" @click="isShowDialogVisible = false">Close</VBtn>
         </VCardActions>
@@ -219,7 +192,7 @@ const headers = [
   { title: 'زمان شروع', value: 'time_open' },
   { title: 'مدت آزمون', value: 'time_limit' },
   { title: 'وضعیت', value: 'status' },
-  { title: 'عملیات', value: 'actions', sortable: false },
+  { title: 'عملیات', value: 'actions', align: 'center' as const, sortable: false },
 ]
 
 // dialog controls

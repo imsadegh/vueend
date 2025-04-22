@@ -105,12 +105,14 @@
     "seo": "سئو"
   },
   "actions": {
-    "actions": "اقدامات",
+    "actions": "مدیریت",
     "refresh": "بارگذاری مجدد",
     "update": "به‌روزرسانی",
     "share": "اشتراک‌گذاری",
     "edit": "ویرایش",
-    "delete": "حذف"
+    "delete": "حذف",
+    "show": "نمایش",
+    "create": "ایجاد"
   },
   "assignment": {
     "reviewSubmissions": "بررسی تمرین‌ها",
@@ -150,7 +152,8 @@
     "submissionDeadline": "مهلت تحویل",
     "description": "توضیحات",
     "reviewed": "بررسی شده",
-    "instructorFeedback": "پاسخ استاد"
+    "instructorFeedback": "پاسخ استاد",
+    "reviewSubmission": "بررسی تکلیف"
   },
   "academy": {
     "view": "مشاهده",
@@ -415,7 +418,7 @@
   "Under Maintenance": "در حال تعمیر",
   "Error": "خطا",
   "Statistics": "آمار",
-  "Actions": "اقدامات",
+  "Actions": "مدیریت",
   "Access Control": "کنترل دسترسی",
   "User Interface": "رابط کاربری",
   "CRM": "مدیریت ارتباط با مشتری",
@@ -568,5 +571,27 @@
     "confirmCreate": "آیا مطمئن هستید که می‌خواهید این آزمون را ایجاد کنید؟",
     "confirmDelete": "آیا مطمئن هستید که می‌خواهید این آزمون را حذف کنید؟",
     "confirmEdit": "آیا مطمئن هستید که می‌خواهید این آزمون را به‌روزرسانی کنید؟"
+  },
+  "question": {
+    "questions": "بانک سوالات",
+    "all": "همه",
+    "title": "عنوان سوال",
+    "type": "نوع سوال",
+    "show": "نمایش",
+    "titleShow": "مشاهده سوال",
+    "titleCreate": "طرح سوال جدید",
+    "titleEdit": "ویرایش سوال",
+    "text": "متن سوال",
+    "multiple_choice": "چند گزینه‌ای",
+    "short_answer": "پاسخ کوتاه",
+    "true_false": "صحیح یا غلط",
+    "essay": "تشریحی",
+    "optionsJSON": "گزینه‌ها (JSON)",
+    "corrcetJSON": "گزینه صحیح (JSON)"
+  },
+  "confirm": {
+    "delete": "آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟",
+    "cancel": "لغو",
+    "confirm": "تایید"
   }
 }

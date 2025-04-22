@@ -149,18 +149,19 @@ const updateEnrollmentStatus = async (enrollment: any) => {
         </VBtn>
 
         <!-- Enrollment Management Dialog -->
-        <VDialog v-model="isDialogVisible" max-width="900">
+        <VDialog v-model="isDialogVisible" :width="'75%'">
           <VCard>
             <VCardTitle>
               {{ $t('enrollment.manageEnrollments') }}
             </VCardTitle>
+            
             <VCardText>
               <!-- Select Course Dropdown -->
               <VSelect v-model="selectedCourseId" :items="availableCourses" item-title="course_name" item-value="id"
                 :label="$t('enrollment.selectCourse')" outlined clearable />
-
+              </VCardText>
               <!-- Display enrollments only if a course is selected -->
-              <div v-if="selectedCourseId">
+              <div class="mb-5" v-if="selectedCourseId">
                 <VDataTable :headers="headers" :items="enrollments" class="mt-4" :items-length="enrollments.length">
                   <!-- Student Name Column -->
                   <template #item.studentName="{ item }">
@@ -200,7 +201,8 @@ const updateEnrollmentStatus = async (enrollment: any) => {
 
                 </VDataTable>
               </div>
-            </VCardText>
+            
+
             <VCardActions>
               <VBtn color="secondary" @click="isDialogVisible = false">
                 {{ $t('button.close') }}

@@ -145,7 +145,7 @@ fetchInstructorCourses()
   <section>
     <VCard>
       <VCardTitle>
-        <h3>{{ $t('course.myCourses') }}</h3>
+        <h3 class="mt-1">{{ $t('course.myCourses') }}</h3>
       </VCardTitle>
 
       <!-- Course List Table -->
@@ -160,7 +160,7 @@ fetchInstructorCourses()
 
         <!-- Course Name -->
         <template #item.course_name="{ item }">
-          <strong>{{ item.course_name }}</strong>
+          {{ item.course_name }}
         </template>
 
         <!-- Discussion Group Link (Clickable) -->
@@ -189,8 +189,9 @@ fetchInstructorCourses()
 
         <!-- Edit Button -->
         <template #item.edit="{ item }">
-          <VBtn color="primary" @click="openEditDialog(item.id)">
+          <VBtn class="ma-1" variant="tonal" color="info" @click="openEditDialog(item.id)">
             {{ $t('actions.edit') }}
+            <VIcon end icon="ri-pencil-line" />
           </VBtn>
         </template>
 

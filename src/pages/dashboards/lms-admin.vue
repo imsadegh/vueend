@@ -36,6 +36,9 @@ const statisticsVertical = [
       <LmsCongratulationsNorris />
     </VCol>
 
+    <VCol cols="12" md="8"> 
+    </VCol>
+
     <!-- 👉 Create Course -->
     <VCol cols="12" md="3">
       <LmsCourseCreate />
@@ -47,7 +50,7 @@ const statisticsVertical = [
     </VCol>
 
     <!-- 👉 Enroll Students -->
-    <VCol cols="12" md="4">
+    <VCol cols="12" md="3">
       <LmsEnrollStudents />
     </VCol>
 
