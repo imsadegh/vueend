@@ -273,8 +273,8 @@ onMounted(() => {
 
         <!-- Type -->
         <template #item.type="{ item }">
-          <VChip :color="item.type === 'group' ? 'success' : 'secondary'" size="small">
-            {{ item.type }}
+          <VChip :color="item.type === 'group' ? 'success' : 'info'" size="small">
+            {{ $t(`assignment.${item.type}`) }}
           </VChip>
         </template>
 

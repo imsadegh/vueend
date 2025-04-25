@@ -95,6 +95,8 @@ async function submitReview() {
 onMounted(() => {
   fetchSubmissions()
 })
+
+
 </script>
 
 <template>
@@ -102,11 +104,10 @@ onMounted(() => {
     <VCardTitle class="mt-1">
       <h4>{{ $t('assignment.reviewSubmissions') }}</h4>
     </VCardTitle>
-    <VDataTable :items="submissions" :headers="[
+    <VDataTableServer :items="submissions" :items-length="submissions.length" :headers="[
       { title: $t('assignment.studentName'), value: 'student_name' },
       { title: $t('assignment.assignmentTitle'), value: 'assignment_title' },
       { title: $t('assignment.submissionDate'), value: 'submission_date' },
-      // { title: $t('assignment.file'), value: 'file_path' },
       { title: $t('assignment.score'), value: 'score' },
       { title: $t('assignment.feedback'), value: 'feedback' },
       // { title: $t('assignment.comments'), value: 'comments' },
@@ -120,6 +121,9 @@ onMounted(() => {
       <!-- <template v-slot:item.file_path="{ item }">
           <a :href="item.file_path" target="_blank">{{ $t('assignment.viewFile') }}</a>
         </template> -->
+      <!-- <template #item.submission_date="{ item }">
+        {{ formatDateFa(item.submission_date) }}
+      </template> -->
       <template v-slot:item.actions="{ item }">
         <VBtn class="ma-1" variant="tonal" color="info" @click="openReviewDialog(item)">
             {{ $t('assignment.review') }}
@@ -127,7 +131,7 @@ onMounted(() => {
           </VBtn>
 
       </template>
-    </VDataTable>
+    </VDataTableServer>
 
   </VCard>
   <VDialog v-model="isReviewDialogVisible" max-width="600">

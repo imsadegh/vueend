@@ -1,9 +1,13 @@
 <script setup lang="ts">
+// import { API_BASE_URL } from '@/config/config'
+// import axios from 'axios'
 
-import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue'
 // import LmsPaymentHistory from '@/views/dashboards/lms/LmsPaymentHistory.vue'
-import LmsTuitionHistory from '@/views/dashboards/lms/LmsTuitionHistory.vue'
+// import LmsExamAttempt from '@/views/dashboards/lms/LmsExamAttempt.vue'
 
+import AcademyMyCourses from '@/views/dashboards/lms/LmsMyCourses.vue'
+import LmsTuitionHistory from '@/views/dashboards/lms/LmsTuitionHistory.vue'
+const searchQuery = ref('')
 
 import customCheck from '@images/svg/check.svg'
 import customLaptop from '@images/svg/laptop.svg'
@@ -11,6 +15,22 @@ import customLightbulb from '@images/svg/lightbulb.svg'
 
 // TODO: Get type from backend
 const userData = useCookie<any>('userData')
+
+
+// const availableExams = ref<any[]>([])
+// const selected = ref<number | null>(null)
+
+// // student-visible, published + active exams
+// const fetchAvailableExams = async () => {
+//   const { data } = await axios.get(`${API_BASE_URL}/exams`, {
+//     headers: { Authorization: `Bearer ${useCookie('accessToken').value}` },
+//     // params: { scope: 'student' },            // ← adjust to your own filter if needed
+//   })
+//   availableExams.value = data
+// }
+
+// onMounted(fetchAvailableExams)
+
 
 // Donut Chart Colors
 const donutChartColors = {
@@ -101,58 +121,36 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
   <div>
     <VRow class="py-5 match-height">
       <!-- 👉 Welcome -->
-      <VCol
-        cols="12"
-        md="8"
-        :class="$vuetify.display.mdAndUp ? 'border-e' : 'border-b'"
-      >
+      <VCol cols="12" md="8" :class="$vuetify.display.mdAndUp ? 'border-e' : 'border-b'">
         <div class="pe-3">
           <div class="mb-2">
             <span class="text-h5">
-                {{ $t('welcome_back') }},
+              {{ $t('welcome_back') }},
             </span>
             <span class="text-h4">
-               {{ userData.first_name }} 👋🏻
+              {{ userData.first_name }} 👋🏻
             </span>
           </div>
 
-          <div
-            class="text-wrap text-body-1 mb-4"
-            style="max-inline-size: 400px;"
-          >
+          <div class="text-wrap text-body-1 mb-4" style="max-inline-size: 400px;">
             {{ $t('academy.progress_awesome') }}
           </div>
 
           <div class="d-flex justify-space-between flex-wrap gap-6 flex-column flex-md-row">
-            <div
-              v-for="{ title, value, icon, color } in [
-                { title: 'ساعات صرف شده', value: '34 ساعت', icon: customLaptop, color: 'primary' },
-                { title: 'نتایج آزمون', value: '82%', icon: customLightbulb, color: 'info' },
-                { title: 'دوره‌های تکمیل‌شده', value: '14', icon: customCheck, color: 'warning' },
-              ]"
-              :key="title"
-            >
+            <div v-for="{ title, value, icon, color } in [
+              { title: 'ساعات صرف شده', value: '34 ساعت', icon: customLaptop, color: 'primary' },
+              { title: 'نتایج آزمون', value: '82%', icon: customLightbulb, color: 'info' },
+              { title: 'دوره‌های تکمیل‌شده', value: '14', icon: customCheck, color: 'warning' },
+            ]" :key="title">
               <div class="d-flex">
-                <VAvatar
-                  variant="tonal"
-                  :color="color"
-                  rounded
-                  size="54"
-                  class="text-primary me-4"
-                >
-                  <VIcon
-                    :icon="icon"
-                    size="38"
-                  />
+                <VAvatar variant="tonal" :color="color" rounded size="54" class="text-primary me-4">
+                  <VIcon :icon="icon" size="38" />
                 </VAvatar>
                 <div>
                   <h6 class="text-h6 text-medium-emphasis">
                     {{ title }}
                   </h6>
-                  <h4
-                    class="text-h4"
-                    :class="`text-${color}`"
-                  >
+                  <h4 class="text-h4" :class="`text-${color}`">
                     {{ value }}
                   </h4>
                 </div>
@@ -163,35 +161,26 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
       </VCol>
 
       <VRow class="match-height">
-
         <!-- 👉 Award -->
-        <VCol cols="12" md="4">
+        <!-- <VCol cols="12" md="4">
           <LmsCongratulationsNorris />
-        </VCol>
+        </VCol> -->
 
         <!-- 👉 Payment History -->
         <!-- <VCol cols="12" md="4">
           <LmsPaymentHistory />
         </VCol> -->
-
-        <!-- 👉 Tuition History -->
-        <VCol cols="12" md="4">
-          <LmsTuitionHistory />
-        </VCol>
       </VRow>
 
       <!-- 👉 Time Spending -->
-      <VCol
-        cols="12"
-        md="4"
-      >
+      <VCol cols="12" md="4">
         <div class="d-flex justify-space-between align-center">
           <div class="d-flex flex-column ps-3">
             <h5 class="text-h5 mb-1 text-no-wrap">
-                {{ $t('academy.time_spending') }}
+              {{ $t('academy.time_spending') }}
             </h5>
             <div class="mb-6 text-body-1">
-                {{ $t('academy.weekly_report') }}
+              {{ $t('academy.weekly_report') }}
             </div>
             <h4 class="text-h4 mb-2">
               231<span class="text-medium-emphasis">
@@ -201,76 +190,82 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
               </span>
             </h4>
             <div>
-              <VChip
-                color="success"
-                density="comfortable"
-              >
+              <VChip color="success" density="comfortable">
                 +18.4%
               </VChip>
             </div>
           </div>
           <div>
-            <VueApexCharts
-              type="donut"
-              height="150"
-              width="150"
-              :options="timeSpendingChartConfig"
-              :series="timeSpendingChartSeries"
-            />
+            <VueApexCharts type="donut" height="150" width="150" :options="timeSpendingChartConfig"
+              :series="timeSpendingChartSeries" />
           </div>
         </div>
       </VCol>
     </VRow>
 
     <VRow class="match-height">
-      <VCol
-        cols="12"
-        md="8"
-      >
-        <!-- 👉 Topic You are Interested in -->
-        <!-- <AcademyCardInterestedTopics /> -->
+      <!-- 👉 Tuition History -->
+      <VCol cols="12" md="4">
+        <LmsTuitionHistory />
       </VCol>
+
+      <!-- 👉 Topic You are Interested in -->
+      <!-- <VCol cols="12" md="8">
+        <AcademyCardInterestedTopics />
+      </VCol> -->
 
       <!-- 👉 Popular Instructors  -->
-      <VCol
-        cols="12"
-        md="4"
-        sm="6"
-      >
-        <!-- <AcademyCardPopularInstructors /> -->
-      </VCol>
+      <!-- <VCol cols="12" md="4" sm="6">
+        <AcademyCardPopularInstructors />
+      </VCol> -->
 
       <!-- 👉 Academy Top Courses  -->
-      <VCol
-        cols="12"
-        md="4"
-        sm="6"
-      >
-        <!-- <AcademyCardTopCourses /> -->
-      </VCol>
+      <!-- <VCol cols="12" md="4" sm="6">
+        <AcademyCardTopCourses />
+      </VCol> -->
 
       <!-- 👉 Academy Upcoming Webinar -->
-      <VCol
-        cols="12"
-        md="4"
-        sm="6"
-      >
-        <!-- <AcademyUpcomingWebinar /> -->
-      </VCol>
+      <!-- <VCol cols="12" md="4" sm="6">
+        <AcademyUpcomingWebinar />
+      </VCol> -->
 
       <!-- 👉 Academy Assignment Progress  -->
-      <VCol
-        cols="12"
-        md="4"
-        sm="6"
-      >
-        <!-- <AcademyAssignmentProgress /> -->
-      </VCol>
+      <!-- <VCol cols="12" md="4" sm="6">
+        <AcademyAssignmentProgress />
+      </VCol> -->
 
       <!-- 👉 Academy Course Table  -->
-      <VCol>
-        <!-- <AcademyCourseTable /> -->
+      <!-- <VCol>
+        <AcademyCourseTable />
+      </VCol> -->
+
+      <!-- 👉 my-course Table  -->
+      <VCol cols="12" md="12" sm="6">
+        <!-- <MyCourse /> -->
+        <AcademyMyCourses :search-query="searchQuery" />
       </VCol>
+
+      <!-- <LmsExamAttempt /> -->
+      <!-- 👉 exam attempt-->
+      <!-- <VCol cols="12" md="4" sm="6">
+        <VList>
+          <VListItem
+            v-for="exam in availableExams"
+            :key="exam.id"
+            @click="selected = exam.id"
+            class="cursor-pointer"
+          >
+            <VListItemTitle>{{ exam.name }}</VListItemTitle>
+          </VListItem>
+        </VList>
+
+        <LmsExamAttempt
+          v-if="selected"
+          :exam-id="selected"
+          class="mt-4"
+        />
+      </VCol> -->
+
     </VRow>
   </div>
 </template>

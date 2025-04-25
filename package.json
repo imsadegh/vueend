@@ -35,7 +35,9 @@
     "chart.js": "4.4.3",
     "cookie-es": "1.2.2",
     "eslint-plugin-regexp": "2.6.0",
+    "jalaali-js": "^1.2.8",
     "jwt-decode": "4.0.0",
+    "luxon": "^3.6.1",
     "mapbox-gl": "3.5.2",
     "ofetch": "1.3.4",
     "pinia": "2.2.0",
@@ -54,6 +56,7 @@
     "vue-router": "4.4.2",
     "vue3-apexcharts": "1.5.3",
     "vue3-perfect-scrollbar": "2.0.0",
+    "vue3-persian-datetime-picker": "^1.2.2",
     "vuetify": "3.6.13",
     "webfontloader": "1.6.28"
   },

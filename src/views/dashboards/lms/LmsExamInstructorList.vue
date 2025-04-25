@@ -150,6 +150,9 @@ const submitUpdate = async () => {
   }
 }
 
+// utils
+import { formatDateFa } from '@/utils/dateFa'
+
 onMounted(fetchExams)
 </script>
 
@@ -163,13 +166,29 @@ onMounted(fetchExams)
       <VDataTableServer :loading="loading" :items="exams" :items-length="totalExams" :headers="[
         { title: $t('academy.Quiz'), key: 'name' },
         { title: $t('course.name'), key: 'course.course_name' },
+        { title: $t('academy.openTime'), key: 'time_open' },
         { title: $t('academy.status'), key: 'status', align: 'center' },
         // { title: $t('actions.assign'), key: 'assign', align: 'center', sortable: false },
         { title: $t('actions.actions'), key: 'actions', align: 'center', sortable: false }
       ]" class="text-no-wrap">
+
+        <template #item.name="{ item }">
+          <VBtn variant="tonal" color="primary" @click="openDetail(item)">
+            <VIcon start icon="ri-eye-line" />
+            {{ item.name }}
+          </VBtn>
+        </template>
+        <template #item.course.course_name="{ item }">
+          {{ item.course.course_name }}
+        </template>
+        <template #item.time_open="{ item }">
+          {{ formatDateFa(item.time_open) }}
+        </template>
+
         <template #item.status="{ item }">
-          <VChip :color="item.status === 'active' ? 'success' : 'secondary'" size="small">
-            {{ $t(`exam.${item.status}`) }}
+          <VChip :color="item.status === 'active' ? 'success' : item.status === 'draft' ? 'warning' : 'secondary'"
+            size="small">
+            {{ $t(`examStatus.${item.status}`) }}
           </VChip>
         </template>
 
@@ -178,10 +197,10 @@ onMounted(fetchExams)
           <!-- <VBtn icon="ri-eye-line" @click="openDetail(item)" /> -->
           <!-- <VBtn icon="ri-edit-line" color="primary" @click="openEdit(item)" /> -->
 
-          <VBtn class="ma-1" @click="openDetail(item)">
+          <!-- <VBtn class="ma-1" @click="openDetail(item)">
             {{ $t('actions.show') }}
             <VIcon end icon="ri-eye-line" />
-          </VBtn>
+          </VBtn> -->
 
           <VBtn class="ma-1" variant="tonal" color="info" @click="openEdit(item)">
             {{ $t('actions.edit') }}
@@ -276,11 +295,8 @@ onMounted(fetchExams)
         </VAlert>
 
         <VCardText>
-            <VTextField 
-            v-model="searchTerm" 
-            :label="`${$t('actions.search')} ${$t('question.questions')}`" 
-            prepend-inner-icon="ri-search-line" 
-            />
+          <VTextField v-model="searchTerm" :label="`${$t('actions.search')} ${$t('question.questions')}`"
+            prepend-inner-icon="ri-search-line" />
 
           <VDivider class="my-4" />
 
@@ -292,14 +308,9 @@ onMounted(fetchExams)
             { title: $t('actions.actions'), key: 'add', align: 'center', sortable: false },
           ]" class="text-no-wrap">
             <template #item.position="{ item }">
-                <VTextField 
-                v-model="positionInputs[item.id]" 
-                type="number" 
-                hide-details 
-                density="compact" 
-                style="max-inline-size: 4rem;" 
-                :rules="[value => value === null || value >= 0 || $t('validation.positiveNumber')]" 
-                />
+              <VTextField v-model="positionInputs[item.id]" type="number" hide-details density="compact"
+                style="max-inline-size: 4rem;"
+                :rules="[value => value === null || value >= 0 || $t('validation.positiveNumber')]" />
             </template>
             <template #item.type="{ item }">
               <VChip size="small">{{ item.type.replace('_', ' ') }}</VChip>

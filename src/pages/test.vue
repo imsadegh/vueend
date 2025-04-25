@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Video element with video.js classes -->
-    <video 
+    <!-- <video 
       ref="videoPlayer" 
       class="video-js vjs-default-skin" 
       controls 
@@ -11,7 +11,19 @@
         src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" 
         type="video/mp4" />
       Your browser does not support the video tag.
-    </video>
+    </video> -->
+
+    <VAlert type="info" variant="outlined" class="mx-auto" style="max-inline-size: 600px;" :title="$t('exam.finished')"
+      close-label="Close Alert" closable>
+
+      <!-- <span>{{ $t('exam.finished') }}</span> -->
+      <!-- <VBtn variant="tonal">
+        {{ $t('button.close') }}
+      </VBtn> -->
+    </VAlert>
+
+
+
   </div>
 </template>
 

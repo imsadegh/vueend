@@ -120,7 +120,7 @@ const login = async () => {
     useCookie('userData').value = userData
     useCookie('accessToken').value = accessToken
     
-    console.log('accessToken:', accessToken)
+    // console.log('accessToken:', accessToken)
     console.log('userAbilityRules:', userAbilityRules)
     console.log('userData:', userData)
 

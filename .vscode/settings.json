@@ -25,8 +25,8 @@
     },
     // Vue
     "[vue]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-        // "editor.defaultFormatter": "Vue.volar",
+        // "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.defaultFormatter": "Vue.volar",
     },
     // Extension: Volar
     "volar.preview.port": 3000,

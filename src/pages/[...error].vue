@@ -19,41 +19,20 @@ definePage({
 
 <template>
   <div class="misc-wrapper">
-    <ErrorHeader
-      :status-code="$t('404')"
-      :title="$t('Page Not Found ⚠️')"
-      :description="$t('We couldn\'t find the page you are looking for.')"
-      class="mb-10"
-    />
+    <ErrorHeader :status-code="$t('404')" :title="$t('Page Not Found ⚠️')"
+      :description="$t('We couldn\'t find the page you are looking for.')" class="mb-10" />
 
     <!-- 👉 Image -->
     <div class="misc-avatar w-100 text-center">
-      <VImg
-        :src="pages404"
-        alt="Coming Soon"
-        :height="$vuetify.display.xs ? 400 : 500"
-        class="my-sm-5"
-      />
+      <VImg :src="pages404" alt="Coming Soon" :height="$vuetify.display.xs ? 400 : 500" class="my-sm-5" />
 
-      <VBtn
-        to="/"
-        class="mt-10"
-      >
+      <VBtn to="/" class="mt-10">
         {{ $t('Back To Home') }}
       </VBtn>
 
-      <VImg
-        :src="authThemeMask"
-        class="d-none d-md-block footer-coming-soon flip-in-rtl"
-        cover
-      />
+      <VImg :src="authThemeMask" class="d-none d-md-block footer-coming-soon flip-in-rtl" cover />
 
-      <VImg
-        :src="miscObj"
-        class="d-none d-md-block footer-coming-soon-obj"
-        :max-width="177"
-        height="160"
-      />
+      <VImg :src="miscObj" class="d-none d-md-block footer-coming-soon-obj" :max-width="177" height="160" />
     </div>
   </div>
 </template>
