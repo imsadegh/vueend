@@ -115,7 +115,9 @@
     "create": "ایجاد",
     "search": "جستجو",
     "save": "ذخیره",
-    "add": "افزودن"
+    "add": "افزودن",
+    "review": "بررسی",
+    "reviewExam": "تصحیح امتحان"
   },
   "assignment": {
     "reviewSubmissions": "بررسی تمرین‌ها",
@@ -570,6 +572,15 @@
     "draft": "پیش‌نویس"
   },
   "exam": {
+    "attempts": "آزمون‌های دانش‌آموزان",
+    "reviewScore": "نمره",
+    "reexam": "آزمون مجدد",
+    "finalized": "نهایی شده",
+    "passed": "قبول",
+    "suggested": "نمره پیشنهاد شده",
+    "earned": "نمره کسب شده",
+    "perAnswer": "برای هر سوال",
+    "scoreFrom": "نمره از",
     "assignedQuestions": "سوالات اختصاص داده شده",
     "questionExists": "این سوال قبلا در آزمون وجود دارد.",
     "assignQuestions": "انتخاب سوالات",
@@ -583,7 +594,14 @@
     "position": "ردیف سوال",
     "finished": "امتحان شما پایان یافت",
     "yourAnswer": "جواب خود را تایپ کنید.",
-    "start": "شروع امتحان"
+    "start": "شروع امتحان",
+    "finalGrade": "نمره نهایی",
+    "feedback": "بازخورد",
+    "inProgress": "در حال پاسخ",
+    "isfinished": "تکمیل شده",
+    "title": "نام امتحان",
+    "attempt": "دفعات جواب",
+    "waitingForNewExam": "در انتظار آزمون مجدد"
   },
   "question": {
     "questions": "بانک سوالات",
@@ -614,5 +632,7 @@
     "delete": "آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟",
     "cancel": "لغو",
     "confirm": "تایید"
-  }
+  },
+  "studentAnswer": "پاسخ",
+  "student": "نام دانش‌آموز"
 }

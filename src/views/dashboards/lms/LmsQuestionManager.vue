@@ -21,15 +21,15 @@ const form = ref<Partial<Question & { options?: string; correct_answers?: string
 const errors = ref<Record<string, string>>({})
 
 const headers = [
-        { title: 'ID', key: 'id', width: 70 },
-        { title: $t('question.title'), key: 'title' },
-        { title: $t('question.type'), key: 'type', align: 'center' as 'center' },
-        // { title: $t('actions.show'),    key: 'show',   align: 'center' as 'center', sortable: false },
-        // { title: $t('actions.edit'),    key: 'edit',   align: 'center' as 'center', sortable: false },
-        // { title: $t('actions.delete'),  key: 'delete', align: 'center' as 'center', sortable: false },
-        { title: $t('actions.actions'), key: 'manage', align: 'center' as 'center', sortable: false },
+  { title: 'ID', key: 'id', width: 70 },
+  { title: $t('question.title'), key: 'title' },
+  { title: $t('question.type'), key: 'type', align: 'center' as 'center' },
+  // { title: $t('actions.show'),    key: 'show',   align: 'center' as 'center', sortable: false },
+  // { title: $t('actions.edit'),    key: 'edit',   align: 'center' as 'center', sortable: false },
+  // { title: $t('actions.delete'),  key: 'delete', align: 'center' as 'center', sortable: false },
+  { title: $t('actions.actions'), key: 'actions', align: 'center' as 'center', sortable: false },
 
-      ] 
+]
 
 // ---------- API ----------
 const fetchQuestions = async () => {
@@ -95,8 +95,17 @@ fetchQuestions()
         </VBtn>
       </VCardActions>
 
-      <VDataTableServer :items="questions" :items-length="total" item-value="id" :headers="headers" 
-      class="text-no-wrap rounded-0">
+      <VDataTableServer :items="questions" :items-length="total" item-value="id" :headers="headers"
+        class="text-no-wrap">
+
+        <!-- title -->
+        <template #item.title="{ item }">
+          <VBtn variant="tonal" color="primary" @click="openShow(item.id)">
+            <VIcon start icon="ri-eye-line" />
+            {{ item.title }}
+          </VBtn>
+        </template>
+
         <!-- type chip -->
         <template #item.type="{ item }">
           <VChip size="small" color="info">{{ item.type.replace('_', ' ') }}</VChip>
@@ -112,12 +121,12 @@ fetchQuestions()
         <template #item.delete="{ item }">
           <VBtn variant="plain" icon="ri-delete-bin-line" color="error" @click="deleteQuestion(item.id)" />
         </template> -->
-        <template #item.manage="{ item }">
+        <template #item.actions="{ item }">
           <!-- <VBtn variant="plain" icon="ri-eye-line" @click="openShow(item.id)"/> -->
-          <VBtn class="ma-1" @click="openShow(item.id)">
+          <!-- <VBtn class="ma-1" @click="openShow(item.id)">
             {{ $t('actions.show') }}
             <VIcon end icon="ri-eye-line" />
-          </VBtn>
+          </VBtn> -->
 
           <VBtn class="ma-1" variant="tonal" color="info" @click="openEdit(item.id)">
             {{ $t('actions.edit') }}
@@ -142,14 +151,17 @@ fetchQuestions()
         <DialogCloseBtn variant="text" size="default" @click="closeDialog" />
 
         <VCardText>
+
           <!-- readonly → show mode -->
-          <VTextField v-model="form.title" :label="$t('question.title')" :disabled="dialogMode === 'show'" />
-          <VTextarea v-model="form.question_text" :label="$t('question.text')" :disabled="dialogMode === 'show'" />
+          <VTextField v-model="form.title" :label="$t('question.title')" :disabled="dialogMode === 'show'"
+            class="mb-4" />
+          <VTextarea v-model="form.question_text" :label="$t('question.text')" :disabled="dialogMode === 'show'"
+            class="mb-4" />
 
           <VSelect v-if="dialogMode !== 'show'" v-model="form.type" :items="[
-            { title: $t('question.multiple_choice'), value: 'multiple_choice' },
+            // { title: $t('question.multiple_choice'), value: 'multiple_choice' },
             { title: $t('question.short_answer'), value: 'short_answer' },
-            { title: $t('question.true_false'), value: 'true_false' },
+            // { title: $t('question.true_false'), value: 'true_false' },
             { title: $t('question.essay'), value: 'essay' },
           ]" :label="$t('question.type')" />
 
@@ -158,6 +170,8 @@ fetchQuestions()
             <VTextarea v-model="form.options" :label="$t('question.optionsJSON')" hint='["A","B","C"]' />
             <VTextarea v-model="form.correct_answers" :label="$t('question.correctJSON')" hint='["A"]' />
           </template>
+
+
         </VCardText>
 
         <VCardActions v-if="dialogMode !== 'show'" class="d-flex justify-end gap-4">

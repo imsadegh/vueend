@@ -3,6 +3,7 @@ import LmsAssignmentList from '@/views/dashboards/lms/LmsAssignmentList.vue';
 import LmsAssignmentSubmissionList from '@/views/dashboards/lms/LmsAssignmentSubmissionList.vue';
 import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue';
 import LmsCourseList from '@/views/dashboards/lms/LmsCourseList.vue';
+import LmsExamAttemptReview from '@/views/dashboards/lms/LmsExamAttemptReview.vue';
 import LmsExamInstructorList from '@/views/dashboards/lms/LmsExamInstructorList.vue';
 import LmsQuestionManager from '@/views/dashboards/lms/LmsQuestionManager.vue';
 
@@ -38,7 +39,7 @@ import LmsQuestionManager from '@/views/dashboards/lms/LmsQuestionManager.vue';
     </VCol>
 
     <!-- 👉 Assignment Submission List -->
-     <VCol cols="12" md="12">
+    <VCol cols="12" md="12">
       <LmsAssignmentSubmissionList />
     </VCol>
 
@@ -49,7 +50,12 @@ import LmsQuestionManager from '@/views/dashboards/lms/LmsQuestionManager.vue';
 
     <!-- 👉 Questions Manager -->
     <VCol cols="12" md="12">
-      <LmsQuestionManager /> 
+      <LmsQuestionManager />
+    </VCol>
+
+    <!-- 👉 Exam Attempts List -->
+    <VCol cols="12" md="12">
+      <LmsExamAttemptReview />
     </VCol>
 
     <!-- 👉 User List -->

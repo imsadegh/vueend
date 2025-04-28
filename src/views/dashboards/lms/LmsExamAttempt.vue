@@ -29,6 +29,7 @@ const loadNext = async () => {
       `${API_BASE_URL}/exams/${examId.value}/attempts/${attemptId.value}/next`,
       { headers: { Authorization: `Bearer ${token}` } },
     )
+    // console.log('next question???', data)
     question.value = data.question
     answer.value = ''
   } catch (e: any) {

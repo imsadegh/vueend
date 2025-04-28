@@ -108,19 +108,19 @@ const login = async () => {
 
     // Log the successful response
     // console.log('Login successful:', response.data)
-    
+
     // Extract data from the API response
     const { accessToken, userData, userAbilityRules } = response.data
-    
+
     // Save user data and token in cookies
     useCookie('userAbilityRules').value = userAbilityRules
     // Update ability rules in the application
     ability.update(userAbilityRules)
-    
+
     useCookie('userData').value = userData
     useCookie('accessToken').value = accessToken
-    
-    // console.log('accessToken:', accessToken)
+
+    console.log('accessToken:', accessToken)
     console.log('userAbilityRules:', userAbilityRules)
     console.log('userData:', userData)
 
@@ -162,53 +162,28 @@ const onSubmit = () => {
     </div>
   </RouterLink>
 
-  <VRow
-    no-gutters
-    class="auth-wrapper"
-  >
-    <VCol
-      md="8"
-      class="d-none d-md-flex align-center justify-center position-relative"
-    >
+  <VRow no-gutters class="auth-wrapper">
+    <VCol md="8" class="d-none d-md-flex align-center justify-center position-relative">
       <div class="d-flex align-center justify-center pa-10">
-        <img
-          :src="authThemeImg"
-          class="auth-illustration w-100"
-          alt="auth-illustration"
-        >
+        <img :src="authThemeImg" class="auth-illustration w-100" alt="auth-illustration">
       </div>
-      <VImg
-        :src="authThemeMask"
-        class="d-none d-md-flex auth-footer-mask"
-        alt="auth-mask"
-      />
+      <VImg :src="authThemeMask" class="d-none d-md-flex auth-footer-mask" alt="auth-mask" />
     </VCol>
 
-    <VCol
-      cols="12"
-      md="4"
-      class="auth-card-v2 d-flex align-center justify-center"
-      style="background-color: rgb(var(--v-theme-surface));"
-    >
-      <VCard
-        flat
-        :max-width="500"
-        class="mt-12 mt-sm-0 pa-5 pa-lg-7"
-      >
+    <VCol cols="12" md="4" class="auth-card-v2 d-flex align-center justify-center"
+      style="background-color: rgb(var(--v-theme-surface));">
+      <VCard flat :max-width="500" class="mt-12 mt-sm-0 pa-5 pa-lg-7">
         <VCardText>
           <h4 class="text-h4 mb-1">
-            {{$t('Welcome to ')}}
+            {{ $t('Welcome to ') }}
             <!-- <span class="text-capitalize">{{ themeConfig.app.title }}!</span> 👋🏻 -->
           </h4>
           <p class="mb-0">
-            {{$t('Please sign-in to your account and start the adventure')}}
+            {{ $t('Please sign-in to your account and start the adventure') }}
           </p>
         </VCardText>
         <VCardText>
-          <VAlert
-            color="primary"
-            variant="tonal"
-          >
+          <VAlert color="primary" variant="tonal">
             <p class="text-caption mb-2 text-primary">
               Admin Email: <strong>admin@demo.com</strong> / Pass: <strong>admin</strong>
             </p>
@@ -219,13 +194,10 @@ const onSubmit = () => {
         </VCardText>
 
         <VCardText>
-          <VForm
-            ref="refVForm"
-            @submit.prevent="onSubmit"
-          >
+          <VForm ref="refVForm" @submit.prevent="onSubmit">
             <VRow>
               <!-- phone number -->
-               <!-- TODO add phone number that only gets number and if it is persian it will get eng; use register page. -->
+              <!-- TODO add phone number that only gets number and if it is persian it will get eng; use register page. -->
               <!-- <VCol cols="12">
                 <VTextField
                   v-model="credentials.phone_number"
@@ -235,69 +207,42 @@ const onSubmit = () => {
                   autofocus
                   :rules="[requiredValidator, phoneValidator]"
                 /> -->
-                  <!-- :error-messages="errors.phone_number" -->
+              <!-- :error-messages="errors.phone_number" -->
               <!-- </VCol> -->
 
               <!-- email -->
               <VCol cols="12">
-                <VTextField
-                  v-model="credentials.email"
-                    :label="$t('Email')"
-                  placeholder="johndoe@email.com"
-                  type="email"
-                  autofocus
-                  :rules="[requiredValidator, emailValidator]"
-                  :error-messages="errors.email"
-                />
+                <VTextField v-model="credentials.email" :label="$t('Email')" placeholder="johndoe@email.com"
+                  type="email" autofocus :rules="[requiredValidator, emailValidator]" :error-messages="errors.email" />
               </VCol>
 
               <!-- password -->
               <VCol cols="12">
-                <VTextField
-                  v-model="credentials.password"
-                    :label="$t('Password')"
-                  placeholder="············"
-                  :rules="[requiredValidator]"
-                  :type="isPasswordVisible ? 'text' : 'password'"
+                <VTextField v-model="credentials.password" :label="$t('Password')" placeholder="············"
+                  :rules="[requiredValidator]" :type="isPasswordVisible ? 'text' : 'password'"
                   :error-messages="errors.password"
                   :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
-                  @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                />
+                  @click:append-inner="isPasswordVisible = !isPasswordVisible" />
 
                 <div class="d-flex align-center flex-wrap justify-space-between my-6 gap-x-2">
-                    <VCheckbox
-                    v-model="rememberMe"
-                    :label="$t('Remember me')"
-                  />
-                  <RouterLink
-                    class="text-primary"
-                    :to="{ name: 'forgot-password' }"
-                  >
-                    {{$t('Forgot Password?')}}
+                  <VCheckbox v-model="rememberMe" :label="$t('Remember me')" />
+                  <RouterLink class="text-primary" :to="{ name: 'forgot-password' }">
+                    {{ $t('Forgot Password?') }}
                   </RouterLink>
                 </div>
 
-                <VBtn
-                  block
-                  type="submit"
-                >
-                    {{$t('Login')}}
+                <VBtn block type="submit">
+                  {{ $t('Login') }}
                 </VBtn>
               </VCol>
 
               <!-- create account -->
-              <VCol
-                cols="12"
-                class="text-body-1 text-center"
-              >
+              <VCol cols="12" class="text-body-1 text-center">
                 <span class="d-inline-block">
-                    {{$t('New on our platform?')}}
+                  {{ $t('New on our platform?') }}
                 </span>
-                <RouterLink
-                  class="text-primary ms-1 d-inline-block text-body-1"
-                  :to="{ name: 'register' }"
-                >
-                    {{$t('Create an account')}}
+                <RouterLink class="text-primary ms-1 d-inline-block text-body-1" :to="{ name: 'register' }">
+                  {{ $t('Create an account') }}
                 </RouterLink>
               </VCol>
 
