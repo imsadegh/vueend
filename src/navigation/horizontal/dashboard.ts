@@ -54,12 +54,12 @@ export default [
     ],
   },
 
-  {
-    title: 'My courses',
-    to: 'all-courses',
-    icon: { icon: 'ri-book-open-line' },
-    action: 'read',
-    subject: 'AclDemo',
-  },
+  // {
+  //   title: 'My courses',
+  //   to: 'all-courses',
+  //   icon: { icon: 'ri-book-open-line' },
+  //   action: 'read',
+  //   subject: 'AclDemo',
+  // },
 
 ]

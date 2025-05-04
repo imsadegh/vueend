@@ -16,26 +16,12 @@ else {
 
 <template>
   <VCard v-if="profileHeaderData">
-    <VImg
-      :src="profileHeaderData.coverImg"
-      min-height="125"
-      max-height="250"
-      cover
-    />
+    <VImg :src="profileHeaderData.coverImg" min-height="125" max-height="250" cover />
 
     <VCardText class="d-flex align-bottom flex-sm-row flex-column justify-center gap-x-6">
       <div class="d-flex h-0">
-        <VAvatar
-          rounded
-          size="130"
-          :image="profileHeaderData.profileImg"
-          class="user-profile-avatar mx-auto"
-        >
-          <VImg
-            :src="profileHeaderData.profileImg"
-            height="120"
-            width="120"
-          />
+        <VAvatar rounded size="130" :image="profileHeaderData.profileImg" class="user-profile-avatar mx-auto">
+          <VImg :src="profileHeaderData.profileImg" height="120" width="120" />
         </VAvatar>
       </div>
 
@@ -47,30 +33,21 @@ else {
         <div class="d-flex align-center justify-center justify-sm-space-between flex-wrap gap-6">
           <div class="d-flex flex-wrap justify-center justify-sm-start flex-grow-1 gap-6">
             <div class="d-flex align-center gap-x-2">
-              <VIcon
-                size="24"
-                icon="ri-palette-line"
-              />
+              <VIcon size="24" icon="ri-palette-line" />
               <div class="text-body-1 font-weight-medium">
                 {{ profileHeaderData.designation }}
               </div>
             </div>
 
             <div class="d-flex align-center gap-x-2">
-              <VIcon
-                size="24"
-                icon="ri-map-pin-line"
-              />
+              <VIcon size="24" icon="ri-map-pin-line" />
               <div class="text-body-1 font-weight-medium">
                 {{ profileHeaderData.location }}
               </div>
             </div>
 
             <div class="d-flex align-center gap-x-2">
-              <VIcon
-                size="24"
-                icon="ri-calendar-line"
-              />
+              <VIcon size="24" icon="ri-calendar-line" />
               <div class="text-body-1 font-weight-medium">
                 {{ profileHeaderData.joiningDate }}
               </div>

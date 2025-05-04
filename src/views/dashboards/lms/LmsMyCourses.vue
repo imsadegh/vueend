@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { API_BASE_URL } from '@/config/config';
 import LmsExamAttempt from '@/views/dashboards/lms/LmsExamAttempt.vue';
+import LmsExamScore from '@/views/dashboards/lms/LmsExamScore.vue';
 import axios from 'axios';
 import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -28,6 +29,15 @@ const label = ref('All Courses');
 const enrolledCourses = ref<any[]>([]);
 const totalCourses = ref(0);
 
+/* exams mapped by courseId */
+const examsByCourse = ref<Record<string, any[]>>({})
+const selectedExamId = ref<number | null>(null)
+const isExamDialog = ref(false)
+
+/* score-dialog state */
+const scoreCourseId = ref<number | null>(null)
+const isScoreDialog = ref(false)
+
 const fetchEnrolledCourses = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/student/courses`, {
@@ -49,11 +59,6 @@ const fetchEnrolledCourses = async () => {
     console.error('Error fetching enrolled courses:', (error as any).response?.data || (error as any).message);
   }
 };
-
-/* exams mapped by courseId */
-const examsByCourse = ref<Record<string, any[]>>({})
-const selectedExamId = ref<number | null>(null)
-const isExamDialog = ref(false)
 
 const fetchExamsForCourse = async (courseId: number) => {
   const { data } = await axios.get(`${API_BASE_URL}/exams`, {
@@ -78,6 +83,18 @@ const onStartExam = (exam: any) => {
   selectedExamId.value = exam.id
   isExamDialog.value = true
 }
+
+const goToCourse = (course: any) => {
+  if (course.can_redirect) {
+    router.push({ name: 'course-details', params: { courseId: course.id } });
+  } else {
+    console.warn(
+      `Course "${course.course_name}" is not accessible. Enrollment status: ${course.enrollment_status}`
+    );
+  }
+};
+
+const confirmStart = (message: string): boolean => window.confirm(message)
 
 watch(
   [hideCompleted, label, () => props.searchQuery, page, sortBy, orderBy],
@@ -106,19 +123,6 @@ onMounted(() => {
 // };
 
 // Add a function to handle redirection based on enrollment status.
-
-const goToCourse = (course: any) => {
-  if (course.can_redirect) {
-    router.push({ name: 'course-details', params: { courseId: course.id } });
-  } else {
-    console.warn(
-      `Course "${course.course_name}" is not accessible. Enrollment status: ${course.enrollment_status}`
-    );
-  }
-};
-
-const confirmStart = (message: string): boolean => window.confirm(message)
-
 </script>
 
 <template>
@@ -233,6 +237,11 @@ const confirmStart = (message: string): boolean => window.confirm(message)
                         {{ exam.name }}
                       </VBtn>
                     </template>
+
+                    <!-- 🡒 View Scores button -->
+                    <VBtn variant="tonal" color="info" @click="scoreCourseId = course.id; isScoreDialog = true">
+                      {{ $t('exam.myScores') }}
+                    </VBtn>
                   </div>
                 </VCardText>
               </VCard>
@@ -244,6 +253,9 @@ const confirmStart = (message: string): boolean => window.confirm(message)
         <VDialog v-model="isExamDialog" :width="'75%'" persistent>
           <LmsExamAttempt v-if="selectedExamId" :exam-id="selectedExamId" @close="isExamDialog = false" />
         </VDialog>
+
+        <!-- dialog mounts the new component -->
+        <LmsExamScore v-if="scoreCourseId !== null" v-model="isScoreDialog" :course-id="scoreCourseId" />
 
       </div>
       <div v-else>

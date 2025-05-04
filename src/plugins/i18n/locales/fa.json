@@ -601,7 +601,13 @@
     "isfinished": "تکمیل شده",
     "title": "نام امتحان",
     "attempt": "دفعات جواب",
-    "waitingForNewExam": "در انتظار آزمون مجدد"
+    "waitingForNewExam": "در انتظار آزمون مجدد",
+    "detailScore": "جزئیات",
+    "reviewedBy": "بررسی توسط",
+    "noFeedback": "بازخوردی نوشته نشده",
+    "notReviewed": "بررسی نشده",
+    "noDetails": "بدون جزئیات",
+    "myScores": "نمرات من"
   },
   "question": {
     "questions": "بانک سوالات",

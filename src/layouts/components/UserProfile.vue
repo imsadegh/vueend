@@ -66,53 +66,22 @@ const userProfileList = [
 </script>
 
 <template>
-  <VBadge
-    v-if="userData"
-    dot
-    bordered
-    location="bottom right"
-    offset-x="2"
-    offset-y="2"
-    color="success"
-    class="user-profile-badge"
-  >
-    <VAvatar
-      class="cursor-pointer"
-      size="38"
-      :color="!(userData && userData.avatar) ? 'primary' : undefined"
-      :variant="!(userData && userData.avatar) ? 'tonal' : undefined"
-    >
-      <VImg
-        v-if="userData && userData.avatar"
-        :src="userData.avatar"
-      />
-      <VIcon
-        v-else
-        icon="ri-user-line"
-      />
+  <VBadge v-if="userData" dot bordered location="bottom right" offset-x="2" offset-y="2" color="success"
+    class="user-profile-badge">
+    <VAvatar class="cursor-pointer" size="38" :color="!(userData && userData.avatar) ? 'primary' : undefined"
+      :variant="!(userData && userData.avatar) ? 'tonal' : undefined">
+      <VImg v-if="userData && userData.avatar" :src="userData.avatar" />
+      <VIcon v-else icon="ri-user-line" />
 
       <!-- SECTION Menu -->
-      <VMenu
-        activator="parent"
-        width="230"
-        location="bottom end"
-        offset="15px"
-      >
+      <VMenu activator="parent" width="230" location="bottom end" offset="15px">
         <VList>
           <VListItem class="px-4">
             <div class="d-flex gap-x-2 align-center">
-              <VAvatar
-                :color="!(userData && userData.avatar) ? 'primary' : undefined"
-                :variant="!(userData && userData.avatar) ? 'tonal' : undefined"
-              >
-                <VImg
-                  v-if="userData && userData.avatar"
-                  :src="userData.avatar"
-                />
-                <VIcon
-                  v-else
-                  icon="ri-user-line"
-                />
+              <VAvatar :color="!(userData && userData.avatar) ? 'primary' : undefined"
+                :variant="!(userData && userData.avatar) ? 'tonal' : undefined">
+                <VImg v-if="userData && userData.avatar" :src="userData.avatar" />
+                <VIcon v-else icon="ri-user-line" />
               </VAvatar>
 
               <div>
@@ -127,49 +96,24 @@ const userProfileList = [
           </VListItem>
 
           <PerfectScrollbar :options="{ wheelPropagation: false }">
-            <template
-              v-for="item in userProfileList"
-              :key="item.title"
-            >
-              <VListItem
-                v-if="item.type === 'navItem'"
-                :to="item.to"
-                class="px-4"
-              >
+            <template v-for="item in userProfileList" :key="item.title">
+              <VListItem v-if="item.type === 'navItem'" :to="item.to" class="px-4">
                 <template #prepend>
-                  <VIcon
-                    :icon="item.icon"
-                    size="22"
-                  />
+                  <VIcon :icon="item.icon" size="22" />
                 </template>
 
                 <VListItemTitle>{{ item.title }}</VListItemTitle>
 
-                <template
-                  v-if="item.chipsProps"
-                  #append
-                >
-                  <VChip
-                    v-bind="item.chipsProps"
-                    variant="elevated"
-                  />
+                <template v-if="item.chipsProps" #append>
+                  <VChip v-bind="item.chipsProps" variant="elevated" />
                 </template>
               </VListItem>
 
-              <VDivider
-                v-else
-                class="my-1"
-              />
+              <VDivider v-else class="my-1" />
             </template>
 
             <VListItem class="px-4">
-              <VBtn
-                block
-                color="error"
-                size="small"
-                append-icon="ri-logout-box-r-line"
-                @click="logout"
-              >
+              <VBtn block color="error" size="small" append-icon="ri-logout-box-r-line" @click="logout">
                 {{ $t('Logout') }}
               </VBtn>
             </VListItem>
