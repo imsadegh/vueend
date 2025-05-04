@@ -95,7 +95,7 @@ const onSubmit = async () => {
       // username: form.value.username,
       // email: form.value.email,
       password: form.value.password,
-      role_id: form.value.role_id, // Include role
+      // role_id: form.value.role_id, // Include role
     })
 
     // Step 2: Send OTP
@@ -106,7 +106,7 @@ const onSubmit = async () => {
     // alert($t('Signup successful! Redirecting to login...'))
     // router.push({ name: 'login' }) // Navigate to login page
     router.push({ path: '/pages/authentication/two-steps-v2', query: { phone_number: form.value.phone_number } })
-    
+
   } catch (error) {
     const response = (error as any).response;
     if (response?.status === 400 && response?.data?.phone_number) {
@@ -114,8 +114,8 @@ const onSubmit = async () => {
       // alert($t(response.data.phone_number[0]))
       // alert(response.data.phone_number[0]);
     } else {
-    // console.error('Signup or OTP sending failed:', error)
-    alert(response?.data?.message || $t('Signup failed. Please try again.'));
+      // console.error('Signup or OTP sending failed:', error)
+      alert(response?.data?.message || $t('Signup failed. Please try again.'));
     }
   }
   // console.log({ 
@@ -137,43 +137,21 @@ const onSubmit = async () => {
     </div>
   </RouterLink>
 
-  <VRow
-    no-gutters
-    class="auth-wrapper"
-  >
-    <VCol
-      md="8"
-      class="d-none d-md-flex align-center justify-center position-relative"
-    >
+  <VRow no-gutters class="auth-wrapper">
+    <VCol md="8" class="d-none d-md-flex align-center justify-center position-relative">
       <!-- here your illustrator -->
       <div class="d-flex align-center justify-center pa-10">
-        <img
-          :src="authThemeImg"
-          class="auth-illustration w-100"
-          alt="auth-illustration"
-        >
+        <img :src="authThemeImg" class="auth-illustration w-100" alt="auth-illustration">
       </div>
-      <VImg
-        :src="authThemeMask"
-        class="d-none d-md-flex auth-footer-mask"
-        alt="auth-mask"
-      />
+      <VImg :src="authThemeMask" class="d-none d-md-flex auth-footer-mask" alt="auth-mask" />
     </VCol>
 
-    <VCol
-      cols="12"
-      md="4"
-      class="auth-card-v2 d-flex align-center justify-center"
-      style="background-color: rgb(var(--v-theme-surface));"
-    >
-      <VCard
-        flat
-        :max-width="500"
-        class="mt-12 mt-sm-0 pa-5 pa-lg-7"
-      >
+    <VCol cols="12" md="4" class="auth-card-v2 d-flex align-center justify-center"
+      style="background-color: rgb(var(--v-theme-surface));">
+      <VCard flat :max-width="500" class="mt-12 mt-sm-0 pa-5 pa-lg-7">
         <VCardText>
           <h4 class="text-h4 mb-1">
-            {{ $t('Adventure starts here 🚀')}}
+            {{ $t('Adventure starts here 🚀') }}
           </h4>
           <p class="mb-0">
             {{ $t('Make your app management easy and fun!') }}
@@ -185,23 +163,15 @@ const onSubmit = async () => {
             <VRow>
               <!-- FirstName -->
               <VCol cols="12">
-                <VTextField
-                  v-model="form.first_name"
-                  autofocus
-                  :label="$t('First Name')"
+                <VTextField v-model="form.first_name" autofocus :label="$t('First Name')"
                   :placeholder="$t('Enter your first name')"
-                  :rules="[rules.required, rules.minLength(3), rules.persian]"
-                />
+                  :rules="[rules.required, rules.minLength(3), rules.persian]" />
               </VCol>
 
               <!-- LastName -->
               <VCol cols="12">
-                <VTextField
-                  v-model="form.last_name"
-                  :label="$t('Last Name')"
-                  :placeholder="$t('Enter your last name')"
-                  :rules="[rules.required, rules.minLength(3), rules.persian]"
-                />
+                <VTextField v-model="form.last_name" :label="$t('Last Name')" :placeholder="$t('Enter your last name')"
+                  :rules="[rules.required, rules.minLength(3), rules.persian]" />
               </VCol>
 
               <!-- Username -->
@@ -216,71 +186,42 @@ const onSubmit = async () => {
 
               <!-- phone number -->
               <VCol cols="12">
-                <VTextField
-                  v-model="form.phone_number"
-                  :label="$t('Phone Number')"
-                  type="tel"
-                  :placeholder="$t('phone number place holder')"
-                  :rules="[rules.required, rules.phone]"
-                  @input="form.phone_number = form.phone_number.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '')"
-                />
+                <VTextField v-model="form.phone_number" :label="$t('Phone Number')" type="tel"
+                  :placeholder="$t('phone number place holder')" :rules="[rules.required, rules.phone]"
+                  @input="form.phone_number = form.phone_number.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '')" />
               </VCol>
 
               <!-- password -->
               <VCol cols="12">
-                <VTextField
-                  v-model="form.password"
-                  :label="$t('Password')"
-                  placeholder="············"
-                  :type="isPasswordVisible ? 'text' : 'password'"
-                  :rules="[rules.required, rules.strongPassword]"
+                <VTextField class="mb-6" v-model="form.password" :label="$t('Password')" placeholder="············"
+                  :type="isPasswordVisible ? 'text' : 'password'" :rules="[rules.required, rules.strongPassword]"
                   :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
-                  @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                />
+                  @click:append-inner="isPasswordVisible = !isPasswordVisible" />
 
-                <br>
+                <!-- <br> -->
 
-              <!-- repeat password -->
-              <!-- <VCol cols="12"> -->
-                <VTextField
-                  v-model="form.repeat_password"
-                  :label="$t('Repeat Password')"
-                  placeholder="············"
-                  :type="isPasswordVisible ? 'text' : 'password'"
-                  :rules="[rules.required, rules.passwordsMatch]"
+                <!-- repeat password -->
+                <!-- <VCol cols="12"> -->
+                <VTextField v-model="form.repeat_password" :label="$t('Repeat Password')" placeholder="············"
+                  :type="isPasswordVisible ? 'text' : 'password'" :rules="[rules.required, rules.passwordsMatch]"
                   :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
-                  @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                />
-              <!-- </VCol> -->
+                  @click:append-inner="isPasswordVisible = !isPasswordVisible" />
+                <!-- </VCol> -->
 
                 <br>
                 <!-- Role -->
-                <VSelect
-                  v-model="form.role_id"
-                  :label="$t('roles.Role')"
-                  :items="[
-                    { text: $t('roles.student'), value: 1 },
-                    { text: $t('roles.instructor'), value: 2 },
-                    { text: $t('roles.assistant'), value: 3 },
-                    { text: $t('roles.manager'), value: 4 },
-                  ]"
-                  item-title="text"
-                  item-value="value"
-                  :rules="[rules.required]"
-                />
+                <!-- <VSelect v-model="form.role_id" :label="$t('roles.Role')" :items="[
+                  { text: $t('roles.student'), value: 1 },
+                  { text: $t('roles.instructor'), value: 2 },
+                  { text: $t('roles.assistant'), value: 3 },
+                  { text: $t('roles.manager'), value: 4 },
+                ]" item-title="text" item-value="value" :rules="[rules.required]" /> -->
 
                 <div class="d-flex align-center my-6">
-                  <VCheckbox
-                    id="privacy-policy"
-                    v-model="form.privacyPolicies"
-                    inline
-                  />
-                  <VLabel
-                    for="privacy-policy"
-                    style="opacity: 1;"
-                  >
+                  <VCheckbox id="privacy-policy" v-model="form.privacyPolicies" inline />
+                  <VLabel for="privacy-policy" style="opacity: 1;">
                     <span class="me-1 text-high-emphasis">
-                      {{ $t ('I agree to')}}
+                      {{ $t('I agree to') }}
                     </span>
                     <!-- <a
                       href="javascript:void(0)"
@@ -289,12 +230,8 @@ const onSubmit = async () => {
                   </VLabel>
                 </div>
 
-                <VBtn
-                  block
-                  type="submit"
-                  :disabled="!isFormValid"
-                >
-                  {{$t ('Sign Up')}}
+                <VBtn block type="submit" :disabled="!isFormValid">
+                  {{ $t('Sign Up') }}
                 </VBtn>
               </VCol>
 
@@ -302,12 +239,10 @@ const onSubmit = async () => {
               <VCol cols="12">
                 <div class="text-center text-base">
                   <span class="d-inline-block">
-                    {{$t ('Already have an account?')}}
-                  </span> <RouterLink
-                    class="text-primary d-inline-block"
-                    :to="{ name: 'login' }"
-                  >
-                    {{$t ('Sign in instead')}}
+                    {{ $t('Already have an account?') }}
+                  </span>
+                  <RouterLink class="text-primary d-inline-block" :to="{ name: 'login' }">
+                    {{ $t('Sign in instead') }}
                   </RouterLink>
                 </div>
               </VCol>
