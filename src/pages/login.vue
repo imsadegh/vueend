@@ -30,8 +30,10 @@ definePage({
 
 const isPasswordVisible = ref(false)
 
+// TODO use the numberphone as login
 // TODO - use vuetify snackbar to show the error messages.
 // TODO - use the standard valdiator that is made by vuetify,
+// TODO - users must login with the phone number instead of the email.
 
 const route = useRoute()
 const router = useRouter()
@@ -49,7 +51,7 @@ const errors = ref<Record<string, string | undefined>>({
 const refVForm = ref<VForm>()
 
 const credentials = ref({
-  // email: 'admin@demo.com',
+  email: 'admin@demo.com',
   // password: 'admin',
   phone_number: '',
   password: 'Sadegh@123',
@@ -99,8 +101,8 @@ const login = async () => {
   try {
     // Send login request to the backend
     const response = await axios.post(`${API_BASE_URL}/auth/login`, {
-      phone_number: credentials.value.phone_number,
-      // email: credentials.value.email,
+      // phone_number: credentials.value.phone_number,
+      email: credentials.value.email,
       password: credentials.value.password,
     })
 
@@ -182,9 +184,9 @@ const onSubmit = () => {
         </VCardText>
         <VCardText>
           <VAlert color="primary" variant="tonal">
-            <!-- <p class="text-caption mb-2 text-primary">
+            <p class="text-caption mb-2 text-primary">
               Admin Email: <strong>admin@demo.com</strong> / Pass: <strong>admin</strong>
-            </p> -->
+            </p>
             <p class="text-caption mb-0 text-primary">
               Client Email: <strong>client@demo.com</strong> / Pass: <strong>client</strong>
             </p>
@@ -196,17 +198,23 @@ const onSubmit = () => {
             <VRow>
               <!-- phone number -->
               <!-- TODO add phone number that only gets number and if it is persian it will get eng; use register page. -->
-              <VCol cols="12">
-                <VTextField v-model="credentials.phone_number" :label="$t('Phone Number')" placeholder="09**-***-****"
-                  type="tel" autofocus :rules="[requiredValidator, phoneValidator]"
-                  :error-messages="errors.phone_number" />
-              </VCol>
+              <!-- <VCol cols="12">
+                <VTextField
+                  v-model="credentials.phone_number"
+                  :label="$t('Phone Number')"
+                  placeholder="09**-***-****"
+                  type="tel"
+                  autofocus
+                  :rules="[requiredValidator, phoneValidator]"
+                /> -->
+              <!-- :error-messages="errors.phone_number" -->
+              <!-- </VCol> -->
 
               <!-- email -->
-              <!-- <VCol cols="12">
+              <VCol cols="12">
                 <VTextField v-model="credentials.email" :label="$t('Email')" placeholder="johndoe@email.com"
                   type="email" autofocus :rules="[requiredValidator, emailValidator]" :error-messages="errors.email" />
-              </VCol> -->
+              </VCol>
 
               <!-- password -->
               <VCol cols="12">
@@ -218,10 +226,9 @@ const onSubmit = () => {
 
                 <div class="d-flex align-center flex-wrap justify-space-between my-6 gap-x-2">
                   <VCheckbox v-model="rememberMe" :label="$t('Remember me')" />
-
-                  <!-- <RouterLink class="text-primary" :to="{ name: 'forgot-password' }">
+                  <RouterLink class="text-primary" :to="{ name: 'forgot-password' }">
                     {{ $t('Forgot Password?') }}
-                  </RouterLink> -->
+                  </RouterLink>
                 </div>
 
                 <VBtn block type="submit">
