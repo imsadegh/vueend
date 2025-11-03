@@ -4,29 +4,9 @@ const emailRouteComponent = () => import('@/pages/apps/email/index.vue')
 
 // 👉 Redirects
 export const redirects: RouteRecordRaw[] = [
-  // ℹ️ We are redirecting to different pages based on role.
-  // NOTE: Role is just for UI purposes. ACL is based on abilities.
-  {
-    path: '/',
-    name: 'index',
-    redirect: to => {
-      // TODO: Get type from backend
-      const userData = useCookie<Record<string, unknown> | null | undefined>('userData')
-      const userRole = userData.value?.role
-
-      if (userRole === 'admin')
-        // return { name: 'dashboards-crm' }
-        return { name: 'dashboards-lms-admin' }
-      if (userRole === 'student')
-        // return { name: 'access-control' }
-        return { name: 'dashboards-academy' }
-        // return { name: 'dashboards-lms-student' }
-      if (userRole === 'instructor')
-        return { name: 'dashboards-lms-instructor' }
-
-      return { name: 'login', query: to.query }
-    },
-  },
+  // ℹ️ Landing page (/) is now handled by src/pages/index.vue as a public route
+  // It automatically redirects logged-in users to their role-specific dashboard
+  // Non-logged-in users see the landing page with login/signup options
   {
     path: '/pages/user-profile',
     name: 'pages-user-profile',

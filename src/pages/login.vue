@@ -44,16 +44,14 @@ const phoneValidator = (v: string) => /^09\d{9}$/.test(v) || $t('Invalid phone n
 const ability = useAbility()
 
 const errors = ref<Record<string, string | undefined>>({
-  email: undefined,
+  phone_number: undefined,
   password: undefined,
 })
 
 const refVForm = ref<VForm>()
 
 const credentials = ref({
-  email: 'admin@demo.com',
-  // password: 'admin',
-  phone_number: '',
+  phone_number: '09121234567',  // Example phone number format
   password: 'Sadegh@123',
 })
 
@@ -99,23 +97,27 @@ const rememberMe = ref(false)
 
 const login = async () => {
   try {
-    // Send login request to the backend
+    // Send login request to the backend using phone_number and password
     const response = await axios.post(`${API_BASE_URL}/auth/login`, {
-      // phone_number: credentials.value.phone_number,
-      email: credentials.value.email,
+      phone_number: credentials.value.phone_number,
       password: credentials.value.password,
     })
 
-    // Log the successful response
-    // console.log('Login successful:', response.data)
+    // Log the successful response for debugging
+    console.log('Login successful:', response.data)
 
     // Extract data from the API response
     const { accessToken, userData, userAbilityRules } = response.data
 
+    // Validate response contains required fields
+    if (!accessToken || !userData) {
+      throw new Error('Invalid response: missing accessToken or userData')
+    }
+
     // Save user data and token in cookies
-    useCookie('userAbilityRules').value = userAbilityRules
+    useCookie('userAbilityRules').value = userAbilityRules || []
     // Update ability rules in the application
-    ability.update(userAbilityRules)
+    ability.update(userAbilityRules || [])
 
     useCookie('userData').value = userData
     useCookie('accessToken').value = accessToken
@@ -128,17 +130,30 @@ const login = async () => {
     await nextTick(() => {
       router.replace(route.query.to ? String(route.query.to) : '/')
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login failed:', error)
 
-    const response = (error as any).response
+    const response = error?.response
 
-    // Update error messages
-    // errors.value.phone_number = response?.data?.errors?.phone_number
-    errors.value.password = response?.data?.errors?.password
-
-    // Display a generic error message
-    alert($t(response?.data?.message || 'Login failed. Please try again.'))
+    // Handle different error scenarios
+    if (response?.status === 419) {
+      alert('Session expired. Please refresh and try again.')
+    } else if (response?.status === 422) {
+      // Validation errors
+      errors.value = response?.data?.errors || {}
+      alert('Please check your input and try again.')
+    } else if (response?.status === 401) {
+      // Invalid credentials
+      alert('Invalid phone number or password.')
+    } else if (response?.status === 500) {
+      // Server error
+      console.error('Server error response:', response?.data)
+      alert('Server error. Please try again later.')
+    } else {
+      // Network or other errors
+      const message = response?.data?.message || error?.message || 'Login failed. Please try again.'
+      alert(message)
+    }
   }
 }
 
@@ -184,11 +199,8 @@ const onSubmit = () => {
         </VCardText>
         <VCardText>
           <VAlert color="primary" variant="tonal">
-            <p class="text-caption mb-2 text-primary">
-              Admin Email: <strong>admin@demo.com</strong> / Pass: <strong>admin</strong>
-            </p>
             <p class="text-caption mb-0 text-primary">
-              Client Email: <strong>client@demo.com</strong> / Pass: <strong>client</strong>
+              {{ $t('Login with phone number and password') }}
             </p>
           </VAlert>
         </VCardText>
@@ -197,23 +209,16 @@ const onSubmit = () => {
           <VForm ref="refVForm" @submit.prevent="onSubmit">
             <VRow>
               <!-- phone number -->
-              <!-- TODO add phone number that only gets number and if it is persian it will get eng; use register page. -->
-              <!-- <VCol cols="12">
+              <VCol cols="12">
                 <VTextField
                   v-model="credentials.phone_number"
                   :label="$t('Phone Number')"
-                  placeholder="09**-***-****"
+                  placeholder="09121234567"
                   type="tel"
                   autofocus
                   :rules="[requiredValidator, phoneValidator]"
-                /> -->
-              <!-- :error-messages="errors.phone_number" -->
-              <!-- </VCol> -->
-
-              <!-- email -->
-              <VCol cols="12">
-                <VTextField v-model="credentials.email" :label="$t('Email')" placeholder="johndoe@email.com"
-                  type="email" autofocus :rules="[requiredValidator, emailValidator]" :error-messages="errors.email" />
+                  :error-messages="errors.phone_number"
+                />
               </VCol>
 
               <!-- password -->
