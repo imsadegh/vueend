@@ -96,8 +96,22 @@ print_success "Files uploaded successfully"
 # Step 4: Build and deploy on server
 print_header "Building on VPS"
 
-ssh -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" << 'ENDSSH'
+ssh -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" bash -l << 'ENDSSH'
 set -e
+
+# Load environment variables (Node.js paths, etc.)
+export PATH="$HOME/.local/share/fnm:$PATH"
+if [ -f "$HOME/.bashrc" ]; then
+    source "$HOME/.bashrc"
+fi
+if [ -f "$HOME/.profile" ]; then
+    source "$HOME/.profile"
+fi
+
+# Initialize fnm if available
+if command -v fnm &> /dev/null; then
+    eval "$(fnm env --use-on-cd)"
+fi
 
 # Colors for remote output
 RED='\033[0;31m'
@@ -112,6 +126,23 @@ DATE=$(date +"%Y%m%d_%H%M%S")
 
 echo -e "${BLUE}📁 Working in: $APP_DIR${NC}"
 
+# Verify Node.js and pnpm are available
+echo -e "${BLUE}🔍 Checking environment...${NC}"
+if ! command -v node &> /dev/null; then
+    echo -e "${RED}❌ Node.js not found in PATH${NC}"
+    echo -e "${YELLOW}PATH: $PATH${NC}"
+    exit 1
+fi
+
+if ! command -v pnpm &> /dev/null; then
+    echo -e "${YELLOW}⚠️  pnpm not found, installing...${NC}"
+    npm install -g pnpm
+fi
+
+echo -e "${GREEN}✅ Node.js: $(node -v)${NC}"
+echo -e "${GREEN}✅ npm: $(npm -v)${NC}"
+echo -e "${GREEN}✅ pnpm: $(pnpm -v)${NC}"
+
 # Create backup directory
 mkdir -p "$BACKUP_DIR"
 
@@ -124,12 +155,6 @@ fi
 
 # Navigate to app directory
 cd "$APP_DIR"
-
-# Check if pnpm is installed
-if ! command -v pnpm &> /dev/null; then
-    echo -e "${YELLOW}⚠️  pnpm not found, installing...${NC}"
-    npm install -g pnpm
-fi
 
 # Install dependencies
 echo -e "${BLUE}📦 Installing dependencies with pnpm...${NC}"
