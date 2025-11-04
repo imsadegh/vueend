@@ -51,8 +51,6 @@ const token = useCookie('accessToken').value;
 const saveCourse = async () => {
   resetFieldErrors(['instructor_id', 'category_id', 'prerequisites']);
 
-  console.log('Authorization Header:', `Bearer ${token}`);
-
   // console.log('Payload:', {
   //   course_name: course_name.value,
   //   course_code: `COURSE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
