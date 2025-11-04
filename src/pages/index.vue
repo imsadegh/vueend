@@ -27,7 +27,8 @@ if (isLoggedIn) {
 
 <template>
   <div class="landing-page">
-    <div class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary-500 to-primary-700 text-white px-4">
+    <div
+      class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary-500 to-primary-700 text-white px-4">
       <!-- Hero Section -->
       <div class="text-center max-w-2xl mx-auto mb-12">
         <h1 class="text-5xl md:text-6xl font-bold mb-6">
@@ -37,22 +38,19 @@ if (isLoggedIn) {
           Your Learning Management System for Excellence in Education
         </p>
         <p class="text-lg opacity-80 mb-12">
-          Connect, learn, and grow with our comprehensive platform designed for students, instructors, and administrators.
+          Connect, learn, and grow with our comprehensive platform designed for students, instructors, and
+          administrators.
         </p>
       </div>
 
       <!-- Call-to-Action Buttons -->
       <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-        <router-link
-          :to="{ name: 'login' }"
-          class="px-8 py-3 bg-white text-primary-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200 text-center"
-        >
+        <router-link :to="{ name: 'login' }"
+          class="px-8 py-3 bg-white text-primary-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200 text-center">
           Login
         </router-link>
-        <router-link
-          :to="{ name: 'register' }"
-          class="px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-700 transition-colors duration-200 text-center"
-        >
+        <router-link :to="{ name: 'register' }"
+          class="px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-700 transition-colors duration-200 text-center">
           Sign Up
         </router-link>
       </div>
@@ -92,6 +90,6 @@ if (isLoggedIn) {
 
 <style scoped>
 .landing-page {
-  width: 100%;
+  inline-size: 100%;
 }
 </style>
