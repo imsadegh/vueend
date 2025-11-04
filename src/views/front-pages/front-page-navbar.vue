@@ -3,6 +3,7 @@ import { useWindowScroll } from '@vueuse/core'
 import type { RouteLocationRaw } from 'vue-router/auto'
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import { useDisplay } from 'vuetify'
+import I18n from '@/@core/components/I18n.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import navImg from '@images/front-pages/misc/nav-img.png'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
@@ -331,6 +332,10 @@ const isPageActive = computed(() => menuItems.some(item => item.navItems.some(li
       <VSpacer />
 
       <div class="d-flex gap-x-4 align-center">
+        <I18n :languages="[
+          { i18nLang: 'en', label: 'English' },
+          { i18nLang: 'fa', label: 'فارسی' },
+        ]" />
         <NavbarThemeSwitcher class="me-0 me-sm-2" />
 
         <VBtn

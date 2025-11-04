@@ -238,5 +238,31 @@
     "create": "create",
     "course": "period",
     "new": "new"
+  },
+  "landingPage": {
+    "title": "Hakim Yar",
+    "welcome": "Welcome to Hakim Yar",
+    "tagline": "Your Learning Management System for Excellence in Education",
+    "subtitle": "Connect, Learn, and Grow",
+    "description": "Connect, learn, and grow with our comprehensive platform designed for students, instructors, and administrators.",
+    "login": "Login",
+    "signUp": "Sign Up",
+    "features": {
+      "title": "Our Features",
+      "interactive": "Interactive Learning",
+      "interactiveDesc": "Engage with course materials, videos, and assignments designed for effective learning.",
+      "expert": "Expert Instructors",
+      "expertDesc": "Learn from experienced educators dedicated to your success.",
+      "progress": "Progress Tracking",
+      "progressDesc": "Monitor your progress and achieve your learning goals."
+    },
+    "sections": {
+      "home": "Home",
+      "features": "Features",
+      "team": "Team",
+      "faq": "FAQ",
+      "contact": "Contact Us"
+    },
+    "brand": "Hakim Yar - Learning Management System"
   }
 }

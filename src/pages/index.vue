@@ -1,7 +1,23 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useCookie } from '@core/composable/useCookie'
+import Footer from '@/views/front-pages/front-page-footer.vue'
+import Navbar from '@/views/front-pages/front-page-navbar.vue'
+import Banner from '@/views/front-pages/landing-page/banner.vue'
+import ContactUs from '@/views/front-pages/landing-page/contact-us.vue'
+import CustomersReview from '@/views/front-pages/landing-page/customers-review.vue'
+import FaqSection from '@/views/front-pages/landing-page/faq-section.vue'
+import Features from '@/views/front-pages/landing-page/features.vue'
+import HeroSection from '@/views/front-pages/landing-page/hero-section.vue'
+import OurTeam from '@/views/front-pages/landing-page/our-team.vue'
+import PricingPlans from '@/views/front-pages/landing-page/pricing-plans.vue'
+import ProductStats from '@/views/front-pages/landing-page/product-stats.vue'
+import { useConfigStore } from '@core/stores/config'
 
+const router = useRouter()
+const store = useConfigStore()
+
+store.skin = 'default'
 definePage({
   meta: {
     layout: 'blank',
@@ -9,87 +25,92 @@ definePage({
   },
 })
 
-const router = useRouter()
-const userData = useCookie('userData')
-const isLoggedIn = !!(userData?.value)
-
 // Auto-redirect logged-in users to their dashboard
-if (isLoggedIn) {
-  const role = userData.value?.role
-  if (role === 'admin')
-    router.push({ name: 'dashboards-lms-admin' })
-  else if (role === 'student')
-    router.push({ name: 'dashboards-academy' })
-  else if (role === 'instructor')
-    router.push({ name: 'dashboards-lms-instructor' })
-}
+const userData = useCookie('userData')
+const isLoggedIn = computed(() => !!(userData?.value))
+
+watch(
+  isLoggedIn,
+  (newVal) => {
+    if (newVal && userData.value) {
+      const role = userData.value?.role
+      if (role === 'admin')
+        router.push({ name: 'dashboards-lms-admin' })
+      else if (role === 'student')
+        router.push({ name: 'dashboards-academy' })
+      else if (role === 'instructor')
+        router.push({ name: 'dashboards-lms-instructor' })
+    }
+  },
+  { immediate: true },
+)
+
+const activeSectionId = ref()
+
+const refHome = ref()
+const refFeatures = ref()
+const refTeam = ref()
+const refContact = ref()
+const refFaq = ref()
+
+useIntersectionObserver(
+  [refHome, refFeatures, refTeam, refContact, refFaq],
+  ([{ isIntersecting, target }]) => {
+    if (isIntersecting)
+      activeSectionId.value = target.id
+  },
+  {
+    threshold: 0.25,
+  },
+)
 </script>
 
 <template>
-  <div class="landing-page">
-    <div
-      class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary-500 to-primary-700 text-white px-4">
-      <!-- Hero Section -->
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6">
-          Welcome to Hakim Yar
-        </h1>
-        <p class="text-xl md:text-2xl mb-8 opacity-90">
-          Your Learning Management System for Excellence in Education
-        </p>
-        <p class="text-lg opacity-80 mb-12">
-          Connect, learn, and grow with our comprehensive platform designed for students, instructors, and
-          administrators.
-        </p>
-      </div>
+  <div class="landing-page-wrapper">
+    <Navbar :active-id="activeSectionId" />
 
-      <!-- Call-to-Action Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-        <router-link :to="{ name: 'login' }"
-          class="px-8 py-3 bg-white text-primary-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200 text-center">
-          Login
-        </router-link>
-        <router-link :to="{ name: 'register' }"
-          class="px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-700 transition-colors duration-200 text-center">
-          Sign Up
-        </router-link>
-      </div>
+    <!-- 👉 Hero Section  -->
+    <HeroSection ref="refHome" />
 
-      <!-- Features Section -->
-      <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mt-16">
-        <!-- Feature 1 -->
-        <div class="text-center">
-          <div class="text-4xl mb-4">📚</div>
-          <h3 class="text-xl font-semibold mb-2">Interactive Learning</h3>
-          <p class="opacity-80">
-            Engage with course materials, videos, and assignments designed for effective learning.
-          </p>
-        </div>
-
-        <!-- Feature 2 -->
-        <div class="text-center">
-          <div class="text-4xl mb-4">👨‍🏫</div>
-          <h3 class="text-xl font-semibold mb-2">Expert Instructors</h3>
-          <p class="opacity-80">
-            Learn from experienced educators dedicated to your success.
-          </p>
-        </div>
-
-        <!-- Feature 3 -->
-        <div class="text-center">
-          <div class="text-4xl mb-4">📊</div>
-          <h3 class="text-xl font-semibold mb-2">Progress Tracking</h3>
-          <p class="opacity-80">
-            Monitor your progress and achieve your learning goals.
-          </p>
-        </div>
-      </div>
+    <!-- 👉 Useful features  -->
+    <div :style="{ 'background-color': 'rgb(var(--v-theme-surface))' }">
+      <Features ref="refFeatures" />
     </div>
+
+    <!-- 👉 Customer Review -->
+    <CustomersReview />
+
+    <!-- 👉 Our Team -->
+    <div :style="{ 'background-color': 'rgb(var(--v-theme-surface))' }">
+      <OurTeam ref="refTeam" />
+    </div>
+
+    <!-- 👉 Pricing Plans -->
+    <PricingPlans />
+
+    <!-- 👉 Product stats -->
+    <ProductStats />
+
+    <!-- 👉 FAQ Section -->
+    <FaqSection ref="refFaq" />
+
+    <!-- 👉 Banner  -->
+    <Banner />
+
+    <!-- 👉 Contact Us  -->
+    <ContactUs ref="refContact" />
+
+    <!-- 👉 Footer -->
+    <Footer />
   </div>
 </template>
 
-<style scoped>
-.landing-page {
-  inline-size: 100%;
+<style lang="scss">
+@media (max-width: 960px) and (min-width: 600px) {
+  .landing-page-wrapper {
+    .v-container {
+      padding-inline: 2rem !important;
+    }
+  }
 }
 </style>

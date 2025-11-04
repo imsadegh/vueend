@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import sectionTitleIcon from '@images/pages/section-title-icon.png'
 import SelectSolid from '@images/svg/3d-select-solid.svg'
 import Edit from '@images/svg/edit.svg'
@@ -7,13 +8,12 @@ import LaptopCharging from '@images/svg/laptop-charging.svg'
 import Lifebelt from '@images/svg/lifebelt.svg'
 import TransitionUp from '@images/svg/transition-up.svg'
 
+const { t: $t } = useI18n()
+
 const featuresData = [
-  { title: 'Quality Code', desc: 'Code structure that all developers will easily understand and fall in love with.', img: LaptopCharging },
-  { title: 'Continuous Updates', desc: 'Free updates for the next 12 months, including new demos and features.', img: TransitionUp },
-  { title: 'Starter Kit', desc: 'Start your project quickly without having to remove unnecessary features.', img: Edit },
-  { title: 'API Ready', desc: 'Just change the endpoint and see your own data loaded within seconds.', img: SelectSolid },
-  { title: 'Well Documented', desc: 'An easy-to-follow doc with lots of references and code examples.', img: Lifebelt },
-  { title: 'Excellent Support', desc: 'An easy-to-follow doc with lots of references and code examples.', img: GoogleDocs },
+  { titleKey: 'landingPage.features.interactive', descKey: 'landingPage.features.interactiveDesc', img: LaptopCharging },
+  { titleKey: 'landingPage.features.expert', descKey: 'landingPage.features.expertDesc', img: TransitionUp },
+  { titleKey: 'landingPage.features.progress', descKey: 'landingPage.features.progressDesc', img: Edit },
 ]
 </script>
 
@@ -29,7 +29,7 @@ const featuresData = [
             width="25"
           >
           <div class="text-body-1 text-high-emphasis font-weight-medium">
-            USEFUL FEATURES
+            {{ $t('landingPage.features.title') }}
           </div>
         </div>
 
@@ -38,12 +38,12 @@ const featuresData = [
             class="text-h4 d-inline-block font-weight-bold"
             style="line-height: 2rem;"
           >
-            Everything you need
-          </span> <span class="text-h5 d-inline-block">to start your next project</span>
+            {{ $t('landingPage.welcome') }}
+          </span>
         </div>
 
         <p class="text-body-1 font-weight-medium text-center">
-          Not just a set of tools, the package includes ready-to-deploy conceptual application.
+          {{ $t('landingPage.tagline') }}
         </p>
       </div>
 
@@ -66,13 +66,13 @@ const featuresData = [
             </VAvatar>
 
             <h5 class="text-h5">
-              {{ data.title }}
+              {{ $t(data.titleKey) }}
             </h5>
             <p
               class="text-center text-medium-emphasis"
               style="max-inline-size: 360px;"
             >
-              {{ data.desc }}
+              {{ $t(data.descKey) }}
             </p>
           </div>
         </VCol>

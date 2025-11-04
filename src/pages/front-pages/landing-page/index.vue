@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { useCookie } from '@core/composable/useCookie'
 import Footer from '@/views/front-pages/front-page-footer.vue'
 import Navbar from '@/views/front-pages/front-page-navbar.vue'
 import Banner from '@/views/front-pages/landing-page/banner.vue'
@@ -12,6 +14,7 @@ import PricingPlans from '@/views/front-pages/landing-page/pricing-plans.vue'
 import ProductStats from '@/views/front-pages/landing-page/product-stats.vue'
 import { useConfigStore } from '@core/stores/config'
 
+const router = useRouter()
 const store = useConfigStore()
 
 store.skin = 'default'
@@ -21,6 +24,26 @@ definePage({
     public: true,
   },
 })
+
+// Auto-redirect logged-in users to their dashboard
+const userData = useCookie('userData')
+const isLoggedIn = computed(() => !!(userData?.value))
+
+watch(
+  isLoggedIn,
+  (newVal) => {
+    if (newVal && userData.value) {
+      const role = userData.value?.role
+      if (role === 'admin')
+        router.push({ name: 'dashboards-lms-admin' })
+      else if (role === 'student')
+        router.push({ name: 'dashboards-academy' })
+      else if (role === 'instructor')
+        router.push({ name: 'dashboards-lms-instructor' })
+    }
+  },
+  { immediate: true },
+)
 
 const activeSectionId = ref()
 

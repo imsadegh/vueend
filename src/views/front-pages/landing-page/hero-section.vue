@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useMouse } from '@vueuse/core'
 import { useTheme } from 'vuetify'
+import { useI18n } from 'vue-i18n'
 import { useGenerateImageVariant } from '@/@core/composable/useGenerateImageVariant'
 import darkBg from '@images/front-pages/backgrounds/hero-bg-dark.png'
 import lightBg from '@images/front-pages/backgrounds/hero-bg.png'
@@ -9,6 +10,7 @@ import heroDashboardImgLight from '@images/front-pages/landing-page/hero-dashboa
 import heroElementsImgDark from '@images/front-pages/landing-page/hero-elements-dark.png'
 import heroElementsImgLight from '@images/front-pages/landing-page/hero-elements-light.png'
 
+const { t: $t } = useI18n()
 const theme = useTheme()
 const isDark = ref(theme.name)
 
@@ -48,16 +50,16 @@ const translateMouse = computed(() => (speed: number) => {
         <div class="text-center pt-6 pb-16">
           <div class="mb-4 landing-page-title">
             <div>
-              All in one sass application
+              {{ $t('landingPage.welcome') }}
             </div>
-            for your business
+            {{ $t('landingPage.tagline') }}
           </div>
           <div class="text-body-1 font-weight-medium text-high-emphasis pb-8">
             <p class="mb-0">
-              No coding required to make customization
+              {{ $t('landingPage.subtitle') }}
             </p>
             <p class="mb-0">
-              The live customer has everything your marketing needs
+              {{ $t('landingPage.description') }}
             </p>
           </div>
           <VBtn
@@ -65,7 +67,7 @@ const translateMouse = computed(() => (speed: number) => {
             size="large"
             :active="false"
           >
-            Get Early Access
+            {{ $t('landingPage.login') }}
           </VBtn>
         </div>
 
