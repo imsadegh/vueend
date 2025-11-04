@@ -51,8 +51,8 @@ const errors = ref<Record<string, string | undefined>>({
 const refVForm = ref<VForm>()
 
 const credentials = ref({
-  phone_number: '09121234567',  // Example phone number format
-  password: 'Sadegh@123',
+  phone_number: '',  // Format: 09XXXXXXXXX
+  password: '',
 })
 
 const rememberMe = ref(false)
@@ -103,9 +103,6 @@ const login = async () => {
       password: credentials.value.password,
     })
 
-    // Log the successful response for debugging
-    console.log('Login successful:', response.data)
-
     // Extract data from the API response
     const { accessToken, userData, userAbilityRules } = response.data
 
@@ -121,10 +118,6 @@ const login = async () => {
 
     useCookie('userData').value = userData
     useCookie('accessToken').value = accessToken
-
-    console.log('accessToken:', accessToken)
-    console.log('userAbilityRules:', userAbilityRules)
-    console.log('userData:', userData)
 
     // Redirect the user to the intended route or homepage
     await nextTick(() => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useCookie } from '#app'
 import { useRouter } from 'vue-router'
+import { useCookie } from '@core/composable/useCookie'
 
 definePage({
   meta: {
@@ -11,7 +11,7 @@ definePage({
 
 const router = useRouter()
 const userData = useCookie('userData')
-const isLoggedIn = !!(userData.value)
+const isLoggedIn = !!(userData?.value)
 
 // Auto-redirect logged-in users to their dashboard
 if (isLoggedIn) {
