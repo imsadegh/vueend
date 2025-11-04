@@ -40,6 +40,11 @@ watch(
         router.push({ name: 'dashboards-academy' })
       else if (role === 'instructor')
         router.push({ name: 'dashboards-lms-instructor' })
+      else if (role) {
+        // Unknown role - fallback to admin dashboard
+        console.warn(`Unknown user role: ${role}, redirecting to admin dashboard`)
+        router.push({ name: 'dashboards-lms-admin' })
+      }
     }
   },
   { immediate: true },

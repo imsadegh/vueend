@@ -93,6 +93,8 @@ const isCurrentRoute = (to: RouteLocationRaw) => {
 }
 
 const isPageActive = computed(() => menuItems.some(item => item.navItems.some(listItem => isCurrentRoute(listItem.to))))
+
+const languages = computed(() => themeConfig.app.i18n.langConfig)
 </script>
 
 <template>
@@ -332,10 +334,7 @@ const isPageActive = computed(() => menuItems.some(item => item.navItems.some(li
       <VSpacer />
 
       <div class="d-flex gap-x-4 align-center">
-        <I18n :languages="[
-          { i18nLang: 'en', label: 'English' },
-          { i18nLang: 'fa', label: 'فارسی' },
-        ]" />
+        <I18n :languages="languages" />
         <NavbarThemeSwitcher class="me-0 me-sm-2" />
 
         <VBtn

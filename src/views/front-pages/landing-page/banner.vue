@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import ctaDashboard from '@images/front-pages/landing-page/cta-dashboard.png'
+
+const { t: $t } = useI18n()
 </script>
 
 <template>
@@ -8,13 +11,13 @@ import ctaDashboard from '@images/front-pages/landing-page/cta-dashboard.png'
       <div class="d-flex align-center justify-sm-space-between flex-column flex-md-row gap-y-6 gap-x-12">
         <div class="text-sm-start text-center py-md-14 py-2">
           <div class="banner-text pb-1">
-            Ready to Get Started?
+            {{ $t('landingPage.banner.title') }}
           </div>
           <div class="text-body-1 font-weight-medium mb-8">
-            Start your project with a 14-day free trial
+            {{ $t('landingPage.banner.subtitle') }}
           </div>
           <VBtn :to="{ name: 'front-pages-payment' }">
-            Get Started
+            {{ $t('landingPage.banner.cta') }}
             <VIcon
               end
               icon="ri-arrow-right-line"

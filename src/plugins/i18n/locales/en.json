@@ -263,6 +263,11 @@
       "faq": "FAQ",
       "contact": "Contact Us"
     },
+    "banner": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Start your project with a 14-day free trial",
+      "cta": "Get Started"
+    },
     "brand": "Hakim Yar - Learning Management System"
   }
 }
