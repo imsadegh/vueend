@@ -1,24 +1,27 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import sittingGirlWithLaptop from '@images/front-pages/landing-page/sitting-girl-with-laptop.png'
 import sectionTitleIcon from '@images/pages/section-title-icon.png'
 import frontPageElement from '@images/svg/front-page-element.svg'
 
+const { t: $t } = useI18n()
+
 const faqData = [
   {
-    question: 'Do you charge for each upgrade?',
-    answer: 'Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps icing marzipan gummi bears macaroon dragée danish caramels powder. Bear claw dragée pastry topping soufflé. Wafer gummi bears marshmallow pastry pie.',
+    questionKey: 'landingPage.faq.question1',
+    answerKey: 'landingPage.faq.answer1',
   },
   {
-    question: 'What is regular license?',
-    answer: 'Regular license can be used for end products that do not charge users for access or service(access is free and there will be no monthly subscription fee). Single regular license can be used for single end product and end product can be used by you or your client. If you want to sell end product to multiple clients then you will need to purchase separate license for each client. The same rule applies if you want to use the same end product on multiple domains(unique setup). For more info on regular license you can check official description.',
+    questionKey: 'landingPage.faq.question2',
+    answerKey: 'landingPage.faq.answer2',
   },
   {
-    question: 'What is extended license?',
-    answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis et aliquid quaerat possimus maxime! Mollitia reprehenderit neque repellat deleniti delectus architecto dolorum maxime, blanditiis earum ea, incidunt quam possimus cumque.',
+    questionKey: 'landingPage.faq.question3',
+    answerKey: 'landingPage.faq.answer3',
   },
   {
-    question: 'Which license is applicable for SASS application?',
-    answer: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi molestias exercitationem ab cum nemo facere voluptates veritatis quia, eveniet veniam at et repudiandae mollitia ipsam quasi labore enim architecto non!',
+    questionKey: 'landingPage.faq.question4',
+    answerKey: 'landingPage.faq.answer4',
   },
 ]
 </script>
@@ -43,21 +46,21 @@ const faqData = [
             class="text-body-1 text-high-emphasis font-weight-medium"
             style="letter-spacing: 0.15px !important;"
           >
-            FAQ
+            {{ $t('landingPage.faq.sectionTitle') }}
           </div>
         </div>
 
         <div class="mb-2 text-center">
-          <span class="text-h5 d-inline-block">Frequently Asked</span> <span
+          <span class="text-h5 d-inline-block">{{ $t('landingPage.faq.heading') }}</span> <span
             class="text-h4 d-inline-block font-weight-bold"
             style="line-height: 2rem;"
           >
-            questions
+            {{ $t('landingPage.faq.headingSuffix') }}
           </span>
         </div>
 
         <p class="text-body-1 font-weight-medium text-center mb-0">
-          Browse through these FAQs to find answers to commonly asked questions.
+          {{ $t('landingPage.faq.description') }}
         </p>
       </div>
 
@@ -75,14 +78,14 @@ const faqData = [
         <div>
           <VExpansionPanels class="py-4">
             <VExpansionPanel
-              v-for="faq in faqData"
-              :key="faq.question"
+              v-for="(faq, index) in faqData"
+              :key="index"
             >
               <VExpansionPanelTitle>
-                {{ faq.question }}
+                {{ $t(faq.questionKey) }}
               </VExpansionPanelTitle>
               <VExpansionPanelText>
-                {{ faq.answer }}
+                {{ $t(faq.answerKey) }}
               </VExpansionPanelText>
             </VExpansionPanel>
           </VExpansionPanels>

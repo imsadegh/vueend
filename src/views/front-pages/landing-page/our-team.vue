@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import teamPerson1 from '@images/front-pages/landing-page/team-member-1.png'
 import teamPerson2 from '@images/front-pages/landing-page/team-member-2.png'
 import teamPerson3 from '@images/front-pages/landing-page/team-member-3.png'
@@ -6,11 +7,13 @@ import teamPerson4 from '@images/front-pages/landing-page/team-member-4.png'
 import sectionTitleIcon from '@images/pages/section-title-icon.png'
 import frontPageElement from '@images/svg/front-page-element.svg'
 
+const { t: $t } = useI18n()
+
 const teamData = ref([
-  { name: 'Sophie Gilbert', position: 'Project Manager', image: teamPerson1, backgroundColor: 'rgba(144, 85, 253, 0.16)', borderColor: 'rgba(144, 85, 253,0.38)', isHover: false },
-  { name: 'Nannie Ford', position: 'Development Lead', image: teamPerson2, backgroundColor: 'rgba(255, 76, 81, 0.16)', borderColor: 'rgba(255, 76, 81,0.38)', isHover: false },
-  { name: 'Chris Watkins', position: 'Marketing Manager', image: teamPerson3, backgroundColor: 'rgba(86, 202, 0, 0.16)', borderColor: 'rgba(86, 202, 0,0.38)', isHover: false },
-  { name: 'Paul Miles', position: 'UI Designer', image: teamPerson4, backgroundColor: 'rgba(22, 177, 255, 0.16)', borderColor: 'rgba(22, 177, 255,0.38)', isHover: false },
+  { name: 'Sophie Gilbert', positionKey: 'landingPage.team.member1Position', image: teamPerson1, backgroundColor: 'rgba(144, 85, 253, 0.16)', borderColor: 'rgba(144, 85, 253,0.38)', isHover: false },
+  { name: 'Nannie Ford', positionKey: 'landingPage.team.member2Position', image: teamPerson2, backgroundColor: 'rgba(255, 76, 81, 0.16)', borderColor: 'rgba(255, 76, 81,0.38)', isHover: false },
+  { name: 'Chris Watkins', positionKey: 'landingPage.team.member3Position', image: teamPerson3, backgroundColor: 'rgba(86, 202, 0, 0.16)', borderColor: 'rgba(86, 202, 0,0.38)', isHover: false },
+  { name: 'Paul Miles', positionKey: 'landingPage.team.member4Position', image: teamPerson4, backgroundColor: 'rgba(22, 177, 255, 0.16)', borderColor: 'rgba(22, 177, 255,0.38)', isHover: false },
 ])
 </script>
 
@@ -31,7 +34,7 @@ const teamData = ref([
             width="25"
           >
           <div class="text-body-1 text-high-emphasis font-weight-medium">
-            OUR GREAT TEAM
+            {{ $t('landingPage.team.sectionTitle') }}
           </div>
         </div>
 
@@ -40,15 +43,15 @@ const teamData = ref([
             class="text-h4 d-inline-block font-weight-bold"
             style="line-height: 2rem;"
           >
-            Supported
-          </span> <span class="text-h5 d-inline-block">by Real People</span>
+            {{ $t('landingPage.team.heading') }}
+          </span> <span class="text-h5 d-inline-block">{{ $t('landingPage.team.headingSuffix') }}</span>
         </div>
 
         <p
           class="text-body-1 font-weight-medium text-center"
           style="letter-spacing: 0.15px !important;"
         >
-          Who is behind these great-looking interfaces?
+          {{ $t('landingPage.team.description') }}
         </p>
       </div>
 
@@ -82,7 +85,7 @@ const teamData = ref([
                   {{ data.name }}
                 </h5>
                 <div class="text-body-1">
-                  {{ data.position }}
+                  {{ $t(data.positionKey) }}
                 </div>
               </div>
 

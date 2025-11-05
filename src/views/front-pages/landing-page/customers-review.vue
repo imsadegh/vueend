@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { register } from 'swiper/element/bundle'
 import { useGenerateImageVariant } from '@/@core/composable/useGenerateImageVariant'
 import logo1dark from '@images/front-pages/branding/logo-1-dark.png'
@@ -20,6 +21,8 @@ import sectionTitleIcon from '@images/pages/section-title-icon.png'
 
 register()
 
+const { t: $t } = useI18n()
+
 const brandLogo1 = useGenerateImageVariant(logo1light, logo1dark)
 const brandLogo2 = useGenerateImageVariant(logo2light, logo2dark)
 const brandLogo3 = useGenerateImageVariant(logo3light, logo3dark)
@@ -28,74 +31,74 @@ const brandLogo5 = useGenerateImageVariant(logo5light, logo5dark)
 
 const reviewData = [
   {
-    desc: 'I\'ve never used a theme as versatile and flexible as Vuexy. It\'s my go to for building dashboard sites on almost any project.',
+    reviewKey: 'landingPage.reviews.review1',
+    nameKey: 'landingPage.reviews.review1Name',
+    positionKey: 'landingPage.reviews.review1Position',
     img: logo1,
     rating: 5,
-    name: 'Eugenia Moore',
-    position: 'Founder of Hubspot',
   },
   {
-    desc: 'Materialize is awesome, and I particularly enjoy knowing that if I get stuck on something.',
+    reviewKey: 'landingPage.reviews.review2',
+    nameKey: 'landingPage.reviews.review2Name',
+    positionKey: 'landingPage.reviews.review2Position',
     img: logo2,
     rating: 5,
-    name: 'Tommy haffman',
-    position: 'Founder of Levis',
   },
   {
-    desc: 'This template is superior in so many ways. The code, the design, the regular updates, the support.. It\'s the whole package. Excellent Work.',
+    reviewKey: 'landingPage.reviews.review3',
+    nameKey: 'landingPage.reviews.review3Name',
+    positionKey: 'landingPage.reviews.review3Position',
     img: logo3,
     rating: 4,
-    name: 'Eugenia Moore',
-    position: 'CTO of Airbnb',
   },
   {
-    desc: 'All the requirements for developers have been taken into consideration, so I\'m able to build any interface I want.',
+    reviewKey: 'landingPage.reviews.review4',
+    nameKey: 'landingPage.reviews.review4Name',
+    positionKey: 'landingPage.reviews.review4Position',
     img: logo4,
     rating: 5,
-    name: 'Sara Smith',
-    position: 'Founder of Continental',
   },
   {
-    desc: 'Materialize is awesome, and I particularly enjoy knowing that if I get stuck on something.',
+    reviewKey: 'landingPage.reviews.review2',
+    nameKey: 'landingPage.reviews.review2Name',
+    positionKey: 'landingPage.reviews.review2Position',
     img: logo2,
     rating: 5,
-    name: 'Tommy haffman',
-    position: 'Founder of Levis',
   },
   {
-    desc: 'I\'ve never used a theme as versatile and flexible as Vuexy. It\'s my go to for building dashboard sites on almost any project.',
+    reviewKey: 'landingPage.reviews.review1',
+    nameKey: 'landingPage.reviews.review1Name',
+    positionKey: 'landingPage.reviews.review1Position',
     img: logo1,
     rating: 5,
-    name: 'Eugenia Moore',
-    position: 'Founder of Hubspot',
   },
   {
-    desc: 'Materialize is awesome, and I particularly enjoy knowing that if I get stuck on something.',
+    reviewKey: 'landingPage.reviews.review2',
+    nameKey: 'landingPage.reviews.review2Name',
+    positionKey: 'landingPage.reviews.review2Position',
     img: logo2,
     rating: 5,
-    name: 'Tommy haffman',
-    position: 'Founder of Levis',
   },
   {
-    desc: 'This template is superior in so many ways. The code, the design, the regular updates, the support.. It\'s the whole package. Excellent Work.',
+    reviewKey: 'landingPage.reviews.review3',
+    nameKey: 'landingPage.reviews.review3Name',
+    positionKey: 'landingPage.reviews.review3Position',
     img: logo3,
     rating: 4,
-    name: 'Eugenia Moore',
-    position: 'CTO of Airbnb',
   },
   {
-    desc: 'All the requirements for developers have been taken into consideration, so I\'m able to build any interface I want.',
+    reviewKey: 'landingPage.reviews.review4',
+    nameKey: 'landingPage.reviews.review4Name',
+    positionKey: 'landingPage.reviews.review4Position',
     img: logo4,
     rating: 5,
-    name: 'Sara Smith',
-    position: 'Founder of Continental',
   },
   {
-    desc: 'Materialize is awesome, and I particularly enjoy knowing that if I get stuck on something.',
+    reviewKey: 'landingPage.reviews.review2',
+    nameKey: 'landingPage.reviews.review2Name',
+    positionKey: 'landingPage.reviews.review2Position',
     img: logo2,
     rating: 5,
-    name: 'Tommy haffman',
-    position: 'Founder of Levis',
   },
 ]
 </script>
@@ -112,7 +115,7 @@ const reviewData = [
           width="25"
         >
         <div class="text-body-1 text-high-emphasis font-weight-medium">
-          REAL CUSTOMERS REVIEWS
+          {{ $t('landingPage.reviews.sectionTitle') }}
         </div>
       </div>
 
@@ -121,12 +124,12 @@ const reviewData = [
           class="text-h4 d-inline-block font-weight-bold"
           style="line-height: 2rem;"
         >
-          Success stories
-        </span> <span class="text-h5 d-inline-block">from clients</span>
+          {{ $t('landingPage.reviews.heading') }}
+        </span> <span class="text-h5 d-inline-block">{{ $t('landingPage.reviews.headingSuffix') }}</span>
       </div>
 
       <p class="text-body-1 font-weight-medium text-center">
-        See what our customers have to say about their experience.
+        {{ $t('landingPage.reviews.description') }}
       </p>
     </div>
 
@@ -181,7 +184,7 @@ const reviewData = [
               >
 
               <div class="text-body-1 text-high-emphasis text-center">
-                {{ data.desc }}
+                {{ $t(data.reviewKey) }}
               </div>
 
               <div>
@@ -194,11 +197,11 @@ const reviewData = [
 
               <div class="text-center">
                 <div class="text-body-1 text-high-emphasis font-weight-medium">
-                  {{ data.name }}
+                  {{ $t(data.nameKey) }}
                 </div>
 
                 <div class="text-body-2">
-                  {{ data.position }}
+                  {{ $t(data.positionKey) }}
                 </div>
               </div>
             </VCardText>

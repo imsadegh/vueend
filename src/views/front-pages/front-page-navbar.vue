@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useWindowScroll } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 import type { RouteLocationRaw } from 'vue-router/auto'
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import { useDisplay } from 'vuetify'
@@ -19,14 +20,17 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const display = useDisplay()
+const { t: $t } = useI18n()
 
 interface navItem {
+  nameKey: string
   name: string
   to: RouteLocationRaw
 }
 
 interface MenuItem {
   listTitle: string
+  listTitleKey: string
   listIcon: string
   navItems: navItem[]
 }
@@ -47,40 +51,43 @@ const isMenuOpen = ref(false)
 const menuItems: MenuItem[] = [
   {
     listTitle: 'Page',
+    listTitleKey: 'Pricing',
     listIcon: 'ri-layout-grid-line',
     navItems: [
-      { name: 'Pricing', to: { name: 'front-pages-pricing' } },
-      { name: 'Payment', to: { name: 'front-pages-payment' } },
-      { name: 'Checkout', to: { name: 'front-pages-checkout' } },
-      { name: 'Help Center', to: { name: 'front-pages-help-center' } },
+      { nameKey: 'Pricing', name: 'Pricing', to: { name: 'front-pages-pricing' } },
+      { nameKey: 'Payment', name: 'Payment', to: { name: 'front-pages-payment' } },
+      { nameKey: 'Checkout', name: 'Checkout', to: { name: 'front-pages-checkout' } },
+      { nameKey: 'Help Center', name: 'Help Center', to: { name: 'front-pages-help-center' } },
     ],
   },
   {
     listTitle: 'Auth Demo',
+    listTitleKey: 'Login v1',
     listIcon: 'ri-lock-unlock-line',
     navItems: [
-      { name: 'Login (Basic)', to: { name: 'pages-authentication-login-v1' } },
-      { name: 'Login (Cover)', to: { name: 'pages-authentication-login-v2' } },
-      { name: 'Register (Basic)', to: { name: 'pages-authentication-register-v1' } },
-      { name: 'Register (Cover)', to: { name: 'pages-authentication-register-v2' } },
-      { name: 'Register (Multi-steps)', to: { name: 'pages-authentication-register-multi-steps' } },
-      { name: 'Forgot Password (Basic)', to: { name: 'pages-authentication-forgot-password-v1' } },
-      { name: 'Forgot Password (Cover)', to: { name: 'pages-authentication-forgot-password-v2' } },
-      { name: 'Reset Password (Basic)', to: { name: 'pages-authentication-reset-password-v1' } },
-      { name: 'Reset Password (cover  )', to: { name: 'pages-authentication-reset-password-v2' } },
+      { nameKey: 'Login v1', name: 'Login (Basic)', to: { name: 'pages-authentication-login-v1' } },
+      { nameKey: 'Login v2', name: 'Login (Cover)', to: { name: 'pages-authentication-login-v2' } },
+      { nameKey: 'Register v1', name: 'Register (Basic)', to: { name: 'pages-authentication-register-v1' } },
+      { nameKey: 'Register v2', name: 'Register (Cover)', to: { name: 'pages-authentication-register-v2' } },
+      { nameKey: 'Register Multi-Steps', name: 'Register (Multi-steps)', to: { name: 'pages-authentication-register-multi-steps' } },
+      { nameKey: 'Forgot Password v1', name: 'Forgot Password (Basic)', to: { name: 'pages-authentication-forgot-password-v1' } },
+      { nameKey: 'Forgot Password v2', name: 'Forgot Password (Cover)', to: { name: 'pages-authentication-forgot-password-v2' } },
+      { nameKey: 'Reset Password v1', name: 'Reset Password (Basic)', to: { name: 'pages-authentication-reset-password-v1' } },
+      { nameKey: 'Reset Password v2', name: 'Reset Password (cover)', to: { name: 'pages-authentication-reset-password-v2' } },
     ],
   },
   {
     listTitle: 'Other',
+    listTitleKey: 'Under Maintenance',
     listIcon: 'ri-image-line',
     navItems: [
-      { name: 'Under Maintenance', to: { name: 'pages-misc-under-maintenance' } },
-      { name: 'Coming Soon', to: { name: 'pages-misc-coming-soon' } },
-      { name: 'Not Authorized', to: { path: '/not-authorized' } },
-      { name: 'Verify Email (Basic)', to: { name: 'pages-authentication-verify-email-v1' } },
-      { name: 'Verify Email (Cover)', to: { name: 'pages-authentication-verify-email-v2' } },
-      { name: 'Two Steps (Basic)', to: { name: 'pages-authentication-two-steps-v1' } },
-      { name: 'Two Steps (Cover)', to: { name: 'pages-authentication-two-steps-v2' } },
+      { nameKey: 'Under Maintenance', name: 'Under Maintenance', to: { name: 'pages-misc-under-maintenance' } },
+      { nameKey: 'Coming Soon', name: 'Coming Soon', to: { name: 'pages-misc-coming-soon' } },
+      { nameKey: 'Not Authorized', name: 'Not Authorized', to: { path: '/not-authorized' } },
+      { nameKey: 'Verify Email v1', name: 'Verify Email (Basic)', to: { name: 'pages-authentication-verify-email-v1' } },
+      { nameKey: 'Verify Email v2', name: 'Verify Email (Cover)', to: { name: 'pages-authentication-verify-email-v2' } },
+      { nameKey: 'Two Steps v1', name: 'Two Steps (Basic)', to: { name: 'pages-authentication-two-steps-v1' } },
+      { nameKey: 'Two Steps v2', name: 'Two Steps (Cover)', to: { name: 'pages-authentication-two-steps-v2' } },
     ],
   },
 ]
@@ -111,13 +118,19 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
       <div>
         <div class="d-flex flex-column gap-y-4 pa-4">
           <RouterLink
-            v-for="(item, index) in ['Home', 'Features', 'Team', 'FAQ', 'Contact us']"
+            v-for="(item, index) in [
+              { key: 'sections.home', id: 'home' },
+              { key: 'sections.features', id: 'features' },
+              { key: 'sections.team', id: 'team' },
+              { key: 'sections.faq', id: 'faq' },
+              { key: 'sections.contact', id: 'contact-us' }
+            ]"
             :key="index"
-            :to="{ name: 'front-pages-landing-page', hash: `#${item.toLowerCase().replace(' ', '-')}` }"
+            :to="{ name: 'front-pages-landing-page', hash: `#${item.id}` }"
             class="font-weight-medium"
-            :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.toLocaleLowerCase() ? 'active-link' : 'text-high-emphasis']"
+            :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.id ? 'active-link' : 'text-high-emphasis']"
           >
-            {{ item }}
+            {{ $t(`landingPage.${item.key}`) }}
           </RouterLink>
           <div
             class="text-high-emphasis font-weight-medium cursor-pointer"
@@ -127,7 +140,7 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
               :class="isMenuOpen ? 'mb-6' : ''"
               @click="isMenuOpen = !isMenuOpen"
             >
-              Pages <VIcon :icon="isMenuOpen ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'" />
+              {{ $t('landingPage.navbar.pages') }} <VIcon :icon="isMenuOpen ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'" />
             </div>
             <div
               v-for="(item, index) in menuItems"
@@ -142,13 +155,13 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
                   :icon="item.listIcon"
                 />
                 <div class="text-body-1 text-high-emphasis font-weight-medium">
-                  {{ item.listTitle }}
+                  {{ $t(item.listTitleKey) }}
                 </div>
               </div>
               <ul class="mb-6">
                 <li
                   v-for="listItem in item.navItems"
-                  :key="listItem.name"
+                  :key="listItem.nameKey"
                   style="list-style: none;"
                   class="text-body-1 mb-4"
                 >
@@ -163,7 +176,7 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
                       :size="10"
                       class="me-2"
                     />
-                    <span>  {{ listItem.name }}</span>
+                    <span>  {{ $t(listItem.nameKey) }}</span>
                   </RouterLink>
                 </li>
               </ul>
@@ -174,7 +187,7 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
             target="_blank"
             class="text-body-1 font-weight-medium nav-link px-0"
           >
-            Admin
+            {{ $t('landingPage.navbar.admin') }}
           </RouterLink>
         </div>
       </div>
@@ -233,13 +246,19 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
           class="text-base align-center gap-x-2"
         >
           <RouterLink
-            v-for="(item, index) in ['Home', 'Features', 'Team', 'FAQ', 'Contact us']"
+            v-for="(item, index) in [
+              { key: 'sections.home', id: 'home' },
+              { key: 'sections.features', id: 'features' },
+              { key: 'sections.team', id: 'team' },
+              { key: 'sections.faq', id: 'faq' },
+              { key: 'sections.contact', id: 'contact-us' }
+            ]"
             :key="index"
-            :to="{ name: 'front-pages-landing-page', hash: `#${item.toLowerCase().replace(' ', '-')}` }"
+            :to="{ name: 'front-pages-landing-page', hash: `#${item.id}` }"
             class="nav-link font-weight-medium"
-            :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.toLocaleLowerCase() ? 'active-link' : '']"
+            :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.id ? 'active-link' : '']"
           >
-            {{ item }}
+            {{ $t(`landingPage.${item.key}`) }}
           </RouterLink>
 
           <!-- Pages Menu -->
@@ -247,7 +266,7 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
             class="font-weight-medium cursor-pointer nav-link"
             :class="isPageActive ? 'active-link' : 'text-high-emphasis'"
           >
-            Pages
+            {{ $t('landingPage.navbar.pages') }}
             <VIcon
               icon="ri-arrow-down-s-line"
               size="20"
@@ -279,13 +298,13 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
                           :icon="item.listIcon"
                         />
                         <div class="text-body-1 text-high-emphasis font-weight-medium">
-                          {{ item.listTitle }}
+                          {{ $t(item.listTitleKey) }}
                         </div>
                       </div>
                       <ul>
                         <li
                           v-for="listItem in item.navItems"
-                          :key="listItem.name"
+                          :key="listItem.nameKey"
                           style="list-style: none;"
                           class="text-body-1 mb-4 text-no-wrap"
                         >
@@ -301,7 +320,7 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
                                 :size="10"
                                 class="me-2"
                               />
-                              <span>{{ listItem.name }}</span>
+                              <span>{{ $t(listItem.nameKey) }}</span>
                             </div>
                           </RouterLink>
                         </li>
@@ -326,7 +345,7 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
             target="_blank"
             class="nav-link font-weight-medium"
           >
-            Admin
+            {{ $t('landingPage.navbar.admin') }}
           </RouterLink>
         </div>
       </div>
@@ -346,7 +365,7 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
           target="_blank"
           rel="noopener noreferrer"
         >
-          Purchase Now
+          {{ $t('landingPage.navbar.purchaseNow') }}
         </VBtn>
 
         <VBtn

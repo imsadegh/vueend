@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import sectionTitleIcon from '@images/pages/section-title-icon.png'
 import frontPageVectorImg from '@images/svg/front-page-vector.svg'
 import ListArrowIcon from '@images/svg/list-arrow-icon.svg'
 import VectorIcon from '@images/svg/vector.svg'
 
+const { t: $t } = useI18n()
+
 const pricingPlans = [
   {
+    titleKey: 'landingPage.pricing.basicPlan',
     title: 'Basic Plan',
     price: 20,
     features: [
@@ -16,12 +20,13 @@ const pricingPlans = [
       'Custom Forms',
       'Traffic analytics',
     ],
-    supportType: 'Basic',
-    supportMedium: 'Only Email',
-    respondTime: 'AVG. Time: 24h',
+    supportTypeKey: 'landingPage.pricing.basicSupport',
+    supportMediumKey: 'landingPage.pricing.onlyEmail',
+    respondTimeKey: 'landingPage.pricing.avgTime24h',
     current: false,
   },
   {
+    titleKey: 'landingPage.pricing.favoritePlan',
     title: 'Favourite Plan',
     price: 51,
     features: [
@@ -32,12 +37,13 @@ const pricingPlans = [
       'Advanced chatbot',
       'Campaign management',
     ],
-    supportType: 'Standard',
-    supportMedium: 'Email & Chat',
-    respondTime: 'AVG. Time: 6h',
+    supportTypeKey: 'landingPage.pricing.standardSupport',
+    supportMediumKey: 'landingPage.pricing.emailAndChat',
+    respondTimeKey: 'landingPage.pricing.avgTime6h',
     current: true,
   },
   {
+    titleKey: 'landingPage.pricing.standardPlan',
     title: 'Standard Plan',
     price: 99,
     features: [
@@ -48,9 +54,9 @@ const pricingPlans = [
       'Custom permissions',
       'Social media automation',
     ],
-    supportType: 'Exclusive',
-    supportMedium: 'Email, Chat & Google Meet',
-    respondTime: 'Live Support',
+    supportTypeKey: 'landingPage.pricing.exclusiveSupport',
+    supportMediumKey: 'landingPage.pricing.fullSupport',
+    respondTimeKey: 'landingPage.pricing.liveSupport',
     current: false,
   },
 ]
@@ -74,7 +80,7 @@ const pricingPlans = [
             width="25"
           >
           <div class="text-body-1 text-high-emphasis font-weight-medium">
-            PRICING PLANS
+            {{ $t('landingPage.pricing.sectionTitle') }}
           </div>
         </div>
 
@@ -83,13 +89,12 @@ const pricingPlans = [
             class="text-h4 d-inline-block font-weight-bold"
             style="line-height: 2rem;"
           >
-            Tailored pricing plans
-          </span> <span class="text-h5 d-inline-block">designed for you</span>
+            {{ $t('landingPage.pricing.heading') }}
+          </span> <span class="text-h5 d-inline-block">{{ $t('landingPage.pricing.headingSuffix') }}</span>
         </div>
 
         <p class="text-body-1 font-weight-medium text-center mb-0">
-          All plans include 40+ advanced tools and features to boost your product. <br>
-          Choose the best plan to fit your needs.
+          {{ $t('landingPage.pricing.description') }}
         </p>
       </div>
 
@@ -117,7 +122,7 @@ const pricingPlans = [
               <div class="d-flex flex-column gap-y-8">
                 <div class="d-flex flex-column  gap-y-3">
                   <h4 class="text-h4 text-center">
-                    {{ plan.title }}
+                    {{ $t(plan.titleKey) }}
                   </h4>
 
                   <div class="d-flex align-center gap-x-3">
@@ -134,10 +139,10 @@ const pricingPlans = [
                     </div>
                     <div>
                       <div class="text-body-1 font-weight-medium text-high-emphasis">
-                        Per month
+                        {{ $t('landingPage.pricing.perMonth') }}
                       </div>
                       <div class="text-body-2">
-                        10% off for yearly subscription
+                        {{ $t('landingPage.pricing.yearlyDiscount') }}
                       </div>
                     </div>
                   </div>
@@ -168,10 +173,10 @@ const pricingPlans = [
                   <div class="d-flex align-center justify-space-between flex-wrap gap-2">
                     <div>
                       <div class="text-body-1 font-weight-medium text-high-emphasis mb-1">
-                        {{ plan.supportType }} Support
+                        {{ $t(plan.supportTypeKey) }} {{ $t('landingPage.pricing.support') }}
                       </div>
                       <div class="text-body-2">
-                        {{ plan.supportMedium }}
+                        {{ $t(plan.supportMediumKey) }}
                       </div>
                     </div>
 
@@ -181,7 +186,7 @@ const pricingPlans = [
                       size="small"
                       class="font-weight-medium"
                     >
-                      {{ plan.respondTime }}
+                      {{ $t(plan.respondTimeKey) }}
                     </VChip>
                   </div>
                 </div>
@@ -191,7 +196,7 @@ const pricingPlans = [
                   :variant="plan.current ? 'elevated' : 'outlined'"
                   :to="{ name: 'front-pages-payment' }"
                 >
-                  Get Started
+                  {{ $t('landingPage.pricing.getStarted') }}
                 </VBtn>
               </div>
             </VCardText>

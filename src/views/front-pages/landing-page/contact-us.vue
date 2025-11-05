@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import ConnectImg from '@images/front-pages/landing-page/lets-contact.png'
 import sectionTitleIcon from '@images/pages/section-title-icon.png'
 import frontPageVectorImg from '@images/svg/front-page-vector.svg'
+
+const { t: $t } = useI18n()
 
 const name = ref('')
 const email = ref('')
@@ -25,7 +28,7 @@ const message = ref('')
             width="25"
           >
           <div class="text-body-1 text-high-emphasis font-weight-medium">
-            CONTACT US
+            {{ $t('landingPage.contact.sectionTitle') }}
           </div>
         </div>
 
@@ -34,12 +37,12 @@ const message = ref('')
             class="text-h4 d-inline-block font-weight-bold"
             style="line-height: 2rem;"
           >
-            Let's work
-          </span> <span class="text-h5 d-inline-block">together</span>
+            {{ $t('landingPage.contact.heading') }}
+          </span> <span class="text-h5 d-inline-block">{{ $t('landingPage.contact.headingSuffix') }}</span>
         </div>
 
         <p class="text-body-1 font-weight-medium text-center mb-0">
-          Any question or remark? just write us a message
+          {{ $t('landingPage.contact.description') }}
         </p>
       </div>
       <div class="mb-15">
@@ -57,11 +60,11 @@ const message = ref('')
             >
               <VCardText class="pa-8">
                 <h6 class="text-h6 mb-1">
-                  Let's contact with us
+                  {{ $t('landingPage.contact.infoTitle') }}
                 </h6>
 
                 <h4 class="text-h4">
-                  Share your ideas or requirement with our experts.
+                  {{ $t('landingPage.contact.infoHeading') }}
                 </h4>
 
                 <VImg
@@ -70,7 +73,7 @@ const message = ref('')
                 />
 
                 <div class="text-body-1">
-                  Looking for more customization, more features, and more anything? Don't worry, We've provide you with an entire team of experienced professionals.
+                  {{ $t('landingPage.contact.infoDescription') }}
                 </div>
               </VCardText>
             </VCard>
@@ -83,7 +86,7 @@ const message = ref('')
             <VCard>
               <VCardText>
                 <div class="text-h5 mb-5">
-                  Share your ideas
+                  {{ $t('landingPage.contact.formTitle') }}
                 </div>
                 <VForm @submit.prevent="() => {}">
                   <VRow>
@@ -93,8 +96,8 @@ const message = ref('')
                     >
                       <VTextField
                         v-model="name"
-                        placeholder="John Doe"
-                        label="Full Name"
+                        :placeholder="$t('landingPage.contact.fullNamePlaceholder')"
+                        :label="$t('landingPage.contact.fullNameLabel')"
                       />
                     </VCol>
 
@@ -104,22 +107,22 @@ const message = ref('')
                     >
                       <VTextField
                         v-model="email"
-                        placeholder="johndoe@gmail.com"
-                        label="Email address"
+                        :placeholder="$t('landingPage.contact.emailPlaceholder')"
+                        :label="$t('landingPage.contact.emailLabel')"
                       />
                     </VCol>
 
                     <VCol cols="12">
                       <VTextarea
                         v-model="message"
-                        placeholder="Type Your message"
-                        label="Message"
+                        :placeholder="$t('landingPage.contact.messagePlaceholder')"
+                        :label="$t('landingPage.contact.messageLabel')"
                       />
                     </VCol>
 
                     <VCol>
                       <VBtn type="submit">
-                        Send Inquiry
+                        {{ $t('landingPage.contact.sendButton') }}
                       </VBtn>
                     </VCol>
                   </VRow>

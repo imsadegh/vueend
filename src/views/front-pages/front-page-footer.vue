@@ -1,20 +1,24 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import appleImg from '@images/front-pages/landing-page/apple-icon.png'
 import googlePlayImg from '@images/front-pages/landing-page/google-play-icon.png'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
 
+const { t: $t } = useI18n()
+
 interface Menu {
   name: string
+  nameKey: string
   to: any
   isNew?: boolean
 }
 
 const menus: Menu[] = [
-  { name: 'Pricing', to: { name: 'front-pages-pricing' } },
-  { name: 'Payment', to: { name: 'front-pages-payment' }, isNew: true },
-  { name: 'Maintenance', to: { name: 'pages-misc-under-maintenance' } },
-  { name: 'Comming Soon', to: { name: 'pages-misc-coming-soon' } },
+  { nameKey: 'Pricing', name: 'Pricing', to: { name: 'front-pages-pricing' } },
+  { nameKey: 'Payment', name: 'Payment', to: { name: 'front-pages-payment' }, isNew: true },
+  { nameKey: 'Under Maintenance', name: 'Maintenance', to: { name: 'pages-misc-under-maintenance' } },
+  { nameKey: 'Coming Soon', name: 'Coming Soon', to: { name: 'pages-misc-coming-soon' } },
 ]
 </script>
 
@@ -39,18 +43,18 @@ const menus: Menu[] = [
                 </h1>
               </div>
               <div class="text-body-1 footer-text mb-6">
-                Most Powerful & Comprehensive <span class="text-high-emphasis">🤩</span> Vuejs Admin Template with Elegant Material Design & Unique Layouts.
+                {{ $t('landingPage.footer.newsletterDescription') }}
               </div>
               <VForm class="subscribe-form d-flex align-center gap-4">
                 <VTextField
-                  label="Subscribe to newsletter"
-                  placeholder="john@email.com"
+                  :label="$t('landingPage.footer.subscribeLabel')"
+                  :placeholder="$t('landingPage.footer.emailPlaceholder')"
                   theme="dark"
                   density="compact"
                   class="footer-text"
                 />
                 <VBtn size="large">
-                  Subscribe
+                  {{ $t('landingPage.footer.subscribeButton') }}
                 </VBtn>
               </VForm>
             </div>
@@ -64,7 +68,7 @@ const menus: Menu[] = [
           >
             <div class="footer-links">
               <div class="footer-heading mb-6">
-                Pages
+                {{ $t('landingPage.footer.pagesHeading') }}
               </div>
               <ul style="list-style: none;">
                 <li
@@ -78,7 +82,7 @@ const menus: Menu[] = [
                   >
                     <div class="d-flex align-center">
                       <div>
-                        {{ item.name }}
+                        {{ $t(item.nameKey) }}
                       </div>
                       <template v-if="item.isNew">
                         <VChip
@@ -105,12 +109,17 @@ const menus: Menu[] = [
           >
             <div class="footer-links">
               <div class="footer-heading mb-6">
-                Products
+                {{ $t('landingPage.footer.productsHeading') }}
               </div>
               <ul>
                 <li
-                  v-for="(item, index) in ['Page Builder', 'Admin Dashboards', 'UI Kits', 'Illustrations']"
-                  :key="index"
+                  v-for="item in [
+                    { key: 'landingPage.footer.pageBuilder' },
+                    { key: 'landingPage.footer.adminDashboards' },
+                    { key: 'landingPage.footer.uiKits' },
+                    { key: 'landingPage.footer.illustrations' },
+                  ]"
+                  :key="item.key"
                   class="mb-4 text-body-1"
                   style="list-style: none;"
                 >
@@ -118,7 +127,7 @@ const menus: Menu[] = [
                     to=""
                     class="footer-text text-no-wrap"
                   >
-                    {{ item }}
+                    {{ $t(item.key) }}
                   </RouterLink>
                 </li>
               </ul>
@@ -133,13 +142,13 @@ const menus: Menu[] = [
           >
             <div>
               <div class="footer-heading mb-6">
-                Download our app
+                {{ $t('landingPage.footer.downloadHeading') }}
               </div>
               <div>
                 <VBtn
                   v-for="(item, index) in [
-                    { image: appleImg, store: 'App Store' },
-                    { image: googlePlayImg, store: 'Google Play' },
+                    { image: appleImg, storeKey: 'landingPage.footer.appStore' },
+                    { image: googlePlayImg, storeKey: 'landingPage.footer.googlePlay' },
                   ]"
                   :key="index"
                   color="#211B2C"
@@ -158,10 +167,10 @@ const menus: Menu[] = [
                       </div>
                       <div class="d-flex flex-column align-start">
                         <div class="text-body-2 footer-text">
-                          Download on the
+                          {{ $t('landingPage.footer.downloadText') }}
                         </div>
                         <div class="text-body-1 font-weight-medium footer-heading">
-                          {{ item.store }}
+                          {{ $t(item.storeKey) }}
                         </div>
                       </div>
                     </div>
@@ -178,19 +187,7 @@ const menus: Menu[] = [
       <VContainer>
         <div class="d-flex justify-space-between flex-wrap gap-y-4">
           <span class="d-flex align-center text-body-2 footer-heading font-weight-regular">
-            &copy;
-
-            {{ new Date().getFullYear() }},
-            Made with <span><VIcon
-              icon="ri-heart-fill"
-              color="#FF4D49"
-            /></span> by <a
-              href="https://pixinvent.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="ms-1 footer-heading font-weight-regular"
-              style="color: rgba(255, 255, 255, var(--v-high-emphasis-opacity));"
-            >Pixinvent</a>
+            {{ $t('landingPage.footer.copyright') }}
           </span>
           <div class="d-flex gap-x-1">
             <template
