@@ -91,7 +91,7 @@ export default [
         children: [
           {
             title: 'Landing',
-            to: 'front-pages-landing-page',
+            to: '/',
             target: '_blank',
 
           },

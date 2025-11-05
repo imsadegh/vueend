@@ -63,7 +63,7 @@ const translateMouse = computed(() => (speed: number) => {
             </p>
           </div>
           <VBtn
-            :to="{ name: 'front-pages-landing-page', hash: `#pricing-plan` }"
+            href="#pricing-plan"
             size="large"
             :active="false"
           >

@@ -117,7 +117,7 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
       <!-- Nav items -->
       <div>
         <div class="d-flex flex-column gap-y-4 pa-4">
-          <RouterLink
+          <a
             v-for="(item, index) in [
               { key: 'sections.home', id: 'home' },
               { key: 'sections.features', id: 'features' },
@@ -126,12 +126,12 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
               { key: 'sections.contact', id: 'contact-us' }
             ]"
             :key="index"
-            :to="{ name: 'front-pages-landing-page', hash: `#${item.id}` }"
+            :href="`#${item.id}`"
             class="font-weight-medium"
             :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.id ? 'active-link' : 'text-high-emphasis']"
           >
             {{ $t(`landingPage.${item.key}`) }}
-          </RouterLink>
+          </a>
           <div
             class="text-high-emphasis font-weight-medium cursor-pointer"
             :class="isPageActive ? 'active-link' : 'text-high-emphasis'"
@@ -245,7 +245,7 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
           :class="$vuetify.display.mdAndUp ? 'd-flex' : 'd-none'"
           class="text-base align-center gap-x-2"
         >
-          <RouterLink
+          <a
             v-for="(item, index) in [
               { key: 'sections.home', id: 'home' },
               { key: 'sections.features', id: 'features' },
@@ -254,12 +254,12 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
               { key: 'sections.contact', id: 'contact-us' }
             ]"
             :key="index"
-            :to="{ name: 'front-pages-landing-page', hash: `#${item.id}` }"
+            :href="`#${item.id}`"
             class="nav-link font-weight-medium"
             :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.id ? 'active-link' : '']"
           >
             {{ $t(`landingPage.${item.key}`) }}
-          </RouterLink>
+          </a>
 
           <!-- Pages Menu -->
           <span
