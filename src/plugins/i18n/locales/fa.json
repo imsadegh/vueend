@@ -760,7 +760,7 @@
       "fullNameLabel": "نام کامل",
       "fullNamePlaceholder": "نام و نام خانوادگی خود را وارد کنید",
       "emailLabel": "آدرس ایمیل",
-      "emailPlaceholder": "نام‌کاربری@ایمیل.com",
+      "emailPlaceholder": "نام‌کاربری{'@'}ایمیل.com",
       "messageLabel": "پیام",
       "messagePlaceholder": "پیام خود را تایپ کنید",
       "sendButton": "ارسال درخواست"
@@ -797,7 +797,7 @@
       "newsletter": "خبرنامه",
       "newsletterDescription": "قدرتمندترین و جامع‌ترین سامانه مدیریت یادگیری... به خبرنامه ما مشترک شوید برای نکات و توصیه‌های مفید.",
       "subscribeLabel": "مشترک شدن در خبرنامه",
-      "emailPlaceholder": "john@email.com",
+      "emailPlaceholder": "john{'@'}email.com",
       "subscribeButton": "مشترک شدن",
       "pagesHeading": "صفحات",
       "pricing": "قیمت‌گذاری",

@@ -358,7 +358,7 @@
       "fullNameLabel": "Full Name",
       "fullNamePlaceholder": "Enter your full name",
       "emailLabel": "Email address",
-      "emailPlaceholder": "username@email.com",
+      "emailPlaceholder": "username{'@'}email.com",
       "messageLabel": "Message",
       "messagePlaceholder": "Type your message",
       "sendButton": "Send Inquiry"
@@ -395,7 +395,7 @@
       "newsletter": "Newsletter",
       "newsletterDescription": "Most Powerful & Comprehensive Learning Management System... Subscribe to our newsletter for tips and useful recommendations.",
       "subscribeLabel": "Subscribe to newsletter",
-      "emailPlaceholder": "john@email.com",
+      "emailPlaceholder": "john{'@'}email.com",
       "subscribeButton": "Subscribe",
       "pagesHeading": "Pages",
       "pricing": "Pricing",
