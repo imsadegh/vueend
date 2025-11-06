@@ -1,3 +1,4 @@
+import { useCookie } from '@core/composable/useCookie'
 import type { RouteNamedMap, _RouterTyped } from 'unplugin-vue-router'
 
 export const setupGuards = (router: _RouterTyped<RouteNamedMap & { [key: string]: any }>) => {
@@ -9,6 +10,25 @@ export const setupGuards = (router: _RouterTyped<RouteNamedMap & { [key: string]
     if (to.meta.disable) {
       return {
         name: '[...error]', // Redirect to a 'not found' or alternative route
+      }
+    }
+
+    // Redirect authenticated users from landing page to their dashboard
+    if (to.path === '/' && to.meta.public) {
+      try {
+        const userData = useCookie('userData')
+        if (userData.value) {
+          const user = userData.value as any
+          const role = user.role || user.role_id
+
+          if (role === 'admin' || role === 5) return { name: 'dashboards-lms-admin' }
+          if (role === 'instructor' || role === 2) return { name: 'dashboards-lms-instructor' }
+          if (role === 'student' || role === 1 || role === 3) return { name: 'dashboards-academy' }
+
+          return { name: 'dashboards-lms-admin' }
+        }
+      } catch (e) {
+        // If error occurs, allow landing page to load normally
       }
     }
 
@@ -26,13 +46,31 @@ export const setupGuards = (router: _RouterTyped<RouteNamedMap & { [key: string]
     const isLoggedIn = !!(useCookie('userData').value && useCookie('accessToken').value)
 
     /*
-      If user is logged in and is trying to access login like page, redirect to home
+      If user is logged in and is trying to access login like page, redirect to their dashboard
       else allow visiting the page
       (WARN: Don't allow executing further by return statement because next code will check for permissions)
      */
     if (to.meta.unauthenticatedOnly) {
-      if (isLoggedIn)
-        return false
+      if (isLoggedIn) {
+        // Redirect authenticated users to their appropriate dashboard
+        try {
+          const userData = useCookie('userData')
+          if (userData.value) {
+            const user = userData.value as any
+            const role = user.role || user.role_id
+
+            if (role === 'admin' || role === 5) return { name: 'dashboards-lms-admin' }
+            if (role === 'instructor' || role === 2) return { name: 'dashboards-lms-instructor' }
+            if (role === 'student' || role === 1 || role === 3) return { name: 'dashboards-academy' }
+
+            return { name: 'dashboards-lms-admin' }
+          }
+        } catch (e) {
+          // If error occurs, redirect to landing page
+        }
+        // Default redirect to landing page
+        return { path: '/' }
+      }
       else
         return undefined
     }

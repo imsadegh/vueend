@@ -1,34 +1,9 @@
 import type { RouteRecordRaw } from 'vue-router/auto'
-import { useCookie } from '@core/composable/useCookie'
 
 const emailRouteComponent = () => import('@/pages/apps/email/index.vue')
 
 // 👉 Redirects
 export const redirects: RouteRecordRaw[] = [
-  // ℹ️ Redirect authenticated users directly to their dashboard
-  // Unauthenticated users see the landing page normally
-  {
-    path: '/',
-    redirect: (to) => {
-      try {
-        const userData = useCookie('userData')
-        if (userData.value) {
-          const user = userData.value as any
-          const role = user.role || user.role_id
-
-          if (role === 'admin' || role === 5) return { name: 'dashboards-lms-admin' }
-          if (role === 'instructor' || role === 2) return { name: 'dashboards-lms-instructor' }
-          if (role === 'student' || role === 1 || role === 3) return { name: 'dashboards-academy' }
-
-          return { name: 'dashboards-lms-admin' }
-        }
-      } catch (e) {
-        // If error occurs, allow landing page to load normally
-      }
-      // For unauthenticated users, don't redirect - let them see landing page
-      return false
-    },
-  },
   {
     path: '/pages/user-profile',
     name: 'pages-user-profile',
