@@ -262,7 +262,7 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
           </a>
 
           <!-- Pages Menu -->
-          <span
+          <!-- <span
             class="font-weight-medium cursor-pointer nav-link"
             :class="isPageActive ? 'active-link' : 'text-high-emphasis'"
           >
@@ -338,15 +338,15 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
                 </VCardText>
               </VCard>
             </VMenu>
-          </span>
+          </span> -->
 
-          <RouterLink
+          <!-- <RouterLink
             to="/"
             target="_blank"
             class="nav-link font-weight-medium"
           >
             {{ $t('landingPage.navbar.admin') }}
-          </RouterLink>
+          </RouterLink> -->
         </div>
       </div>
 
@@ -356,7 +356,8 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
         <I18n :languages="languages" />
         <NavbarThemeSwitcher class="me-0 me-sm-2" />
 
-        <VBtn
+        <!--
+          <VBtn
           v-if="$vuetify.display.lgAndUp"
           prepend-icon="ri-shopping-cart-line"
           variant="elevated"
@@ -364,11 +365,13 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
           href="https://1.envato.market/materialize_admin"
           target="_blank"
           rel="noopener noreferrer"
-        >
+          >
           {{ $t('landingPage.navbar.purchaseNow') }}
-        </VBtn>
+          </VBtn>
+        -->
 
-        <VBtn
+        <!--
+          <VBtn
           v-else
           icon
           rounded
@@ -377,9 +380,11 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
           href="https://1.envato.market/materialize_admin"
           target="_blank"
           rel="noopener noreferrer"
-        >
+          >
           <VIcon icon="ri-shopping-cart-line" />
-        </VBtn>
+          </VBtn>
+        -->
+
       </div>
     </VAppBar>
   </div>

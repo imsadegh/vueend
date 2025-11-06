@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { useCookie } from '@core/composable/useCookie'
+import { ref } from 'vue'
+import { useIntersectionObserver } from '@vueuse/core'
+import { useConfigStore } from '@core/stores/config'
 import Footer from '@/views/front-pages/front-page-footer.vue'
 import Navbar from '@/views/front-pages/front-page-navbar.vue'
 import Banner from '@/views/front-pages/landing-page/banner.vue'
@@ -12,9 +13,7 @@ import HeroSection from '@/views/front-pages/landing-page/hero-section.vue'
 import OurTeam from '@/views/front-pages/landing-page/our-team.vue'
 import PricingPlans from '@/views/front-pages/landing-page/pricing-plans.vue'
 import ProductStats from '@/views/front-pages/landing-page/product-stats.vue'
-import { useConfigStore } from '@core/stores/config'
 
-const router = useRouter()
 const store = useConfigStore()
 
 store.skin = 'default'
@@ -24,31 +23,6 @@ definePage({
     public: true,
   },
 })
-
-// Auto-redirect logged-in users to their dashboard
-const userData = useCookie('userData')
-const isLoggedIn = computed(() => !!(userData?.value))
-
-watch(
-  isLoggedIn,
-  (newVal) => {
-    if (newVal && userData.value) {
-      const role = userData.value?.role
-      if (role === 'admin')
-        router.push({ name: 'dashboards-lms-admin' })
-      else if (role === 'student')
-        router.push({ name: 'dashboards-academy' })
-      else if (role === 'instructor')
-        router.push({ name: 'dashboards-lms-instructor' })
-      else if (role) {
-        // Unknown role - fallback to admin dashboard
-        console.warn(`Unknown user role: ${role}, redirecting to admin dashboard`)
-        router.push({ name: 'dashboards-lms-admin' })
-      }
-    }
-  },
-  { immediate: true },
-)
 
 const activeSectionId = ref()
 
@@ -86,12 +60,12 @@ useIntersectionObserver(
     <CustomersReview />
 
     <!-- 👉 Our Team -->
-    <div :style="{ 'background-color': 'rgb(var(--v-theme-surface))' }">
+    <!-- <div :style="{ 'background-color': 'rgb(var(--v-theme-surface))' }">
       <OurTeam ref="refTeam" />
-    </div>
+    </div> -->
 
     <!-- 👉 Pricing Plans -->
-    <PricingPlans />
+    <!-- <PricingPlans /> -->
 
     <!-- 👉 Product stats -->
     <ProductStats />
