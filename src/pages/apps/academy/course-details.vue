@@ -5,7 +5,7 @@ const isSubmissionDialogVisible = ref(false)
 const assignments = ref<any[]>([]);
 const selectedAssignmentId = ref<number | null>(null);
 
-const token = useCookie('accessToken').value
+const token = useCookie('accessToken')
 
 import { API_BASE_URL } from '@/config/config';
 // import { VideoPlayer } from '@videojs-player/vue';
@@ -82,7 +82,7 @@ const fetchAssignments = async () => {
   try {
     const courseId = route.params.courseId;
     const response = await axios.get(`${API_BASE_URL}/courses/${courseId}/assignments`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token.value}` }
     });
     assignments.value = response.data; // Expecting an array of assignments
   } catch (error) {
@@ -167,7 +167,7 @@ const fetchModules = async () => {
   try {
     const courseId = route.params.courseId
     const response = await axios.get(`${API_BASE_URL}/courses/${courseId}/modules`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token.value}` }
     })
     modules.value = response.data
   } catch (error) {
@@ -192,6 +192,8 @@ function getVideoOptions(module: any) {
   }
 }
 
+
+
 function openVideoDialog(module: any) {
   selectedVideoModule.value = module
   isVideoDialogVisible.value = true
@@ -199,6 +201,57 @@ function openVideoDialog(module: any) {
 function openArticleDialog(module: any) {
   selectedArticleModule.value = module
   isArticleDialogVisible.value = true
+}
+
+// Deep link - open video in mobile app
+const openVideoInApp = async (module: any) => {
+  try {
+    const courseId = route.params.courseId
+    const token = useCookie('accessToken')
+    
+    // Request deep link from backend
+    const response = await axios.get(
+      `${API_BASE_URL}/deep-link/watch`,
+      {
+        params: {
+          course_id: courseId,
+          module_id: module.id,
+        },
+        headers: { Authorization: `Bearer ${token.value}` }
+      }
+    )
+    
+    const { deep_link, fallback_url } = response.data
+    
+    console.log('Deep link:', deep_link)
+    
+    // Set a timer to fallback to app store if app doesn't launch
+    // (if the page is still visible after 2 seconds, app didn't open)
+    let fallbackTimer: any = null
+    const pageVisibilityHandler = () => {
+      // If page becomes hidden, it means the app opened, so cancel fallback
+      if (document.hidden) {
+        clearTimeout(fallbackTimer)
+      }
+    }
+    
+    document.addEventListener('visibilitychange', pageVisibilityHandler)
+    
+    // Try the fallback after 2.5 seconds if app didn't open
+    fallbackTimer = setTimeout(() => {
+      document.removeEventListener('visibilitychange', pageVisibilityHandler)
+      window.location.href = fallback_url
+    }, 2500)
+    
+    // Attempt to open the deep link
+    window.location.href = deep_link
+  } catch (error) {
+    const errorData = (error as any).response?.data || (error as any).message
+    const errorMsg = typeof errorData === 'string' ? errorData : JSON.stringify(errorData)
+    console.error('Error generating deep link:', errorMsg)
+    console.error('Full error:', error)
+    alert(`Failed to generate app link. Error: ${errorMsg}`)
+  }
 }
 
 const openDiscussionGroup = () => {
@@ -210,9 +263,9 @@ const openDiscussionGroup = () => {
 onMounted(async () => {
   try {
     const courseId = route.params.courseId
-    const token = useCookie('accessToken').value
+    const token = useCookie('accessToken')
     const response = await axios.get(`${API_BASE_URL}/courses/${courseId}`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token.value}` }
     })
     courseData.value = response.data
   } catch (err) {
@@ -327,12 +380,15 @@ onMounted(async () => {
                     <VCardTitle class="mt-1 pb-3">
                       {{ module.title }}
                     </VCardTitle>
-                    <VCardText class="d-flex justify-center">
+                    <VCardText class="d-flex gap-2 justify-center">
                       <!-- <VCardActions class="d-flex justify-center"> -->
 
                       <!-- <div>{{ module.description }}</div> -->
                       <VBtn variant="tonal" color="primary" @click="openVideoDialog(module)">
                         {{ $t('course.viewVideo') }}
+                      </VBtn>
+                      <VBtn variant="tonal" color="success" @click="openVideoInApp(module)">
+                        📱 {{ $t('course.watchOnApp') }}
                       </VBtn>
                       <!-- </VCardActions> -->
                     </VCardText>
