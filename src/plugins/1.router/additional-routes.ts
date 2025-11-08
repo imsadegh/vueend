@@ -4,9 +4,6 @@ const emailRouteComponent = () => import('@/pages/apps/email/index.vue')
 
 // 👉 Redirects
 export const redirects: RouteRecordRaw[] = [
-  // ℹ️ Landing page (/) is now handled by src/pages/index.vue as a public route
-  // It automatically redirects logged-in users to their role-specific dashboard
-  // Non-logged-in users see the landing page with login/signup options
   {
     path: '/pages/user-profile',
     name: 'pages-user-profile',
