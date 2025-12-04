@@ -91,7 +91,7 @@ export default [
         children: [
           {
             title: 'Landing',
-            to: '/',
+            to: { path: '/' },
             target: '_blank',
 
           },
