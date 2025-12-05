@@ -1,14 +1,13 @@
 <script setup lang="ts">
+import I18n from '@/@core/components/I18n.vue'
+import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
+import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
+import { themeConfig } from '@themeConfig'
 import { useWindowScroll } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import type { RouteLocationRaw } from 'vue-router/auto'
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import { useDisplay } from 'vuetify'
-import I18n from '@/@core/components/I18n.vue'
-import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
-import navImg from '@images/front-pages/misc/nav-img.png'
-import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
-import { themeConfig } from '@themeConfig'
 
 interface Props {
   activeId?: string
@@ -106,134 +105,74 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
 
 <template>
   <!-- 👉 Navigation drawer for mobile devices  -->
-  <VNavigationDrawer
-    v-model="sidebar"
-    disable-resize-watcher
-  >
-    <PerfectScrollbar
-      :options="{ wheelPropagation: false }"
-      class="h-100"
-    >
+  <VNavigationDrawer v-model="sidebar" disable-resize-watcher>
+    <PerfectScrollbar :options="{ wheelPropagation: false }" class="h-100">
       <!-- Nav items -->
       <div>
         <div class="d-flex flex-column gap-y-4 pa-4">
-          <a
-            v-for="(item, index) in [
-              { key: 'sections.home', id: 'home' },
-              { key: 'sections.features', id: 'features' },
-              { key: 'sections.team', id: 'team' },
-              { key: 'sections.faq', id: 'faq' },
-              { key: 'sections.contact', id: 'contact-us' }
-            ]"
-            :key="index"
-            :href="`#${item.id}`"
-            class="font-weight-medium"
-            :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.id ? 'active-link' : 'text-high-emphasis']"
-          >
+          <a v-for="(item, index) in [
+            { key: 'sections.home', id: 'home' },
+            { key: 'sections.features', id: 'features' },
+            { key: 'sections.team', id: 'team' },
+            { key: 'sections.faq', id: 'faq' },
+            { key: 'sections.contact', id: 'contact-us' }
+          ]" :key="index" :href="`#${item.id}`" class="font-weight-medium"
+            :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.id ? 'active-link' : 'text-high-emphasis']">
             {{ $t(`landingPage.${item.key}`) }}
           </a>
-          <div
-            class="text-high-emphasis font-weight-medium cursor-pointer"
-            :class="isPageActive ? 'active-link' : 'text-high-emphasis'"
-          >
-            <div
-              :class="isMenuOpen ? 'mb-6' : ''"
-              @click="isMenuOpen = !isMenuOpen"
-            >
-              {{ $t('landingPage.navbar.pages') }} <VIcon :icon="isMenuOpen ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'" />
+          <div class="text-high-emphasis font-weight-medium cursor-pointer"
+            :class="isPageActive ? 'active-link' : 'text-high-emphasis'">
+            <div :class="isMenuOpen ? 'mb-6' : ''" @click="isMenuOpen = !isMenuOpen">
+              {{ $t('landingPage.navbar.pages') }}
+              <VIcon :icon="isMenuOpen ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'" />
             </div>
-            <div
-              v-for="(item, index) in menuItems"
-              :key="index"
-              :class="isMenuOpen ? 'd-block' : 'd-none'"
-            >
+            <div v-for="(item, index) in menuItems" :key="index" :class="isMenuOpen ? 'd-block' : 'd-none'">
               <div class="d-flex align-center gap-x-3 mb-4">
-                <VAvatar
-                  variant="tonal"
-                  color="primary"
-                  rounded
-                  :icon="item.listIcon"
-                />
+                <VAvatar variant="tonal" color="primary" rounded :icon="item.listIcon" />
                 <div class="text-body-1 text-high-emphasis font-weight-medium">
                   {{ $t(item.listTitleKey) }}
                 </div>
               </div>
               <ul class="mb-6">
-                <li
-                  v-for="listItem in item.navItems"
-                  :key="listItem.nameKey"
-                  style="list-style: none;"
-                  class="text-body-1 mb-4"
-                >
-                  <RouterLink
-                    :to="listItem.to"
-                    :target="item.listTitle === 'Page' ? '_self' : '_blank'"
-                    class="mega-menu-item"
-                    :class="isCurrentRoute(listItem.to) ? 'active-link' : ''"
-                  >
-                    <VIcon
-                      icon="ri-circle-line"
-                      :size="10"
-                      class="me-2"
-                    />
-                    <span>  {{ $t(listItem.nameKey) }}</span>
+                <li v-for="listItem in item.navItems" :key="listItem.nameKey" style="list-style: none;"
+                  class="text-body-1 mb-4">
+                  <RouterLink :to="listItem.to" :target="item.listTitle === 'Page' ? '_self' : '_blank'"
+                    class="mega-menu-item" :class="isCurrentRoute(listItem.to) ? 'active-link' : ''">
+                    <VIcon icon="ri-circle-line" :size="10" class="me-2" />
+                    <span> {{ $t(listItem.nameKey) }}</span>
                   </RouterLink>
                 </li>
               </ul>
             </div>
           </div>
-          <RouterLink
-            to="/"
-            target="_blank"
-            class="text-body-1 font-weight-medium nav-link px-0"
-          >
+          <RouterLink to="/" target="_blank" class="text-body-1 font-weight-medium nav-link px-0">
             {{ $t('landingPage.navbar.admin') }}
           </RouterLink>
         </div>
       </div>
       <!-- Navigation drawer close icon -->
-      <VIcon
-        id="navigation-drawer-close-btn"
-        icon="ri-close-line"
-        size="20"
-        @click="sidebar = !sidebar"
-      />
+      <VIcon id="navigation-drawer-close-btn" icon="ri-close-line" size="20" @click="sidebar = !sidebar" />
     </PerfectScrollbar>
   </VNavigationDrawer>
 
   <!-- 👉 Navbar for desktop devices  -->
   <div class="front-page-navbar">
-    <VAppBar
-      :class="y > 20 ? 'front-page-navbar-box-shadow' : ''"
-      :border="y < 20 ? '1px solid rgba(var(--v-theme-surface), 0.78)' : 'none'"
-      elevation="0"
-      class="rounded-b-xl"
-      :style="y > 20 ? '' : `background-color: rgba(var(--v-theme-surface),${props.navbarInitialOpacity})`"
-      height="62"
-    >
+    <VAppBar :class="y > 20 ? 'front-page-navbar-box-shadow' : ''"
+      :border="y < 20 ? '1px solid rgba(var(--v-theme-surface), 0.78)' : 'none'" elevation="0" class="rounded-b-xl"
+      :style="y > 20 ? '' : `background-color: rgba(var(--v-theme-surface),${props.navbarInitialOpacity})`" height="62">
       <!-- toggle icon for mobile device -->
-      <VAppBarNavIcon
-        :class="$vuetify.display.mdAndUp ? 'd-none' : 'd-inline-block'"
-        class="ms-0 me-1"
-        color="high-emphasis"
-        @click="() => sidebar = !sidebar"
-      />
+      <VAppBarNavIcon :class="$vuetify.display.mdAndUp ? 'd-none' : 'd-inline-block'" class="ms-0 me-1"
+        color="high-emphasis" @click="() => sidebar = !sidebar" />
 
       <!-- Title and Landing page sections -->
       <div class="d-flex align-center">
         <VAppBarTitle class="me-3 me-sm-6">
-          <RouterLink
-            to="/"
-            class="d-flex gap-x-4"
-            :class="$vuetify.display.mdAndUp ? 'd-none' : 'd-block'"
-          >
+          <RouterLink to="/" class="d-flex gap-x-4" :class="$vuetify.display.mdAndUp ? 'd-none' : 'd-block'">
             <div class="d-flex gap-x-3 align-center">
               <VNodeRenderer :nodes="themeConfig.app.logo" />
 
-              <div
-                class="nav-title text-truncate"
-                :class="[$vuetify.display.lgAndUp ? 'd-block' : 'd-none', $vuetify.display.mdAndUp ? 'd-none' : 'd-block']"
-              >
+              <div class="nav-title text-truncate"
+                :class="[$vuetify.display.lgAndUp ? 'd-block' : 'd-none', $vuetify.display.mdAndUp ? 'd-none' : 'd-block']">
                 {{ themeConfig.app.title }}
               </div>
             </div>
@@ -241,23 +180,15 @@ const languages = computed(() => themeConfig.app.i18n.langConfig)
         </VAppBarTitle>
 
         <!-- landing page sections -->
-        <div
-          :class="$vuetify.display.mdAndUp ? 'd-flex' : 'd-none'"
-          class="text-base align-center gap-x-2"
-        >
-          <a
-            v-for="(item, index) in [
-              { key: 'sections.home', id: 'home' },
-              { key: 'sections.features', id: 'features' },
-              { key: 'sections.team', id: 'team' },
-              { key: 'sections.faq', id: 'faq' },
-              { key: 'sections.contact', id: 'contact-us' }
-            ]"
-            :key="index"
-            :href="`#${item.id}`"
-            class="nav-link font-weight-medium"
-            :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.id ? 'active-link' : '']"
-          >
+        <div :class="$vuetify.display.mdAndUp ? 'd-flex' : 'd-none'" class="text-base align-center gap-x-2">
+          <a v-for="(item, index) in [
+            { key: 'sections.home', id: 'home' },
+            { key: 'sections.features', id: 'features' },
+            // { key: 'sections.team', id: 'team' },
+            { key: 'sections.faq', id: 'faq' },
+            { key: 'sections.contact', id: 'contact-us' }
+          ]" :key="index" :href="`#${item.id}`" class="nav-link font-weight-medium"
+            :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.id ? 'active-link' : '']">
             {{ $t(`landingPage.${item.key}`) }}
           </a>
 

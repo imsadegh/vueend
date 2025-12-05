@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import ctaDashboard from '@images/front-pages/landing-page/cta-dashboard.png'
+import ctaDashboard from '@images/front-pages/landing-page/cta-dashboard.png';
+import { useI18n } from 'vue-i18n';
 
 const { t: $t } = useI18n()
 </script>
@@ -13,26 +13,18 @@ const { t: $t } = useI18n()
           <div class="banner-text pb-1">
             {{ $t('landingPage.banner.title') }}
           </div>
-          <div class="text-body-1 font-weight-medium mb-8">
+          <!-- <div class="text-body-1 font-weight-medium mb-8">
             {{ $t('landingPage.banner.subtitle') }}
-          </div>
+          </div> -->
+          <VSpacer />
           <VBtn :to="{ name: 'front-pages-payment' }">
             {{ $t('landingPage.banner.cta') }}
-            <VIcon
-              end
-              icon="ri-arrow-right-line"
-              class="flip-in-rtl"
-            />
+            <VIcon end icon="ri-arrow-right-line" class="flip-in-rtl" />
           </VBtn>
         </div>
 
-        <VImg
-          :src="ctaDashboard"
-          :max-width="$vuetify.display.mdAndUp ? 600 : ''"
-          max-height="300"
-          width="auto"
-          class="align-self-center mb-n4 align-self-md-end"
-        />
+        <VImg :src="ctaDashboard" :max-width="$vuetify.display.mdAndUp ? 600 : ''" max-height="300" width="auto"
+          class="align-self-center mb-n4 align-self-md-end" />
       </div>
     </VContainer>
   </div>

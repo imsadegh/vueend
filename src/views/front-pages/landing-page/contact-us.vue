@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import ConnectImg from '@images/front-pages/landing-page/lets-contact.png'
 import sectionTitleIcon from '@images/pages/section-title-icon.png'
 import frontPageVectorImg from '@images/svg/front-page-vector.svg'
+import { useI18n } from 'vue-i18n'
 
 const { t: $t } = useI18n()
 
@@ -16,29 +15,19 @@ const message = ref('')
     <!-- 👉 Headers  -->
     <div class="contact-us-section">
       <div class="headers d-flex justify-center flex-column align-center pb-15">
-        <Component
-          :is="frontPageVectorImg"
-          class="front-page-vector"
-        />
+        <Component :is="frontPageVectorImg" class="front-page-vector" />
         <div class="d-flex gap-x-3 mb-6">
-          <img
-            :src="sectionTitleIcon"
-            alt="section title icon"
-            height="24"
-            width="25"
-          >
+          <img :src="sectionTitleIcon" alt="section title icon" height="24" width="25">
           <div class="text-body-1 text-high-emphasis font-weight-medium">
             {{ $t('landingPage.contact.sectionTitle') }}
           </div>
         </div>
 
         <div class="mb-2 text-center">
-          <span
-            class="text-h4 d-inline-block font-weight-bold"
-            style="line-height: 2rem;"
-          >
+          <span class="text-h4 d-inline-block font-weight-bold" style="line-height: 2rem;">
             {{ $t('landingPage.contact.heading') }}
-          </span> <span class="text-h5 d-inline-block">{{ $t('landingPage.contact.headingSuffix') }}</span>
+          </span>
+          <!-- <span class="text-h5 d-inline-block">{{ $t('landingPage.contact.headingSuffix') }}</span> -->
         </div>
 
         <p class="text-body-1 font-weight-medium text-center mb-0">
@@ -47,30 +36,18 @@ const message = ref('')
       </div>
       <div class="mb-15">
         <VRow class="match-height">
-          <VCol
-            cols="12"
-            md="4"
-            sm="6"
-          >
-            <VCard
-              flat
-              elevation="0"
-              color="primary"
-              theme="dark"
-            >
+          <VCol cols="12" md="4" sm="6">
+            <VCard flat elevation="0" color="primary" theme="dark">
               <VCardText class="pa-8">
-                <h6 class="text-h6 mb-1">
+                <!-- <h6 class="text-h6 mb-1">
                   {{ $t('landingPage.contact.infoTitle') }}
-                </h6>
+                </h6> -->
 
                 <h4 class="text-h4">
                   {{ $t('landingPage.contact.infoHeading') }}
                 </h4>
 
-                <VImg
-                  :src="ConnectImg"
-                  class="my-5"
-                />
+                <!-- <VImg :src="ConnectImg" class="my-5" /> -->
 
                 <div class="text-body-1">
                   {{ $t('landingPage.contact.infoDescription') }}
@@ -78,46 +55,27 @@ const message = ref('')
               </VCardText>
             </VCard>
           </VCol>
-          <VCol
-            cols="12"
-            md="8"
-            sm="6"
-          >
+          <VCol cols="12" md="8" sm="6">
             <VCard>
               <VCardText>
                 <div class="text-h5 mb-5">
                   {{ $t('landingPage.contact.formTitle') }}
                 </div>
-                <VForm @submit.prevent="() => {}">
+                <VForm @submit.prevent="() => { }">
                   <VRow>
-                    <VCol
-                      cols="12"
-                      md="6"
-                    >
-                      <VTextField
-                        v-model="name"
-                        :placeholder="$t('landingPage.contact.fullNamePlaceholder')"
-                        :label="$t('landingPage.contact.fullNameLabel')"
-                      />
+                    <VCol cols="12" md="6">
+                      <VTextField v-model="name" :placeholder="$t('landingPage.contact.fullNamePlaceholder')"
+                        :label="$t('landingPage.contact.fullNameLabel')" />
                     </VCol>
 
-                    <VCol
-                      cols="12"
-                      md="6"
-                    >
-                      <VTextField
-                        v-model="email"
-                        :placeholder="$t('landingPage.contact.emailPlaceholder')"
-                        :label="$t('landingPage.contact.emailLabel')"
-                      />
+                    <VCol cols="12" md="6">
+                      <VTextField v-model="email" :placeholder="$t('landingPage.contact.emailPlaceholder')"
+                        :label="$t('landingPage.contact.emailLabel')" />
                     </VCol>
 
                     <VCol cols="12">
-                      <VTextarea
-                        v-model="message"
-                        :placeholder="$t('landingPage.contact.messagePlaceholder')"
-                        :label="$t('landingPage.contact.messageLabel')"
-                      />
+                      <VTextarea v-model="message" :placeholder="$t('landingPage.contact.messagePlaceholder')"
+                        :label="$t('landingPage.contact.messageLabel')" />
                     </VCol>
 
                     <VCol>
