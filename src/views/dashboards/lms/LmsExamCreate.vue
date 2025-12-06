@@ -121,6 +121,7 @@ function openShow(e: any) {
 // CRUD
 async function saveExam() {
   const payload = {
+    course_id: form.course_id,
     name: form.name,
     intro: form.intro,
     time_open: form.time_open,
@@ -147,13 +148,15 @@ async function saveExam() {
         payload,
         { headers: { Authorization: `Bearer ${token}` } })
     } else {
-      await axios.post(`${API_BASE_URL}/exams`, form, { headers: { Authorization: `Bearer ${token}` } })
+      await axios.post(`${API_BASE_URL}/exams`, payload, { headers: { Authorization: `Bearer ${token}` } })
     }
     isDialogVisible.value = false
     fetchExams()
   } catch (err: any) {
     if (err.response?.data?.errors) {
       Object.assign(errors, err.response.data.errors)
+    } else if (err.response?.data?.message) {
+      alert(err.response.data.message)
     }
   }
 }
@@ -257,15 +260,15 @@ import { formatDateFa } from '@/utils/dateFa'
               </VCol>
               <VCol cols="12" sm="6">
                 <VTextField v-model="form.time_open" type="datetime-local" :label="$t('academy.openTime')"
-                  :error-messages="errors.time_open" />
+                  :error-messages="errors.time_open" required />
               </VCol>
               <VCol cols="12" sm="6">
                 <VTextField v-model="form.time_close" type="datetime-local" :label="$t('academy.timeClose')"
-                  :error-messages="errors.time_close" />
+                  :error-messages="errors.time_close" required />
               </VCol>
               <VCol cols="12" sm="4">
                 <VTextField v-model.number="form.time_limit" type="number" :label="$t('academy.timeLimit')"
-                  :error-messages="errors.time_limit" />
+                  :error-messages="errors.time_limit" required />
               </VCol>
               <VCol cols="12" sm="4">
                 <VTextField v-model.number="form.grade" type="number" :label="$t('academy.grade')"
