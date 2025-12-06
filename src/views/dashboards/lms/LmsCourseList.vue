@@ -16,7 +16,7 @@ interface Course {
   featured: boolean;
   description: string;
   about: string;
-  discussion_group_url: string;
+  discussion_group_url: string | null;
   allow_waitlist: boolean;
   start_date: string | null;
   end_date: string | null;
@@ -165,11 +165,12 @@ fetchInstructorCourses()
 
         <!-- Discussion Group Link (Clickable) -->
         <template #item.course_discussionGroup="{ item }">
-          <a :href="item.discussion_group_url" target="_blank" class="text-primary">
-            {{ item.discussion_group_url.replace(/^(https?:\/\/)?(www\.)?/, '').length > 30 
-              ? item.discussion_group_url.replace(/^(https?:\/\/)?(www\.)?/, '').substring(0, 10) + '...' 
+          <a v-if="item.discussion_group_url" :href="item.discussion_group_url" target="_blank" class="text-primary">
+            {{ item.discussion_group_url.replace(/^(https?:\/\/)?(www\.)?/, '').length > 30
+              ? item.discussion_group_url.replace(/^(https?:\/\/)?(www\.)?/, '').substring(0, 10) + '...'
               : item.discussion_group_url.replace(/^(https?:\/\/)?(www\.)?/, '') }}
           </a>
+          <span v-else class="text-disabled">{{ $t('course.noDiscussionGroup') }}</span>
         </template>
 
         <!-- Status -->

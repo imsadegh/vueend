@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LmsAllCoursesList from '@/views/dashboards/lms/LmsAllCoursesList.vue';
 import LmsCongratulationsNorris from '@/views/dashboards/lms/LmsCongratulationsNorris.vue';
 import LmsCourseCreate from '@/views/dashboards/lms/LmsCourseCreate.vue';
 import LmsCourseModuleCreate from '@/views/dashboards/lms/LmsCourseModuleCreate.vue';
@@ -7,7 +8,6 @@ import LmsExamCreate from '@/views/dashboards/lms/LmsExamCreate.vue';
 
 // TODO - add vuetify Outlined Timeline component with its backend
 // TODO - register new student
-// TODO for the panel admin, should be able to see the list of students and their courses, also instructors and be able to edit the courses info
 
 const statisticsVertical = [
   {
@@ -59,6 +59,11 @@ const statisticsVertical = [
     <!-- 👉 Exam -->
     <VCol cols="12" md="12">
       <LmsExamCreate />
+    </VCol>
+
+    <!-- 👉 All Courses List (Admin) -->
+    <VCol cols="12">
+      <LmsAllCoursesList />
     </VCol>
 
     <!-- 👉 Total Orders -->

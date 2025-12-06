@@ -49,6 +49,7 @@
     "about": "درباره دوره",
     "aboutPlaceholder": "درباره دوره توضیحات بیشتری وارد کنید",
     "discussionGroupUrl": "لینک گروه مباحثه",
+    "noDiscussionGroup": "هیچ گروه مباحثه‌ای وجود ندارد",
     "status": "وضعیت",
     "active": "فعال",
     "draft": "پیش‌نویس",
@@ -159,6 +160,14 @@
     "reviewed": "بررسی شده",
     "instructorFeedback": "پاسخ استاد",
     "reviewSubmission": "بررسی تکلیف"
+  },
+  "admin": {
+    "allCourses": "همه دوره‌ها",
+    "instructor": "مدرس",
+    "enrollments": "ثبت‌نام‌ها",
+    "students": "دانش‌آموز",
+    "unknownInstructor": "مدرس نامشخص",
+    "allStatuses": "همه وضعیت‌ها"
   },
   "academy": {
     "view": "مشاهده",
@@ -817,5 +826,6 @@
       "googlePlay": "Google Play",
       "copyright": "ساخته شده با ❤️ توسط تیم حکیم‌یار"
     }
-  }
+  },
+  "Login with phone number and password": "شماره تماس و رمز عبور خود را وارد کنید"
 }

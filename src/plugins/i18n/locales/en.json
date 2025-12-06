@@ -210,6 +210,14 @@
       }
     }
   },
+  "admin": {
+    "allCourses": "All Courses",
+    "instructor": "Instructor",
+    "enrollments": "Enrollments",
+    "students": "students",
+    "unknownInstructor": "Unknown Instructor",
+    "allStatuses": "All Statuses"
+  },
   "academy": {
     "viewCourses": "View courses",
     "enrollNowInPopularCourses": "Enroll now in popular courses.",
@@ -237,7 +245,8 @@
   "course": {
     "create": "create",
     "course": "period",
-    "new": "new"
+    "new": "new",
+    "noDiscussionGroup": "No discussion group"
   },
   "landingPage": {
     "title": "Hakim Yar",
