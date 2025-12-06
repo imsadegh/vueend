@@ -455,5 +455,28 @@
       "googlePlay": "Google Play",
       "copyright": "Made with ❤️ by Hakim Yar Team"
     }
+  },
+  "profile": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "melliCode": "National ID",
+    "birthDate": "Birth Date",
+    "sex": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "address": "Address",
+    "city": "City",
+    "zipCode": "Zip Code",
+    "uploadPhoto": "Upload Photo",
+    "reset": "Reset",
+    "allowedFormats": "Allowed formats: JPG, GIF or PNG. Max size 800KB",
+    "saveChanges": "Save Changes",
+    "profileUpdatedSuccess": "Profile updated successfully",
+    "avatarUpdatedSuccess": "Avatar updated successfully",
+    "errorFetchingProfile": "Error fetching profile",
+    "errorUpdatingProfile": "Error updating profile",
+    "errorUploadingAvatar": "Error uploading avatar"
   }
 }

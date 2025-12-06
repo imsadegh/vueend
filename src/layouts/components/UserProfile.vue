@@ -32,7 +32,7 @@ const userProfileList = [
     type: 'navItem',
     icon: 'ri-user-line',
     title: $t('Profile'),
-    to: { name: 'apps-user-view-id', params: { id: 21 } },
+    to: { name: 'pages-account-settings-tab', params: { tab: 'account' } },
   },
   // {
   //   type: 'navItem',

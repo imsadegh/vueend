@@ -1,126 +1,214 @@
 <script lang="ts" setup>
-import avatar1 from '@images/avatars/avatar-1.png'
+import { API_BASE_URL } from '@/config/config'
+import axios from 'axios'
+import { useI18n } from 'vue-i18n'
 
-const accountData = {
-  avatarImg: avatar1,
-  firstName: 'john',
-  lastName: 'Doe',
-  email: 'johnDoe@example.com',
-  org: 'Pixinvent',
-  phone: '+1 (917) 543-9876',
-  address: '123 Main St, New York, NY 10001',
-  state: 'New York',
-  zip: '10001',
-  country: ['USA'],
-  language: ['English'],
-  timezone: '(GMT-11:00) International Date Line West',
-  currency: 'USD',
-}
+const { t } = useI18n()
+const token = useCookie('accessToken').value
+const userData = useCookie<any>('userData')
 
 const refInputEl = ref<HTMLElement>()
+const isLoading = ref(false)
+const isSaving = ref(false)
+const successMessage = ref('')
+const errorMessage = ref('')
 
-const isConfirmDialogOpen = ref(false)
-const accountDataLocal = ref(structuredClone(accountData))
-const isAccountDeactivated = ref(false)
+// Form data
+const accountDataLocal = ref({
+  first_name: '',
+  last_name: '',
+  email: '',
+  phone_number: '',
+  melli_code: '',
+  birth_date: '',
+  sex: '',
+  address: '',
+  city: '',
+  zip_code: '',
+  avatar: '',
+})
 
-const validateAccountDeactivation = [(v: string) => !!v || 'Please confirm account deactivation']
+// Form errors
+const errors = ref<Record<string, string[]>>({})
 
-const resetForm = () => {
-  accountDataLocal.value = structuredClone(accountData)
+// Options
+const sexOptions = [
+  { title: t('profile.male'), value: 'male' },
+  { title: t('profile.female'), value: 'female' },
+]
+
+const cityOptions = [
+  'تهران',
+  'مشهد',
+  'اصفهان',
+  'شیراز',
+  'تبریز',
+  'کرج',
+  'قم',
+  'اهواز',
+  'کرمانشاه',
+  'ارومیه',
+]
+
+// Fetch user profile on mount
+onMounted(async () => {
+  await fetchProfile()
+})
+
+async function fetchProfile() {
+  isLoading.value = true
+  try {
+    const response = await axios.get(`${API_BASE_URL}/profile`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    Object.assign(accountDataLocal.value, response.data)
+  }
+  catch (error: any) {
+    console.error('Error fetching profile:', error)
+    errorMessage.value = t('profile.errorFetchingProfile')
+  }
+  finally {
+    isLoading.value = false
+  }
 }
 
-// changeAvatar function
-const changeAvatar = (file: Event) => {
+async function saveProfile() {
+  isSaving.value = true
+  errors.value = {}
+  successMessage.value = ''
+  errorMessage.value = ''
+
+  try {
+    const response = await axios.put(`${API_BASE_URL}/profile`, accountDataLocal.value, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+
+    // Update the userData cookie with new values
+    if (userData.value) {
+      userData.value = {
+        ...userData.value,
+        first_name: response.data.user.first_name,
+        last_name: response.data.user.last_name,
+        full_name: response.data.user.full_name,
+        email: response.data.user.email,
+        phone_number: response.data.user.phone_number,
+        avatar: response.data.user.avatar,
+      }
+    }
+
+    successMessage.value = t('profile.profileUpdatedSuccess')
+  }
+  catch (error: any) {
+    if (error.response?.data?.errors) {
+      errors.value = error.response.data.errors
+    }
+    else {
+      errorMessage.value = t('profile.errorUpdatingProfile')
+    }
+  }
+  finally {
+    isSaving.value = false
+  }
+}
+
+// Reset form to original data
+async function resetForm() {
+  await fetchProfile()
+  successMessage.value = ''
+  errorMessage.value = ''
+  errors.value = {}
+}
+
+// Change avatar
+async function changeAvatar(event: Event) {
   const fileReader = new FileReader()
-  const { files } = file.target as HTMLInputElement
+  const { files } = event.target as HTMLInputElement
 
   if (files && files.length) {
+    // Show preview
     fileReader.readAsDataURL(files[0])
     fileReader.onload = () => {
       if (typeof fileReader.result === 'string')
-        accountDataLocal.value.avatarImg = fileReader.result
+        accountDataLocal.value.avatar = fileReader.result
+    }
+
+    // Upload to server
+    const formData = new FormData()
+    formData.append('avatar', files[0])
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/profile/avatar`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      accountDataLocal.value.avatar = response.data.avatar
+
+      // Update userData cookie
+      if (userData.value)
+        userData.value.avatar = response.data.avatar
+
+      successMessage.value = t('profile.avatarUpdatedSuccess')
+    }
+    catch (error: any) {
+      errorMessage.value = t('profile.errorUploadingAvatar')
     }
   }
 }
 
-// reset avatar image
-const resetAvatar = () => {
-  accountDataLocal.value.avatarImg = accountData.avatarImg
+// Reset avatar
+function resetAvatar() {
+  accountDataLocal.value.avatar = ''
 }
-
-const timezones = [
-  '(GMT-11:00) International Date Line West',
-  '(GMT-11:00) Midway Island',
-  '(GMT-10:00) Hawaii',
-  '(GMT-09:00) Alaska',
-  '(GMT-08:00) Pacific Time (US & Canada)',
-  '(GMT-08:00) Tijuana',
-  '(GMT-07:00) Arizona',
-  '(GMT-07:00) Chihuahua',
-  '(GMT-07:00) La Paz',
-  '(GMT-07:00) Mazatlan',
-  '(GMT-07:00) Mountain Time (US & Canada)',
-  '(GMT-06:00) Central America',
-  '(GMT-06:00) Central Time (US & Canada)',
-  '(GMT-06:00) Guadalajara',
-  '(GMT-06:00) Mexico City',
-  '(GMT-06:00) Monterrey',
-  '(GMT-06:00) Saskatchewan',
-  '(GMT-05:00) Bogota',
-  '(GMT-05:00) Eastern Time (US & Canada)',
-  '(GMT-05:00) Indiana (East)',
-  '(GMT-05:00) Lima',
-  '(GMT-05:00) Quito',
-  '(GMT-04:00) Atlantic Time (Canada)',
-  '(GMT-04:00) Caracas',
-  '(GMT-04:00) La Paz',
-  '(GMT-04:00) Santiago',
-  '(GMT-03:30) Newfoundland',
-  '(GMT-03:00) Brasilia',
-  '(GMT-03:00) Buenos Aires',
-  '(GMT-03:00) Georgetown',
-  '(GMT-03:00) Greenland',
-  '(GMT-02:00) Mid-Atlantic',
-  '(GMT-01:00) Azores',
-  '(GMT-01:00) Cape Verde Is.',
-  '(GMT+00:00) Casablanca',
-  '(GMT+00:00) Dublin',
-  '(GMT+00:00) Edinburgh',
-  '(GMT+00:00) Lisbon',
-  '(GMT+00:00) London',
-]
-
-const currencies = [
-  'USD',
-  'EUR',
-  'GBP',
-  'AUD',
-  'BRL',
-  'CAD',
-  'CNY',
-  'CZK',
-  'DKK',
-  'HKD',
-  'HUF',
-  'INR',
-]
 </script>
 
 <template>
   <VRow>
     <VCol cols="12">
-      <VCard>
+      <!-- Success/Error messages -->
+      <VAlert
+        v-if="successMessage"
+        type="success"
+        variant="tonal"
+        closable
+        class="mb-4"
+        @click:close="successMessage = ''"
+      >
+        {{ successMessage }}
+      </VAlert>
+
+      <VAlert
+        v-if="errorMessage"
+        type="error"
+        variant="tonal"
+        closable
+        class="mb-4"
+        @click:close="errorMessage = ''"
+      >
+        {{ errorMessage }}
+      </VAlert>
+
+      <VCard :loading="isLoading">
         <VCardText>
           <div class="d-flex mb-10">
-            <!-- 👉 Avatar -->
+            <!-- Avatar -->
             <VAvatar
               rounded
               size="100"
               class="me-6"
-              :image="accountDataLocal.avatarImg"
-            />
+              :image="accountDataLocal.avatar"
+              :color="!accountDataLocal.avatar ? 'primary' : undefined"
+            >
+              <VIcon
+                v-if="!accountDataLocal.avatar"
+                icon="ri-user-line"
+                size="50"
+              />
+            </VAvatar>
 
-            <!-- 👉 Upload Photo -->
+            <!-- Upload Photo -->
             <form class="d-flex flex-column justify-center gap-4">
               <div class="d-flex flex-wrap gap-4">
                 <VBtn
@@ -131,7 +219,7 @@ const currencies = [
                     icon="ri-upload-cloud-line"
                     class="d-sm-none"
                   />
-                  <span class="d-none d-sm-block">Upload new photo</span>
+                  <span class="d-none d-sm-block">{{ t('profile.uploadPhoto') }}</span>
                 </VBtn>
                 <input
                   ref="refInputEl"
@@ -147,7 +235,7 @@ const currencies = [
                   variant="outlined"
                   @click="resetAvatar"
                 >
-                  <span class="d-none d-sm-block">Reset</span>
+                  <span class="d-none d-sm-block">{{ t('profile.reset') }}</span>
                   <VIcon
                     icon="ri-refresh-line"
                     class="d-sm-none"
@@ -155,177 +243,152 @@ const currencies = [
                 </VBtn>
               </div>
               <p class="text-body-1 mb-0">
-                Allowed JPG, GIF or PNG. Max size of 800K
+                {{ t('profile.allowedFormats') }}
               </p>
             </form>
           </div>
 
-          <!-- 👉 Form -->
-          <VForm>
+          <!-- Form -->
+          <VForm @submit.prevent="saveProfile">
             <VRow>
-              <!-- 👉 First Name -->
+              <!-- First Name -->
               <VCol
                 md="6"
                 cols="12"
               >
                 <VTextField
-                  v-model="accountDataLocal.firstName"
-                  placeholder="John"
-                  label="First Name"
+                  v-model="accountDataLocal.first_name"
+                  :label="t('profile.firstName')"
+                  :error-messages="errors.first_name"
                 />
               </VCol>
 
-              <!-- 👉 Last Name -->
+              <!-- Last Name -->
               <VCol
                 md="6"
                 cols="12"
               >
                 <VTextField
-                  v-model="accountDataLocal.lastName"
-                  placeholder="Doe"
-                  label="Last Name"
+                  v-model="accountDataLocal.last_name"
+                  :label="t('profile.lastName')"
+                  :error-messages="errors.last_name"
                 />
               </VCol>
 
-              <!-- 👉 Email -->
+              <!-- Email -->
               <VCol
                 cols="12"
                 md="6"
               >
                 <VTextField
                   v-model="accountDataLocal.email"
-                  label="E-mail"
-                  placeholder="johndoe@gmail.com"
+                  :label="t('profile.email')"
                   type="email"
+                  :error-messages="errors.email"
                 />
               </VCol>
 
-              <!-- 👉 Organization -->
+              <!-- Phone -->
               <VCol
                 cols="12"
                 md="6"
               >
                 <VTextField
-                  v-model="accountDataLocal.org"
-                  label="Organization"
-                  placeholder="Pixinvent"
+                  v-model="accountDataLocal.phone_number"
+                  :label="t('profile.phoneNumber')"
+                  dir="ltr"
+                  :error-messages="errors.phone_number"
                 />
               </VCol>
 
-              <!-- 👉 Phone -->
+              <!-- Melli Code -->
               <VCol
                 cols="12"
                 md="6"
               >
                 <VTextField
-                  v-model="accountDataLocal.phone"
-                  label="Phone Number"
-                  placeholder="+1 (917) 543-9876"
+                  v-model="accountDataLocal.melli_code"
+                  :label="t('profile.melliCode')"
+                  dir="ltr"
+                  :error-messages="errors.melli_code"
                 />
               </VCol>
 
-              <!-- 👉 Address -->
+              <!-- Birth Date -->
               <VCol
                 cols="12"
                 md="6"
               >
                 <VTextField
+                  v-model="accountDataLocal.birth_date"
+                  :label="t('profile.birthDate')"
+                  type="date"
+                  :error-messages="errors.birth_date"
+                />
+              </VCol>
+
+              <!-- Sex -->
+              <VCol
+                cols="12"
+                md="6"
+              >
+                <VSelect
+                  v-model="accountDataLocal.sex"
+                  :label="t('profile.sex')"
+                  :items="sexOptions"
+                  :error-messages="errors.sex"
+                  clearable
+                />
+              </VCol>
+
+              <!-- City -->
+              <VCol
+                cols="12"
+                md="6"
+              >
+                <VCombobox
+                  v-model="accountDataLocal.city"
+                  :label="t('profile.city')"
+                  :items="cityOptions"
+                  :error-messages="errors.city"
+                  clearable
+                />
+              </VCol>
+
+              <!-- Address -->
+              <VCol cols="12">
+                <VTextarea
                   v-model="accountDataLocal.address"
-                  label="Address"
-                  placeholder="123 Main St, New York, NY 10001"
+                  :label="t('profile.address')"
+                  rows="2"
+                  :error-messages="errors.address"
                 />
               </VCol>
 
-              <!-- 👉 State -->
+              <!-- Zip Code -->
               <VCol
                 cols="12"
                 md="6"
               >
                 <VTextField
-                  v-model="accountDataLocal.state"
-                  label="State"
-                  placeholder="New York"
+                  v-model="accountDataLocal.zip_code"
+                  :label="t('profile.zipCode')"
+                  dir="ltr"
+                  :error-messages="errors.zip_code"
                 />
               </VCol>
 
-              <!-- 👉 Zip Code -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VTextField
-                  v-model="accountDataLocal.zip"
-                  label="Zip Code"
-                  placeholder="10001"
-                />
-              </VCol>
-
-              <!-- 👉 Country -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VSelect
-                  v-model="accountDataLocal.country"
-                  multiple
-                  chips
-                  closable-chips
-                  label="Country"
-                  :items="['USA', 'Canada', 'UK', 'India', 'Australia']"
-                  placeholder="Select Country"
-                />
-              </VCol>
-
-              <!-- 👉 Language -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VSelect
-                  v-model="accountDataLocal.language"
-                  label="Language"
-                  multiple
-                  chips
-                  closable-chips
-                  placeholder="Select Language"
-                  :items="['English', 'Spanish', 'Arabic', 'Hindi', 'Urdu']"
-                />
-              </VCol>
-
-              <!-- 👉 Timezone -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VSelect
-                  v-model="accountDataLocal.timezone"
-                  label="Timezone"
-                  placeholder="Select Timezone"
-                  :items="timezones"
-                  :menu-props="{ maxHeight: 200 }"
-                />
-              </VCol>
-
-              <!-- 👉 Currency -->
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <VSelect
-                  v-model="accountDataLocal.currency"
-                  label="Currency"
-                  placeholder="Select Currency"
-                  :items="currencies"
-                  :menu-props="{ maxHeight: 200 }"
-                />
-              </VCol>
-
-              <!-- 👉 Form Actions -->
+              <!-- Form Actions -->
               <VCol
                 cols="12"
                 class="d-flex flex-wrap gap-4"
               >
-                <VBtn>Save changes</VBtn>
+                <VBtn
+                  type="submit"
+                  :loading="isSaving"
+                >
+                  {{ t('profile.saveChanges') }}
+                </VBtn>
 
                 <VBtn
                   color="secondary"
@@ -333,7 +396,7 @@ const currencies = [
                   type="reset"
                   @click.prevent="resetForm"
                 >
-                  Reset
+                  {{ t('profile.reset') }}
                 </VBtn>
               </VCol>
             </VRow>
@@ -341,45 +404,5 @@ const currencies = [
         </VCardText>
       </VCard>
     </VCol>
-
-    <VCol cols="12">
-      <!-- 👉 Delete Account -->
-      <VCard>
-        <VCardItem class="pb-6">
-          <VCardTitle>
-            Delete Account
-          </VCardTitle>
-        </VCardItem>
-        <VCardText>
-          <!-- 👉 Checkbox and Button  -->
-          <div>
-            <VCheckbox
-              v-model="isAccountDeactivated"
-              :rules="validateAccountDeactivation"
-              label="I confirm my account deactivation"
-            />
-          </div>
-
-          <VBtn
-            :disabled="!isAccountDeactivated"
-            color="error"
-            class="mt-6"
-            @click="isConfirmDialogOpen = true"
-          >
-            Deactivate Account
-          </VBtn>
-        </VCardText>
-      </VCard>
-    </VCol>
   </VRow>
-
-  <!-- Confirm Dialog -->
-  <ConfirmDialog
-    v-model:isDialogVisible="isConfirmDialogOpen"
-    confirmation-question="Are you sure you want to deactivate your account?"
-    confirm-title="Deactivated!"
-    confirm-msg="Your account has been deactivated successfully."
-    cancel-title="Cancelled"
-    cancel-msg="Account Deactivation Cancelled!"
-  />
 </template>

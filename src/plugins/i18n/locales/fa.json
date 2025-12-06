@@ -850,5 +850,28 @@
       "copyright": "ساخته شده با ❤️ توسط تیم حکیم‌یار"
     }
   },
-  "Login with phone number and password": "شماره تماس و رمز عبور خود را وارد کنید"
+  "Login with phone number and password": "شماره تماس و رمز عبور خود را وارد کنید",
+  "profile": {
+    "firstName": "نام",
+    "lastName": "نام خانوادگی",
+    "email": "ایمیل",
+    "phoneNumber": "شماره تلفن",
+    "melliCode": "کد ملی",
+    "birthDate": "تاریخ تولد",
+    "sex": "جنسیت",
+    "male": "مرد",
+    "female": "زن",
+    "address": "آدرس",
+    "city": "شهر",
+    "zipCode": "کد پستی",
+    "uploadPhoto": "آپلود تصویر",
+    "reset": "بازنشانی",
+    "allowedFormats": "فرمت‌های مجاز: JPG، GIF یا PNG. حداکثر حجم ۸۰۰ کیلوبایت",
+    "saveChanges": "ذخیره تغییرات",
+    "profileUpdatedSuccess": "پروفایل با موفقیت به‌روزرسانی شد",
+    "avatarUpdatedSuccess": "تصویر پروفایل با موفقیت به‌روزرسانی شد",
+    "errorFetchingProfile": "خطا در دریافت اطلاعات پروفایل",
+    "errorUpdatingProfile": "خطا در به‌روزرسانی پروفایل",
+    "errorUploadingAvatar": "خطا در آپلود تصویر"
+  }
 }
