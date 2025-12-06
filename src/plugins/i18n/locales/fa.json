@@ -851,6 +851,25 @@
     }
   },
   "Login with phone number and password": "شماره تماس و رمز عبور خود را وارد کنید",
+  "accountSettings": {
+    "account": "حساب کاربری",
+    "security": "امنیت",
+    "billingPlans": "صورتحساب و پلن‌ها"
+  },
+  "security": {
+    "changePassword": "تغییر رمز عبور",
+    "currentPassword": "رمز عبور فعلی",
+    "newPassword": "رمز عبور جدید",
+    "confirmPassword": "تأیید رمز عبور جدید",
+    "passwordRequirements": "الزامات رمز عبور:",
+    "requirement1": "حداقل ۸ کاراکتر - هرچه بیشتر بهتر",
+    "requirement2": "حداقل یک حرف کوچک",
+    "requirement3": "حداقل یک عدد، نماد یا کاراکتر خاص",
+    "saveChanges": "ذخیره تغییرات",
+    "reset": "بازنشانی",
+    "passwordChangedSuccess": "رمز عبور با موفقیت تغییر کرد",
+    "errorChangingPassword": "خطا در تغییر رمز عبور"
+  },
   "profile": {
     "firstName": "نام",
     "lastName": "نام خانوادگی",

@@ -456,6 +456,25 @@
       "copyright": "Made with ❤️ by Hakim Yar Team"
     }
   },
+  "accountSettings": {
+    "account": "Account",
+    "security": "Security",
+    "billingPlans": "Billing & Plans"
+  },
+  "security": {
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "passwordRequirements": "Password Requirements:",
+    "requirement1": "Minimum 8 characters long - the more, the better",
+    "requirement2": "At least one lowercase character",
+    "requirement3": "At least one number, symbol, or special character",
+    "saveChanges": "Save Changes",
+    "reset": "Reset",
+    "passwordChangedSuccess": "Password changed successfully",
+    "errorChangingPassword": "Error changing password"
+  },
   "profile": {
     "firstName": "First Name",
     "lastName": "Last Name",
