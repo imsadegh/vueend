@@ -6,7 +6,7 @@
 // import LmsExamAttempt from '@/views/dashboards/lms/LmsExamAttempt.vue'
 
 import AcademyMyCourses from '@/views/dashboards/lms/LmsMyCourses.vue'
-import LmsTuitionHistory from '@/views/dashboards/lms/LmsTuitionHistory.vue'
+// import LmsTuitionHistory from '@/views/dashboards/lms/LmsTuitionHistory.vue'
 const searchQuery = ref('')
 
 import customCheck from '@images/svg/check.svg'
@@ -205,9 +205,9 @@ const timeSpendingChartSeries = [23, 35, 10, 20, 35, 23]
 
     <VRow class="match-height">
       <!-- 👉 Tuition History -->
-      <VCol cols="12" md="4">
+      <!-- <VCol cols="12" md="4">
         <LmsTuitionHistory />
-      </VCol>
+      </VCol> -->
 
       <!-- 👉 Topic You are Interested in -->
       <!-- <VCol cols="12" md="8">
